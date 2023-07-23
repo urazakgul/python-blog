@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Python Blog",
+    "section": "",
+    "text": "Jun 22, 2023\n\n\nUraz Akgül\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Hakkında",
+    "section": "",
+    "text": "Merhaba! Bu blog, Python öğrenme sürecimde edindiğim bilgileri ve bu bilgileri nasıl uyguladığımı paylaşmak için oluşturuldu."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code."
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Hoş Geldiniz!",
+    "section": "",
+    "text": "Bu blog, Python öğrenme sürecimde edindiğim bilgileri ve bu bilgileri nasıl uyguladığımı paylaşmak için oluşturuldu."
+  }
+]

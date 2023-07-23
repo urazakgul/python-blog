@@ -1,0 +1,18 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Python Blog"
+  navbar:
+    right:
+      - icon: twitter
+        href: https://twitter.com/urazdev
+      - icon: github
+        href: https://github.com/urazakgul
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
