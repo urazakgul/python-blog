@@ -1,5 +1,5 @@
 ---
-title: "TCMB'nin Faiz Oranlarına İlişkin Basın Duyurularının Duygu Skorları ve Politika Faizleri"
+title: "TCMB'nin Faiz Oranlarına İlişkin Basın Duyurularının Duygu Skoru ve Politika Faizi"
 author: "Uraz Akgül"
 date: "07/23/2023"
 date-modified: "07/23/2023"
