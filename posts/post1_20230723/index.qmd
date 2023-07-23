@@ -320,7 +320,7 @@ final_df['Faiz'] = final_df['Faiz'].astype(float)
 final_df.groupby('Baskan')[['ToplamSkor', 'Faiz']].corr(numeric_only=True)
 ```
 
-En yüksek pozitif korelasyon %92 ile Naci Ağbal'a ait. Ağbal'ı %79 ile Şahap Kavcıoğlu takip ediyor. Murat Çetinkaya ve Murat Uysal ise negatif yönde sırasıyla -%27 ve %19 korelasyonlara sahip.
+En yüksek pozitif korelasyon %92 ile Naci Ağbal'a ait. Ağbal'ı %79 ile Şahap Kavcıoğlu takip ediyor. Murat Çetinkaya ve Murat Uysal ise negatif yönde sırasıyla -%27 ve -%19 korelasyonlara sahip.
 
 ### Sonuç
 
