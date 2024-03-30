@@ -1,0 +1,13 @@
+---
+title: "Python Dünyama Hoş Geldin!"
+author: "Uraz Akgül"
+date: "2024-03-23"
+# date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Diğer]
+image: "python.jpg"
+# execute:
+#   eval: false
+---
+
+Uygulamalı içerikler oluşturacağım bu blog, bana günlük, sana rehber olsun.

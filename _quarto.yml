@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Python Blog"
+  navbar:
+    right:
+      - icon: twitter-x
+        href: https://twitter.com/urazdev
+        target: _blank
+      - icon: github
+        href: https://github.com/urazakgul
+        target: _blank
+
+format:
+  html:
+    lang: tr
+    date-format: "MMMM D, YYYY"
+    theme:
+      light: litera
+      dark: solar
+    css: styles.css
+
+execute:
+  freeze: auto
