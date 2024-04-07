@@ -236,9 +236,9 @@ Hata terimleri normal dağılmaktadır.
 
 sw_statistic, sw_p_value = shapiro(residuals)
 if sw_p_value >= alpha:
-    print("Hata terimleri normal dağılıyor.")
+    print('Hata terimleri normal dağılıyor.')
 else:
-    print("Hata terimleri normal dağılmıyor.")
+    print('Hata terimleri normal dağılmıyor.')
 
 ```
 
@@ -248,9 +248,9 @@ Hata terimlerinde otokorelasyon bulunmamaktadır.
 
 bg_test_statistic, bg_p_value, _, _ = dg.acorr_breusch_godfrey(model_linlin, nlags=5)
 if bg_p_value >= alpha:
-    print("Hata terimleri arasında otokorelasyon yoktur.")
+    print('Hata terimleri arasında otokorelasyon yoktur.')
 else:
-    print("Hata terimleri arasında otokorelasyon vardır.")
+    print('Hata terimleri arasında otokorelasyon vardır.')
 
 ```
 
@@ -261,9 +261,9 @@ Modelde, `alpha` değerini 0.01 aldığımızda değişen varyans bulunmamaktad�
 bp_test_statistic, bp_p_value, _, _ = dg.het_breuschpagan(residuals, model_linlin.model.exog)
 
 if bp_p_value <= 0.01: # alpha
-    print("Modelde değişen varyans vardır.")
+    print('Modelde değişen varyans vardır.')
 else:
-    print("Modelde değişen varyans yoktur.")
+    print('Modelde değişen varyans yoktur.')
 
 ```
 
@@ -277,7 +277,7 @@ forecasts = model_linlin.get_prediction(X_value).summary_frame(alpha)
 forecasted_vote_mean = forecasts['mean']
 forecasted_vote_lower = forecasts['obs_ci_lower']
 forecasted_vote_upper = forecasts['obs_ci_upper']
-print(f"Oy Öngörüsü: %{forecasted_vote_mean.item():.2f}\nOy Öngörüsü Aralığı: %{forecasted_vote_lower.item():.2f} - %{forecasted_vote_upper.item():.2f}")
+print(f'Oy Öngörüsü: %{forecasted_vote_mean.item():.2f}\nOy Öngörüsü Aralığı: %{forecasted_vote_lower.item():.2f} - %{forecasted_vote_upper.item():.2f}')
 
 ```
 
