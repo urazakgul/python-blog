@@ -254,7 +254,7 @@ else:
 
 ```
 
-Modelde, `alpha` değerini 0.01 aldığımızda değişen varyans yoktur.
+Modelde, `alpha` değerini 0.01 aldığımızda değişen varyans bulunmamaktadır.
 
 ```{python}
 
@@ -281,7 +281,7 @@ print(f"Oy Öngörüsü: %{forecasted_vote_mean.item():.2f}\nOy Öngörüsü Ara
 
 ```
 
-%50.57 - %51.32 tahmin aralığında %50.95'lik bir oy öngörüsünde bulunabiliriz. Gerçek oy oranı %51.14'tür. Öngörü, gerçek oyun yaklaşık 0.19 puan kadar altında kalmıştır ancak fena olmadığını söyleyebiliriz. Bu öngörüyü açılan sandık oranı %49 iken yaptık.
+%50.57 - %51.32 öngörü aralığında %50.95'lik bir oy öngörüsünde bulunabiliriz. Gerçek oy oranı %51.14'tür. Öngörü, gerçek oyun yaklaşık 0.19 puan kadar altında kalmıştır ancak fena olmadığını söyleyebiliriz. Bu öngörüyü açılan sandık oranı %49 iken yaptık.
 
 Sonraki seçimlerde pratik bir şekilde kullanmak için buraya kadar yaptığımız modelleme işlemlerini bir fonksiyona dönüştürelim.
 
