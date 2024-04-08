@@ -1,0 +1,328 @@
+{
+  "Data": [
+    {
+      "PROVINCE": "ADANA",
+      "CHP": 46.6
+    },
+    {
+      "PROVINCE": "ADIYAMAN",
+      "CHP": 49.7
+    },
+    {
+      "PROVINCE": "AFYONKARAHİSAR",
+      "CHP": 50.7
+    },
+    {
+      "PROVINCE": "AĞRI",
+      "CHP": 2.6
+    },
+    {
+      "PROVINCE": "AKSARAY",
+      "CHP": 7.8
+    },
+    {
+      "PROVINCE": "AMASYA",
+      "CHP": 43
+    },
+    {
+      "PROVINCE": "ANKARA",
+      "CHP": 60.4
+    },
+    {
+      "PROVINCE": "ANTALYA",
+      "CHP": 48.7
+    },
+    {
+      "PROVINCE": "ARDAHAN",
+      "CHP": 45.1
+    },
+    {
+      "PROVINCE": "ARTVİN",
+      "CHP": 45.2
+    },
+    {
+      "PROVINCE": "AYDIN",
+      "CHP": 50.5
+    },
+    {
+      "PROVINCE": "BALIKESİR",
+      "CHP": 51.1
+    },
+    {
+      "PROVINCE": "BARTIN",
+      "CHP": 51.3
+    },
+    {
+      "PROVINCE": "BATMAN",
+      "CHP": 1.8
+    },
+    {
+      "PROVINCE": "BAYBURT",
+      "CHP": 4.3
+    },
+    {
+      "PROVINCE": "BİLECİK",
+      "CHP": 48.9
+    },
+    {
+      "PROVINCE": "BİNGÖL",
+      "CHP": 2.3
+    },
+    {
+      "PROVINCE": "BİTLİS",
+      "CHP": 2.1
+    },
+    {
+      "PROVINCE": "BOLU",
+      "CHP": 52.9
+    },
+    {
+      "PROVINCE": "BURDUR",
+      "CHP": 46.3
+    },
+    {
+      "PROVINCE": "BURSA",
+      "CHP": 47.6
+    },
+    {
+      "PROVINCE": "ÇANAKKALE",
+      "CHP": 39.7
+    },
+    {
+      "PROVINCE": "ÇANKIRI",
+      "CHP": 2.7
+    },
+    {
+      "PROVINCE": "ÇORUM",
+      "CHP": 37
+    },
+    {
+      "PROVINCE": "DENİZLİ",
+      "CHP": 48.1
+    },
+    {
+      "PROVINCE": "DİYARBAKIR",
+      "CHP": 3.5
+    },
+    {
+      "PROVINCE": "DÜZCE",
+      "CHP": 13.4
+    },
+    {
+      "PROVINCE": "EDİRNE",
+      "CHP": 46.7
+    },
+    {
+      "PROVINCE": "ELAZIĞ",
+      "CHP": 16.5
+    },
+    {
+      "PROVINCE": "ERZİNCAN",
+      "CHP": 21.1
+    },
+    {
+      "PROVINCE": "ERZURUM",
+      "CHP": 6.5
+    },
+    {
+      "PROVINCE": "ESKİŞEHIR",
+      "CHP": 51
+    },
+    {
+      "PROVINCE": "GAZİANTEP",
+      "CHP": 28.1
+    },
+    {
+      "PROVINCE": "GİRESUN",
+      "CHP": 54.6
+    },
+    {
+      "PROVINCE": "GÜMÜŞHANE",
+      "CHP": 13.4
+    },
+    {
+      "PROVINCE": "HAKKARİ",
+      "CHP": 1.4
+    },
+    {
+      "PROVINCE": "HATAY",
+      "CHP": 44.1
+    },
+    {
+      "PROVINCE": "IĞDIR",
+      "CHP": 2.9
+    },
+    {
+      "PROVINCE": "ISPARTA",
+      "CHP": 21.1
+    },
+    {
+      "PROVINCE": "İSTANBUL",
+      "CHP": 51.1
+    },
+    {
+      "PROVINCE": "İZMİR",
+      "CHP": 49
+    },
+    {
+      "PROVINCE": "KAHRAMANMARAŞ",
+      "CHP": 15.2
+    },
+    {
+      "PROVINCE": "KARABÜK",
+      "CHP": 11.1
+    },
+    {
+      "PROVINCE": "KARAMAN",
+      "CHP": 18
+    },
+    {
+      "PROVINCE": "KARS",
+      "CHP": 17.2
+    },
+    {
+      "PROVINCE": "KASTAMONU",
+      "CHP": 49.2
+    },
+    {
+      "PROVINCE": "KAYSERİ",
+      "CHP": 14.3
+    },
+    {
+      "PROVINCE": "KİLİS",
+      "CHP": 42
+    },
+    {
+      "PROVINCE": "KIRIKKALE",
+      "CHP": 49.9
+    },
+    {
+      "PROVINCE": "KIRKLARELİ",
+      "CHP": 40.7
+    },
+    {
+      "PROVINCE": "KIRŞEHİR",
+      "CHP": 52.9
+    },
+    {
+      "PROVINCE": "KOCAELİ",
+      "CHP": 29
+    },
+    {
+      "PROVINCE": "KONYA",
+      "CHP": 12.8
+    },
+    {
+      "PROVINCE": "KÜTAHYA",
+      "CHP": 29.7
+    },
+    {
+      "PROVINCE": "MALATYA",
+      "CHP": 37.3
+    },
+    {
+      "PROVINCE": "MANİSA",
+      "CHP": 57.3
+    },
+    {
+      "PROVINCE": "MARDİN",
+      "CHP": 2.5
+    },
+    {
+      "PROVINCE": "MERSİN",
+      "CHP": 59.5
+    },
+    {
+      "PROVINCE": "MUĞLA",
+      "CHP": 55
+    },
+    {
+      "PROVINCE": "MUŞ",
+      "CHP": 1.5
+    },
+    {
+      "PROVINCE": "NEVŞEHİR",
+      "CHP": 3.2
+    },
+    {
+      "PROVINCE": "NİĞDE",
+      "CHP": 25.6
+    },
+    {
+      "PROVINCE": "ORDU",
+      "CHP": 16.6
+    },
+    {
+      "PROVINCE": "OSMANİYE",
+      "CHP": 21.8
+    },
+    {
+      "PROVINCE": "RİZE",
+      "CHP": 12.1
+    },
+    {
+      "PROVINCE": "SAKARYA",
+      "CHP": 16.5
+    },
+    {
+      "PROVINCE": "SAMSUN",
+      "CHP": 27
+    },
+    {
+      "PROVINCE": "ŞANLIURFA",
+      "CHP": 1.5
+    },
+    {
+      "PROVINCE": "SİİRT",
+      "CHP": 1.9
+    },
+    {
+      "PROVINCE": "SİNOP",
+      "CHP": 49.4
+    },
+    {
+      "PROVINCE": "ŞIRNAK",
+      "CHP": 4
+    },
+    {
+      "PROVINCE": "SİVAS",
+      "CHP": 8.5
+    },
+    {
+      "PROVINCE": "TEKİRDAĞ",
+      "CHP": 50.3
+    },
+    {
+      "PROVINCE": "TOKAT",
+      "CHP": 9.4
+    },
+    {
+      "PROVINCE": "TRABZON",
+      "CHP": 28.5
+    },
+    {
+      "PROVINCE": "TUNCELİ",
+      "CHP": 33.3
+    },
+    {
+      "PROVINCE": "UŞAK",
+      "CHP": 40.9
+    },
+    {
+      "PROVINCE": "VAN",
+      "CHP": 2.7
+    },
+    {
+      "PROVINCE": "YALOVA",
+      "CHP": 46.4
+    },
+    {
+      "PROVINCE": "YOZGAT",
+      "CHP": 2.1
+    },
+    {
+      "PROVINCE": "ZONGULDAK",
+      "CHP": 54.5
+    }
+  ]
+}
