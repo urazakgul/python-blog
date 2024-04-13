@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Seçim Verilerinin Türkiye Haritasında Görselleştirilmesi</title>
+<title>Python Blog - İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,10 +147,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Seçim Verilerinin Türkiye Haritasında Görselleştirilmesi</h1>
+      <h1 class="title">İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Harita</div>
-                <div class="quarto-category">Seçim</div>
+                <div class="quarto-category">Yüz</div>
               </div>
                   </div>
   </div>
@@ -168,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 8, 2024</p>
+        <p class="date">Nisan 13, 2024</p>
       </div>
     </div>
     
@@ -187,126 +186,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>31 Mart 2024 yerel seçimlerini geride bıraktık ancak biz Türkiye’de yaşayanlar için iki seçim arası kısa bir reklam arası gibi. Önümüzdeki seçimlere hazırlıklı olmak için bu arayı değerlendirmeye devam ediyoruz.</p>
-<p>Bu uygulamada, CHP’nin iller bazında aldığı oyları harita üzerinde göstereceğiz. <code>local_elections_province_20240331</code> isimli JSON dosyasında bulunan verilere <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_4" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<p>Harita üzerinde görselleştirme yapmak için <code>geopandas</code> kütüphanesini kullanacağız. <code>geopandas</code>, isminden de anlaşılacağı üzere, popüler veri bilimi kütüphanesi <code>pandas</code>’ı jeo-uzamsal veriler ile destekleyip genişletiyor.</p>
-<p>Haritada görselleştirmek için öncelikle Türkiye’nin <code>.shp</code> uzantılı dosyasını bulmamız gerekiyor. <code>.shp</code>, coğrafi verileri depolamak için kullanılan bir vektör veri formatıdır. <a href="https://data.humdata.org/dataset/cod-ab-tur?" class="external" target="_blank">Buradan</a> <code>turkey_administrativelevels0_1_2.zip</code> isimli dosyayı indirebilirsiniz. Eğer bir problem ile karşılaşırsanız <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_4" class="external" target="_blank">burada</a> bulunan dosyayı da indirebilirsiniz.</p>
+<p>Yapılan çalışmaların yanında içinde profil fotoğrafının da olduğu sosyal medya kullanımı da önemli olabiliyor.</p>
+<p>Bu uygulamada, İstanbul ilçe belediye başkanlarının X (Twitter) profillerindeki duygularını inceleyeceğiz. Duyguların tespitinde <code>Py-Feat</code> kütüphanesinden faydalanacağız.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="ddbde872" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<div id="6adf6f84" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feat <span class="im">import</span> Detector</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feat.plotting <span class="im">import</span> imshow</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Verilerin Hazırlanması</strong></p>
-<p><code>read_file()</code> fonksiyonu ile <code>.shp</code> uzantılı dosyayı içeri aktaralım.</p>
-<div id="754d7e9c" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shapefile_tr <span class="op">=</span> gpd.read_file(<span class="st">'turkey_administrativelevels0_1_2/tur_polbnda_adm1.shp'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shapefile_tr)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Fotoğrafların İçe Aktarılması</strong></p>
+<p><a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_6" class="external" target="_blank">Buradan</a> ulaşabileceğiniz fotoğraflar ilçe belediye başkanlarının X (Twitter) hesaplarından indirilmiştir.</p>
+<div id="341b1d54" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>image_folder <span class="op">=</span> <span class="st">'ilce_bb_profil/'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>image_files <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(image_folder) <span class="cf">if</span> f.endswith(<span class="st">'.jpg'</span>)]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
-<p><code>shapefile_tr</code> ile birleştireceğimiz seçim verilerinin yer aldığı JSON dosyasını içe aktaralım.</p>
-<div id="8c1463e2" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'local_elections_province_20240331.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">'Data'</span>])</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Duyguların Tespit Edilmesi ve Görselleştirilmesi</strong></p>
+<p><code>Py-Feat</code>, görüntülerden ve videolardan yüz ifadelerini kolayca tespit etmek, yüz ifadesi verilerini önceden işlemek ve analiz etmek ve yüz ifadesi verilerini görselleştirmek için kapsamlı bir araç ve model seti sağlar. <code>Py-Feat</code> önceden eğitilmiş çeşitli modelleri içeriyor.</p>
+<div id="6b70cfab" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>detector <span class="op">=</span> Detector(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    face_model<span class="op">=</span><span class="st">'retinaface'</span>, <span class="co"># face detection</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    landmark_model<span class="op">=</span><span class="st">'mobilefacenet'</span>, <span class="co"># facial landmark detection</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    facepose_model<span class="op">=</span><span class="st">'img2pose'</span>, <span class="co"># facial pose estimation</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    au_model<span class="op">=</span><span class="st">'xgb'</span>, <span class="co"># action unit detection</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    emotion_model<span class="op">=</span><span class="st">'resmasknet'</span>, <span class="co"># emotion detection</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
-<p><code>shapefile_tr</code> tablosundaki <code>adm1_tr</code> sütunu ile <code>df</code> tablosundaki <code>PROVINCE</code> sütununu kullanarak iki tabloyu birleştireceğiz.</p>
-<div id="bac8e46e" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.merge(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  shapefile_tr,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  df,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  left_on<span class="op">=</span><span class="st">'adm1_tr'</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  right_on<span class="op">=</span><span class="st">'PROVINCE'</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  how<span class="op">=</span><span class="st">'left'</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Yüz tespiti (Face detection, <code>face_model</code>): Bir görüntüdeki veya bir videodaki insan yüzlerini algılama sürecidir. Yüz tespiti, bir görüntü içindeki yüz bölgelerini belirlemek için kullanılır. Parametre seçenekleri şunlardır: <code>retinaface</code>, <code>mtcnn</code>, <code>faceboxes</code>, <code>img2pose</code> ve <code>img2pose-c</code>.</p></li>
+<li><p>Yüz belirleme (Facial landmark detection, <code>landmark_model</code>): Yüzün belirli noktalarını (örneğin, gözler, burun, ağız) tespit etme sürecidir. Bu noktalar genellikle gözbebekleri, burun ucundaki nokta, dudakların kenarları gibi önemli anatomik yerlerdir. Parametre seçenekleri şunlardır: <code>mobilefacenet</code>, <code>mobilenet</code> ve <code>pfld</code>.</p></li>
+<li><p>Yüz poz tahmini (Facial Pose estimation, <code>facepose_model</code>): Bir yüzün konumunu ve/veya dönüşünü belirleme sürecidir. Yüzün kaç derece eğik olduğunu, hangi yönde baktığını tahmin etmeyi içerir. Parametre seçenekleri şunlardır: <code>img2pose</code> ve <code>img2pose-c</code>.</p></li>
+<li><p>Hareket Birimi tespiti (Action Unit detection, <code>au_model</code>): Yüz ifadelerindeki belirli kas gruplarını temsil eden hareket birimlerini (action units) tanımlama sürecidir. Örneğin, kaşların kaldırılması, dudakların büzülmesi gibi. Parametre seçenekleri şunlardır: <code>xgb</code> ve <code>svm</code>.</p></li>
+<li><p>Duygu tespiti (Emotion detection, <code>emotion_model</code>): Bir kişinin yüz ifadesinden duygusal durumunu belirleme sürecidir. Örneğin, mutlu, üzgün, kızgın gibi duyguları tanımlama. Parametre seçenekleri şunlardır: <code>resmasknet</code> ve <code>svm</code>.</p></li>
+</ul>
+<p>Bir döngü ile tüm fotoğrafları dahil edeceğiz ama öncesinde örnek bir fotoğraf ile sürece bakalım.</p>
+<div id="54e77fef" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>example_img <span class="op">=</span> <span class="st">'uskudar_chp.jpg'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>imshow(image_folder <span class="op">+</span> example_img)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
-<p>Birleştirdikten sonra harita aşamasına geçebiliriz.</p>
-<p><strong>Haritanın Oluşturulması</strong></p>
-<p>Haritayı en temiz haliyle görelim.</p>
-<div id="f30db5e0" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>merged_df.plot(ax<span class="op">=</span>ax)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="ilce_bb_profil/uskudar_chp.jpg" class="img-fluid"></p>
+<p><code>detect_image()</code> ile yüklenen modelleri kullanalım.</p>
+<div id="9310484c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>single_face_prediction <span class="op">=</span> detector.detect_image(image_folder <span class="op">+</span> example_img)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_4.png" class="img-fluid"></p>
-<p>Şimdi verileri haritaya gönderelim ve görselin daha profesyonel görünmesini sağlayalım.</p>
-<div id="478a5c6b" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>merged_df.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'CHP'</span>, cmap<span class="op">=</span><span class="st">'Reds'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'31 Mart 2024 Yerel Seçimleri - Cumhuriyet Halk Partisi Oy Dağılımı'</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    fontdict <span class="op">=</span> {<span class="st">'fontsize'</span>: <span class="dv">8</span>}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.95</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.01</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Veriler Yeni Şafak'ın web sitesinden alınmıştır."</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">6</span>,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">'right'</span>,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    va<span class="op">=</span><span class="st">'bottom'</span>,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>ax.transAxes</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="imgs/single_face_prediction.PNG" class="img-fluid"></p>
+<p>Buradan duyguları çekelim.</p>
+<div id="a564dfde" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>emotions <span class="op">=</span> single_face_prediction.emotions</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_5.png" class="img-fluid"></p>
-<p>Neler yaptık? İnceleyelim.</p>
-<p>Öncelikle, <code>plt.subplots()</code> ile bir <code>Figure</code> ve <code>Axes</code> nesnesi oluşturuyoruz. Sonrasında, <code>merged_df</code> isimli DataFrame’den gelen verileri kullanarak harita oluşturuyoruz ve bu işlemi <code>plot()</code> ile gerçekleştiriyoruz. <code>column</code> parametresi haritada renk kodlaması yapılacak sütunu belirtirken, <code>cmap</code> parametresi renk haritasını belirler. Sadece haritanın görüntülenmesini sağlamak için <code>ax.axis()</code> ile eksenleri kapalı hale getiriyoruz. <code>ax.set_title()</code> ile haritanın başlığını ayarlıyoruz. Son olarak, <code>ax.text()</code> ile sağ alt köşeye bir metin ekliyoruz ve <code>plt.show()</code> ile grafiği görüntülüyoruz.</p>
-<p>Yukarıda sürekli verileri kullandık. Peki, kategorik verileri harita üzerinde nasıl gösterebiliriz?</p>
-<p>CHP’nin %50’den az ve çok aldığı illeri görselleştirmek istediğimizi varsayalım.</p>
-<div id="17c829b0" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>merged_df[<span class="st">'CHP_50'</span>] <span class="op">=</span> merged_df[<span class="st">'CHP'</span>].<span class="bu">apply</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">lambda</span> x: <span class="st">'%50</span><span class="ch">\'</span><span class="st">den az'</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="dv">50</span> <span class="cf">else</span> <span class="st">'%50</span><span class="ch">\'</span><span class="st">den çok'</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="imgs/emotions.PNG" class="img-fluid"></p>
+<p><code>Py-Feat</code> görselleştirme imkanı da sunuyor. Bunu iki farklı şekilde yapabiliriz.</p>
+<div id="33455afb" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>figs <span class="op">=</span> single_face_prediction.plot_detections(poses<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_6.PNG" class="img-fluid"></p>
-<div id="3fd02318" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"%50'den az"</span>: <span class="st">"gray"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"%50'den çok"</span>: <span class="st">"black"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> ListedColormap(<span class="bu">list</span>(colors.values()))</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>merged_df.plot(</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ax<span class="op">=</span>ax,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  column<span class="op">=</span><span class="st">'CHP_50'</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  cmap<span class="op">=</span>cmap,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  legend<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  legend_kwds<span class="op">=</span>{<span class="st">'loc'</span>: <span class="st">'lower left'</span>, <span class="st">'fontsize'</span>: <span class="dv">8</span>}</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"31 Mart 2024 Yerel Seçimleri - Cumhuriyet Halk Partisi'nin %50'den Az ve Çok Aldığı İller"</span>,</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    fontdict <span class="op">=</span> {<span class="st">'fontsize'</span>: <span class="dv">8</span>}</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.95</span>,</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.01</span>,</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Veriler Yeni Şafak'ın web sitesinden alınmıştır."</span>,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">6</span>,</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span>,</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">'right'</span>,</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    va<span class="op">=</span><span class="st">'bottom'</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>ax.transAxes</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="imgs/emotions_plot_1.png" class="img-fluid"></p>
+<div id="39defa6e" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>figs <span class="op">=</span> single_face_prediction.plot_detections(faces<span class="op">=</span><span class="st">'aus'</span>, muscles<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_7.png" class="img-fluid"></p>
-<p>Farklı neler yaptık? İnceleyelim.</p>
-<p><code>colors</code> isminde bir sözlük tanımladık. Bu sözlük, görselleştirmede kullanılacak renkleri ve bunlara karşılık gelen kategorileri içeriyor. Ayrıca, <code>cmap</code> isminde bir <code>ListedColormap</code> nesnesi oluşturduk. Bu, renk paletini belirtiyor ve <code>colors</code> sözlüğünden alınan renklerle oluşturuluyor. Önceki haritada olmayan, bu haritada sol alt köşede bulunan lejant ise kategorilerin tanımlarını içeriyor.</p>
+<p><img src="imgs/emotions_plot_2.png" class="img-fluid"></p>
+<p>Tüm fotoğraflar için duyguları tespit edelim. Görseli ısı haritası ile yapacağız.</p>
+<p>Öncesinde <code>image_files</code> değişkenine tüm fotoğrafları aktarmıştık. Bunu kullanabiliriz.</p>
+<div id="9dcdd1a3" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>emotions_df <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> image_file <span class="kw">in</span> image_files:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    face_prediction <span class="op">=</span> detector.detect_image(image_folder <span class="op">+</span> image_file)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    face_prediction_final <span class="op">=</span> face_prediction[face_prediction[<span class="st">'FaceScore'</span>] <span class="op">==</span> face_prediction[<span class="st">'FaceScore'</span>].<span class="bu">max</span>()]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    emotions <span class="op">=</span> face_prediction_final.emotions</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ilce, parti <span class="op">=</span> image_file.split(<span class="st">'_'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    parti <span class="op">=</span> parti.split(<span class="st">'.'</span>)[<span class="dv">0</span>]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    emotions[<span class="st">'image_file'</span>] <span class="op">=</span> ilce.upper() <span class="op">+</span> <span class="st">'-'</span> <span class="op">+</span> parti.upper()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    emotions_df <span class="op">=</span> pd.concat([emotions_df, emotions], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>emotions_df <span class="op">=</span> emotions_df.set_index(<span class="st">'image_file'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>emotions_df.columns <span class="op">=</span> emotions_df.columns.<span class="bu">str</span>.upper()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Döngüde bulunan <code>face_prediction_final</code> değişkenini birden fazla yüz tespiti olduğu için oluşturdum. Büyükçekmece belediye başkanının profilinde kedi de bulunmaktadır.</p>
+<div id="6b97ef8b" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>example_img <span class="op">=</span> <span class="st">'buyukcekmece_chp.jpg'</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>imshow(image_folder <span class="op">+</span> example_img)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="ilce_bb_profil/buyukcekmece_chp.jpg" class="img-fluid"></p>
+<p>Isı haritası ile duyguları gösterebiliriz.</p>
+<div id="56e1dd69" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">12</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(emotions_df, cmap<span class="op">=</span><span class="st">'Reds'</span>, annot<span class="op">=</span><span class="va">False</span>, linewidths<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'İstanbul İlçe Belediye Başkanları X (Twitter) Profilleri Duygu Dağılımı'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.tick_params(left<span class="op">=</span><span class="va">False</span>, bottom<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">''</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/emotions_heatmap.png" class="img-fluid"></p>
+<p>Profil fotoğraflarında doğal olarak en güçlü duygunun <code>happiness</code> olduğunu görüyoruz. <code>neutral</code> pozlar da kendini göstermektedir.</p>
 
 
 
