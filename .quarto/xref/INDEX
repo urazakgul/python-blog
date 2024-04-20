@@ -1,26 +1,29 @@
 {
   "index.qmd": {
-    "index.html": "5bcf17ba"
+    "index.html": "b104e3d7"
   },
   "posts/post_1/index.qmd": {
-    "index.html": "b46b6973"
+    "index.html": "2d98606b"
   },
   "posts/post_2/index.qmd": {
-    "index.html": "1162f2e8"
+    "index.html": "5ca816fd"
   },
   "posts/post_3/index.qmd": {
-    "index.html": "2734a098"
+    "index.html": "84cad7e5"
   },
   "posts/post_4/index.qmd": {
-    "index.html": "5337b35b"
+    "index.html": "8f3a17f3"
   },
   "posts/post_5/index.qmd": {
-    "index.html": "31698c2c"
+    "index.html": "afbb2c22"
   },
   "posts/post_6/index.qmd": {
-    "index.html": "12059eef"
+    "index.html": "8fad77ae"
   },
   "posts/post_7/index.qmd": {
-    "index.html": "92b0b248"
+    "index.html": "94dc932c"
+  },
+  "posts/post_8/index.qmd": {
+    "index.html": "cf381637"
   }
 }

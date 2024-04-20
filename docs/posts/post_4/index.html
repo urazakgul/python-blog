@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Harita üzerinde görselleştirme yapmak için <code>geopandas</code> kütüphanesini kullanacağız. <code>geopandas</code>, isminden de anlaşılacağı üzere, popüler veri bilimi kütüphanesi <code>pandas</code>’ı jeo-uzamsal veriler ile destekleyip genişletiyor.</p>
 <p>Haritada görselleştirmek için öncelikle Türkiye’nin <code>.shp</code> uzantılı dosyasını bulmamız gerekiyor. <code>.shp</code>, coğrafi verileri depolamak için kullanılan bir vektör veri formatıdır. <a href="https://data.humdata.org/dataset/cod-ab-tur?" class="external" target="_blank">Buradan</a> <code>turkey_administrativelevels0_1_2.zip</code> isimli dosyayı indirebilirsiniz. Eğer bir problem ile karşılaşırsanız <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_4" class="external" target="_blank">burada</a> bulunan dosyayı da indirebilirsiniz.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="a545da04" class="cell" data-execution_count="1">
+<div id="bb54aff7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
@@ -201,14 +201,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Verilerin Hazırlanması</strong></p>
 <p><code>read_file()</code> fonksiyonu ile <code>.shp</code> uzantılı dosyayı içeri aktaralım.</p>
-<div id="0930bc57" class="cell" data-execution_count="2">
+<div id="1b506a2c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shapefile_tr <span class="op">=</span> gpd.read_file(<span class="st">'turkey_administrativelevels0_1_2/tur_polbnda_adm1.shp'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shapefile_tr)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_1.PNG" class="img-fluid"></p>
 <p><code>shapefile_tr</code> ile birleştireceğimiz seçim verilerinin yer aldığı JSON dosyasını içe aktaralım.</p>
-<div id="68dbeca0" class="cell" data-execution_count="3">
+<div id="5050b0d1" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'local_elections_province_20240331.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -218,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
 <p><code>shapefile_tr</code> tablosundaki <code>adm1_tr</code> sütunu ile <code>df</code> tablosundaki <code>PROVINCE</code> sütununu kullanarak iki tabloyu birleştireceğiz.</p>
-<div id="ab9ef7de" class="cell" data-execution_count="4">
+<div id="7b99f5ef" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.merge(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  shapefile_tr,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  df,</span>
@@ -231,14 +231,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Birleştirdikten sonra harita aşamasına geçebiliriz.</p>
 <p><strong>Haritanın Oluşturulması</strong></p>
 <p>Haritayı en temiz haliyle görelim.</p>
-<div id="c2ed14d3" class="cell" data-execution_count="5">
+<div id="063c4c96" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>merged_df.plot(ax<span class="op">=</span>ax)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_4.png" class="img-fluid"></p>
 <p>Şimdi verileri haritaya gönderelim ve görselin daha profesyonel görünmesini sağlayalım.</p>
-<div id="50421152" class="cell" data-execution_count="6">
+<div id="17e814a6" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>merged_df.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'CHP'</span>, cmap<span class="op">=</span><span class="st">'Reds'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
@@ -264,13 +264,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Öncelikle, <code>plt.subplots()</code> ile bir <code>Figure</code> ve <code>Axes</code> nesnesi oluşturuyoruz. Sonrasında, <code>merged_df</code> isimli DataFrame’den gelen verileri kullanarak harita oluşturuyoruz ve bu işlemi <code>plot()</code> ile gerçekleştiriyoruz. <code>column</code> parametresi haritada renk kodlaması yapılacak sütunu belirtirken, <code>cmap</code> parametresi renk haritasını belirler. Sadece haritanın görüntülenmesini sağlamak için <code>ax.axis()</code> ile eksenleri kapalı hale getiriyoruz. <code>ax.set_title()</code> ile haritanın başlığını ayarlıyoruz. Son olarak, <code>ax.text()</code> ile sağ alt köşeye bir metin ekliyoruz ve <code>plt.show()</code> ile grafiği görüntülüyoruz.</p>
 <p>Yukarıda sürekli verileri kullandık. Peki, kategorik verileri harita üzerinde nasıl gösterebiliriz?</p>
 <p>CHP’nin %50’den az ve çok aldığı illeri görselleştirmek istediğimizi varsayalım.</p>
-<div id="1e43acef" class="cell" data-execution_count="7">
+<div id="6411a863" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>merged_df[<span class="st">'CHP_50'</span>] <span class="op">=</span> merged_df[<span class="st">'CHP'</span>].<span class="bu">apply</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">lambda</span> x: <span class="st">'%50</span><span class="ch">\'</span><span class="st">den az'</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="dv">50</span> <span class="cf">else</span> <span class="st">'%50</span><span class="ch">\'</span><span class="st">den çok'</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_6.PNG" class="img-fluid"></p>
-<div id="6a9f2bc7" class="cell" data-execution_count="8">
+<div id="c86e2957" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"%50'den az"</span>: <span class="st">"gray"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"%50'den çok"</span>: <span class="st">"black"</span></span>
