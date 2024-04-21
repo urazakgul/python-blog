@@ -1,0 +1,59 @@
+---
+title: "TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)"
+author: "Uraz Akgül"
+date: "2024-04-21"
+# date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [API, EVDS]
+image: "imgs/evds.PNG"
+execute:
+  eval: false
+---
+
+Türkiye Cumhuriyet Merkez Bankası, *yenievds@tcmb.gov.tr* adresinden bir duyuru göndermişti. Mail almayanlar için bir kısmını aşağıda paylaşıyorum.
+
+*Önceki duyurumuzda EVDS nin web servis parametrelerinde güvenlik sebebiyle bir düzenleme yapılacağını belirtmiştik. URL adresinden giden "key" parametresinin artık http request header içinde gelmesi ve web servis kullanan uygulamalarınızda "key=xxxxxx" parametresini http request header olarak dönüştürmeniz gerektiği belirtilmişti. Bu düzenleme 05 Nisan 2024 Cuma saat 21:00 TSİ tarihinden itibaren geçerli olacaktır.*
+
+URL adresinden gönderdiğimiz `key` parametresini artık `headers` içinden göndereceğiz.
+
+```{python}
+
+import requests
+import json
+from urllib.parse import urlencode
+import pandas as pd
+
+api_key = 'api_key'
+
+series_code='TP.APIFON4' # TCMB Ağırlıklı Ortalama Fonlama Maliyeti
+start_date='01-01-2011' # başlangıç
+end_date='20-04-2024' # bitiş
+frequency='5' # aylık
+aggregationType='avg' # ortalama
+
+params = {
+    'series': series_code,
+    'startDate': start_date,
+    'endDate': end_date,
+    'frequency': frequency,
+    'aggregationTypes': aggregationType,
+    'type': 'json'
+}
+
+url = f'https://evds2.tcmb.gov.tr/service/evds/{urlencode(params)}'
+
+response = requests.get(url=url, headers={'key': api_key})
+
+# print(response.request.headers)
+
+formatted_response = json.loads(response.content)
+
+data = formatted_response['items']
+df = pd.DataFrame(data)
+
+df['Tarih'] = pd.to_datetime(df['Tarih']) + pd.offsets.Day(0)
+df = df.drop(columns=['UNIXTIME'])
+df.columns = ['Tarih', 'AOFM']
+df['AOFM'] = pd.to_numeric(df['AOFM'])
+
+```

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Partilere Göre Milletvekillerinin Ortalama Yüzü: Türkiye Örneği</title>
+<title>Python Blog - TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,9 +147,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Partilere Göre Milletvekillerinin Ortalama Yüzü: Türkiye Örneği</h1>
+      <h1 class="title">TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Yüz</div>
+                <div class="quarto-category">API</div>
+                <div class="quarto-category">EVDS</div>
               </div>
                   </div>
   </div>
@@ -167,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 10, 2024</p>
+        <p class="date">Nisan 21, 2024</p>
       </div>
     </div>
     
@@ -186,56 +187,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>1800’lü yıllarda Francis Galton, belirli bir grup insanda ortak olan yüz özelliklerini görselleştirmek amacıyla birçok farklı bireyin yüz fotoğraflarını tek bir fotoğraf filmi üzerine yansıtmış ve bu yüzlerin kompozit görüntülerini oluşturmuştur.</p>
-<p>Bugün benzer bir yaklaşım, belirli bir grup insanın -örneğin, milletvekilleri gibi- ortak yüz özelliklerini incelemek amacıyla modern tekniklerle gerçekleştirilebilir.</p>
-<p>Bu uygulamada, 28. dönem AKP, CHP, DEM ve MHP milletvekillerinin fotoğraflarını kullanarak parti ve cinsiyet kategorisinde ortalama bir yüz yaratacağız. Uygulamayı GitHub’ta bulunan <a href="https://github.com/johnwmillr/Facer" class="external" target="_blank">şu</a> repo yardımı ile yapacağız. Uygulamanın veri seti olan fotoğraflara ise <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_5" class="external" target="_blank">burada</a> bulunan <code>tbmm_28</code> isimli klasör ile ulaşabilirsiniz.</p>
-<p>Öncelikle repoyu proje klasörümüze klonlayalım.</p>
-<pre class="{bash}"><code>
-git clone https://github.com/johnwmillr/facer.git Facer
-</code></pre>
-<p>Klonlama işleminden sonra bulunduğumuz dizinde sadece <code>Facer</code> klasöründeki <code>facer</code> klasörünü bırakabiliriz. <code>facer</code> klasörünün içinde ise <code>facer.py</code> ve <code>utils.py</code> dosyaları kalabilir.</p>
-<p>Yukarıdaki işlemden sonra aşağıdaki gibi zip’li dosyayı indirip unzip’liyor ve dosyayı bulunduğumuz dizinde açtığımız <code>model</code> isimli klasöre taşıyoruz.</p>
-<pre class="{bash}"><code>
-curl -O http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
-bunzip2 shape_predictor_68_face_landmarks.dat.bz2
-
-mkdir model
-mv shape_predictor_68_face_landmarks.dat model
-</code></pre>
-<p>TBMM’nin web sitesinden alınan görseller <code>.jpe</code> formatında olduğu için <code>facer</code> klasöründe bulunan <code>facer.py</code> dosyasındaki <code>glob_image_files()</code> fonksiyonuna <code>.jpe</code> uzantısını ekliyoruz.</p>
-<p>Ortalama bir yüze ulaşmak için uygulanan adımlar <a href="https://learnopencv.com/average-face-opencv-c-python-tutorial/" class="external" target="_blank">burada</a> detaylı bir şekilde veriliyor.</p>
-<div id="91d49092" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> facer.facer <span class="im">import</span> load_images, detect_face_landmarks, create_average_face</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>folders <span class="op">=</span> [</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/akp/kadin'</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/chp/kadin'</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/dem/kadin'</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/mhp/kadin'</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/akp/erkek'</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/chp/erkek'</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/dem/erkek'</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'./tbmm_28/mhp/erkek'</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> folder <span class="kw">in</span> folders:</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    images <span class="op">=</span> load_images(folder)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    landmarks, faces <span class="op">=</span> detect_face_landmarks(images)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    average_face <span class="op">=</span> create_average_face(faces, landmarks, save_image<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    gender <span class="op">=</span> <span class="st">'kadin'</span> <span class="cf">if</span> <span class="st">'kadin'</span> <span class="kw">in</span> folder <span class="cf">else</span> <span class="st">'erkek'</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    party <span class="op">=</span> folder.split(<span class="st">'/'</span>)[<span class="dv">2</span>]</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    file_name <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>party<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>gender<span class="sc">}</span><span class="ss">.jpg'</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    plt.imshow(average_face)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    plt.savefig(os.path.join(<span class="st">'imgs'</span>, file_name))</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Türkiye Cumhuriyet Merkez Bankası, <em>yenievds@tcmb.gov.tr</em> adresinden bir duyuru göndermişti. Mail almayanlar için bir kısmını aşağıda paylaşıyorum.</p>
+<p><em>Önceki duyurumuzda EVDS nin web servis parametrelerinde güvenlik sebebiyle bir düzenleme yapılacağını belirtmiştik. URL adresinden giden “key” parametresinin artık http request header içinde gelmesi ve web servis kullanan uygulamalarınızda “key=xxxxxx” parametresini http request header olarak dönüştürmeniz gerektiği belirtilmişti. Bu düzenleme 05 Nisan 2024 Cuma saat 21:00 TSİ tarihinden itibaren geçerli olacaktır.</em></p>
+<p>URL adresinden gönderdiğimiz <code>key</code> parametresini artık <code>headers</code> içinden göndereceğiz.</p>
+<div id="64328fbb" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> <span class="st">'api_key'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>series_code<span class="op">=</span><span class="st">'TP.APIFON4'</span> <span class="co"># TCMB Ağırlıklı Ortalama Fonlama Maliyeti</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>start_date<span class="op">=</span><span class="st">'01-01-2011'</span> <span class="co"># başlangıç</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>end_date<span class="op">=</span><span class="st">'20-04-2024'</span> <span class="co"># bitiş</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>frequency<span class="op">=</span><span class="st">'5'</span> <span class="co"># aylık</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>aggregationType<span class="op">=</span><span class="st">'avg'</span> <span class="co"># ortalama</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'series'</span>: series_code,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'startDate'</span>: start_date,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'endDate'</span>: end_date,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'frequency'</span>: frequency,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'aggregationTypes'</span>: aggregationType,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'type'</span>: <span class="st">'json'</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'https://evds2.tcmb.gov.tr/service/evds/</span><span class="sc">{</span>urlencode(params)<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url<span class="op">=</span>url, headers<span class="op">=</span>{<span class="st">'key'</span>: api_key})</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># print(response.request.headers)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>formatted_response <span class="op">=</span> json.loads(response.content)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> formatted_response[<span class="st">'items'</span>]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Tarih'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Tarih'</span>]) <span class="op">+</span> pd.offsets.Day(<span class="dv">0</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'UNIXTIME'</span>])</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>df.columns <span class="op">=</span> [<span class="st">'Tarih'</span>, <span class="st">'AOFM'</span>]</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'AOFM'</span>] <span class="op">=</span> pd.to_numeric(df[<span class="st">'AOFM'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/kadin-erkek-mv.jpg" class="img-fluid"></p>
 
 
 
