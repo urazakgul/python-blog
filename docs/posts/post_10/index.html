@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Korelasyon Tahmin Oyunu</title>
+<title>Python Blog - Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,35 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -176,10 +147,11 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Korelasyon Tahmin Oyunu</h1>
+      <h1 class="title">Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Oyun</div>
-                <div class="quarto-category">Web Uygulaması</div>
+                <div class="quarto-category">Otomatize</div>
+                <div class="quarto-category">Outlook</div>
+                <div class="quarto-category">Görev Zamanlayıcı</div>
               </div>
                   </div>
   </div>
@@ -197,7 +169,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Mart 24, 2024</p>
+        <p class="date">Nisan 23, 2024</p>
       </div>
     </div>
     
@@ -216,131 +188,98 @@ window.Quarto = {
 
 
 
-<p>Korelasyon tahmin oyunu yapımında nelere ihtiyacımız olabilir?</p>
-<p>Birincisi, iki adet rassal seri üretmeliyiz ve bu serileri üretirken korelasyon katsayısını dikkate almalıyız. Buradaki korelasyon katsayısı Pearson’ı ifade etmektedir. Rassal serileri üretmek için <code>numpy</code> kütüphanesinin <code>np.random.multivariate_normal</code> fonksiyonundan faydalanabiliriz.</p>
-<p>İkincisi, kullanıcı için bir skorlama yapmalıyız. Bunun için RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) metriğini kullanabiliriz. RMSE skoru düştükçe başarı artacaktır.</p>
-<p>Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.</p>
+<p>İş verimliliğini artırmak için rutin görevlerin otomatize edilmesini önemsiyorum. Tekrarlayan rutin görevlerin otomatize edilmesi, çalışanların değerli zamanlarını stratejik ve yaratıcı faaliyetlere odaklamalarını sağlayabilir.</p>
+<p>Bu uygulamada, Windows Görev Zamanlayıcı (Task Scheduler) ile belirlediğimiz rutin görevin otomatik olarak çalıştırılmasını sağlayacağız.</p>
+<p>Rutin görevimiz şöyle olacak: Belirlediğimiz kripto paraların 52 + 1 haftalık kapanış fiyatlarını alacağız ve her birinin getiri ortalaması ile standart sapmasını hesaplayacağız. Getiri ortalamaları ile standart sapmaları grafik üzerine aktaracağız. Grafiği ve verileri sırasıyla PNG ve XLSX formatlarında kaydedeceğiz. Tüm bu bilgileri Microsoft Outlook uygulaması aracılığıyla göndereceğiz.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="3d5925b3" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f2a40ee7" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> win32com.client <span class="im">as</span> win32</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Korelasyonlu Rassal Serilerin Üretilmesi</strong></p>
-<div id="092ed0b1" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.array([[<span class="dv">1</span>, rho], [rho, <span class="dv">1</span>]])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    correlated_data <span class="op">=</span> np.random.multivariate_normal(mean<span class="op">=</span>mu, cov<span class="op">=</span>cov_matrix, size<span class="op">=</span>num_points)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correlated_data, rho</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</strong></p>
+<div id="626d3d17" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [<span class="st">'BTC-USD'</span>,<span class="st">'ETH-USD'</span>,<span class="st">'SOL-USD'</span>,<span class="st">'XRP-USD'</span>,<span class="st">'DOGE-USD'</span>,<span class="st">'ADA-USD'</span>,<span class="st">'AVAX-USD'</span>,<span class="st">'DOT-USD'</span>,<span class="st">'NEAR-USD'</span>,<span class="st">'RNDR-USD'</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>today_date <span class="op">=</span> datetime.today().date()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> today_date <span class="op">-</span> timedelta(weeks<span class="op">=</span><span class="dv">53</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> yf.download(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    tickers<span class="op">=</span>tickers,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    start<span class="op">=</span>start_date,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    end<span class="op">=</span>today_date,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    progress<span class="op">=</span><span class="va">False</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>daily_returns <span class="op">=</span> df[<span class="st">'Adj Close'</span>].pct_change()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># print(daily_returns)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>daily_returns.to_excel(<span class="st">'cryptocurrency_returns_data.xlsx'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>std_devs <span class="op">=</span> daily_returns.std()</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> daily_returns.mean()</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ticker <span class="kw">in</span> tickers:</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    plt.scatter(std_devs[ticker], means[ticker], s<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    plt.text(std_devs[ticker], means[ticker], ticker, fontsize<span class="op">=</span><span class="dv">8</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'bottom'</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Average and Standard Deviation of 52-Week Returns of Tracked Cryptocurrencies'</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Standard Deviation'</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Average'</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'cryptocurrency_returns_chart.png'</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.show()</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Fonksiyonumuzun ismini <code>generate_correlated_data</code> olarak belirledik ve fonksiyonumuzun herhangi bir parametresi bulunmamaktadır.</p>
-<p><code>num_points</code> değişkeni, 100 ile 1000 arasında olmak üzere rassal olarak üretilecek serilere ait verilerin uzunluğunu temsil etmektedir. Bu değeri üretebilmek için <code>numpy</code> kütüphanesinin <code>np.random.uniform</code> fonksiyonunu kullandık ve <code>int()</code> ile değerin tam sayı veri tipinde olmasını sağladık.</p>
-<p><code>rho</code> değişkeni, -1 ile 1 arasında rassal olarak olarak üretilmiş bir korelasyon katsayısını temsil etmektedir. Bu değeri üretebilmek için <code>np.random.uniform</code> fonksiyonunu kullandık. <code>rho</code> değerini noktadan sonra iki rakam gelecek şekilde ayarladık.</p>
-<p><code>cov_matrix</code> değişkeni, 2x2’lik bir kovaryans matrisini temsil etmektedir.</p>
-<p><code>mu</code> değişkeni, veri kümesinin her bir boyutu için belirlenen ortalama değeri temsil etmektedir. Bu değer 0 olacağı için X ve Y <code>[0, 0]</code>’dır.</p>
-<p><code>correlated_data</code> değişkeni, <code>np.random.multivariate_normal</code> fonksiyonu yardımıyla üretilen verileri temsil etmektedir. Bu fonksiyon, çok değişkenli bir normal dağılımdan rassal örnekler üretir. Fonksiyonun içerisine parametre olarak ortalama, kovaryans matrisi ve örnek büyüklüğü girilir.</p>
-<p><code>generate_correlated_data</code> fonksiyonu bize <code>correlated_data</code> ve <code>rho</code> değerlerini dönüyor. <code>correlated_data</code> değişkenindeki ilk seriye <code>correlated_data[:,0]</code>; ikinci seriye <code>correlated_data[:,1]</code> ile ulaşılabilir.</p>
-<p>Fonksiyonun döndüğü değerleri kullanarak bir görselleştirme yapalım.</p>
-<div id="c8540e66" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f'Randomly selected correlation: {rho}')</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Gönderilecek grafik:</p>
 <p><img src="imgs/img_1.png" class="img-fluid"></p>
-<p>Bir diğer fonksiyonumuz olan ve RMSE değerini hesaplayan <code>calculate_rmse</code> fonksiyonuna bakalım.</p>
-<p><span class="math inline">\(\mathrm{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
-<div id="4bdda5ff" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Gönderilecek excel dosyası içeriği:</p>
+<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
+<p><strong>Outlook Mail İçeriğinin Hazırlanması</strong></p>
+<div id="aad6696d" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>outlook <span class="op">=</span> win32.Dispatch(<span class="st">'outlook.application'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mail <span class="op">=</span> outlook.CreateItem(<span class="dv">0</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>mail.Subject <span class="op">=</span> <span class="st">'Cryptocurrency Returns Chart as of '</span> <span class="op">+</span> datetime.now().strftime(<span class="st">'</span><span class="sc">%#d</span><span class="st"> %b %Y %H:%M'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>mail.To <span class="op">=</span> <span class="st">'urazdev@gmail.com'</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>attachment <span class="op">=</span> mail.Attachments.Add(os.getcwd() <span class="op">+</span> <span class="st">'\cryptocurrency_returns_chart.png'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>attachment.PropertyAccessor.SetProperty(<span class="st">'http://schemas.microsoft.com/mapi/proptag/0x3712001F'</span>, <span class="st">'cryptocurrency_returns_chart'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>mail.HTMLBody <span class="op">=</span> <span class="vs">r"""</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="vs">Dear Uraz,&lt;br&gt;&lt;br&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="vs">The chart illustrating the average return and standard deviation for each cryptocurrency is as follows:&lt;br&gt;&lt;br&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;img src="cid:cryptocurrency_returns_chart"&gt;&lt;br&gt;&lt;br&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="vs">Please find attached the Excel file containing the 52-week returns data for the tracked cryptocurrencies.&lt;br&gt;&lt;br&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="vs">Best regards,&lt;br&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="vs">@urazdev</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>mail.Attachments.Add(os.getcwd() <span class="op">+</span> <span class="st">'\cryptocurrency_returns_data.xlsx'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>mail.Send()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>calculate_rmse</code> fonksiyonu, <code>predictions</code> ve <code>actuals</code> olmak üzere 2 adet parametre alıyor. Önce <code>mse</code> değişkenine tahminler ile gerçek değerler arasındaki farkların karelerinin ortalamasını gönderiyoruz. Ardından da bu ortalamanın karekökünü <code>rmse</code> değişkenine atıyoruz ve bu değeri noktadan sonra 4 rakam olacak şekilde döndürüyoruz.</p>
-<p>Kodların ana yapısını oluşturduk.</p>
-<p><strong>Streamlit Web Uygulamasının Yapımı</strong></p>
-<p>Web uygulaması tarafında kullanılan kodlar aşağıdadır.</p>
-<div id="8156a2eb" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Oturum durumu değişkenlerinin tanımlanması ve varsayılan değerlerin ayarlanması</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rhos'</span>, []) <span class="co"># Korelasyon katsayıları</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'guesses'</span>, []) <span class="co"># Kullanıcının tahminleri</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rmse_values'</span>, []) <span class="co"># RMSE değeri</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'plots'</span>, []) <span class="co"># Görseller</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Korelasyonlu veri oluşturan fonksiyon</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.array([[<span class="dv">1</span>, rho], [rho, <span class="dv">1</span>]])</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    correlated_data <span class="op">=</span> np.random.multivariate_normal(mean<span class="op">=</span>mu, cov<span class="op">=</span>cov_matrix, size<span class="op">=</span>num_points)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correlated_data, rho</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE hesaplayan fonksiyon</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 'rhos' listesi boş ise yeni bir korelasyonlu veri oluşturulması ve korelasyon katsayısının kaydedilmesi</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(st.session_state[<span class="st">'rhos'</span>]) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rhos'</span>].append(rho)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 'plots' listesi boşsa ilk görselin oluşturulması ve kaydedilmesi</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(st.session_state[<span class="st">'plots'</span>]) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'plots'</span>].append(plt)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    st.pyplot(st.session_state[<span class="st">'plots'</span>][<span class="dv">0</span>])</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Kullanıcının tahmini</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>user_guess <span class="op">=</span> st.sidebar.text_input(</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'Your Guess:'</span>,</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="st">'0.0'</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Kullanıcı tahmininin ondalık sayıya dönüştürülmesi</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>user_guess <span class="op">=</span> <span class="bu">float</span>(user_guess)</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Tahmin butonunun oluşturulması</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>guess_button <span class="op">=</span> st.sidebar.button(label<span class="op">=</span><span class="st">'Guess'</span>)</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Tahmin butonuna basıldığında yapılacaklar</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> guess_button:</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rhos'</span>].append(rho)</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'guesses'</span>].append(user_guess)</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> calculate_rmse(np.array(st.session_state[<span class="st">'rhos'</span>][:<span class="op">-</span><span class="dv">1</span>]), np.array(st.session_state[<span class="st">'guesses'</span>]))</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rmse_values'</span>].append(rmse)</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    st.subheader(<span class="ss">f'Guess: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"guesses"</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">, Actual: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"rhos"</span>][<span class="op">-</span><span class="dv">2</span>]<span class="sc">}</span><span class="ss">, RMSE: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"rmse_values"</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'plots'</span>].append(plt)</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    st.pyplot(st.session_state[<span class="st">'plots'</span>][<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Windows/Visual Studio Code için bir not: Streamlit uygulamasının yapımında kullanılacak olan kodları <code>.py</code> uzantılı <code>app.py</code> isminde bir script’e kaydedip terminalden <code>streamlit run app.py</code> komutu ile çalıştırabilirsiniz.</p>
-<p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
+<p><code>win32com.client</code> modülünün <code>Dispatch</code> fonksiyonu Outlook uygulaması oluşturur. Bu, Windows üzerinde Outlook’u otomatik olarak başlatmak ve programı kontrol etmek için kullanılır.</p>
+<p><code>CreateItem</code> fonksiyonu, Outlook uygulaması üzerinden yeni bir öğe oluşturur. Burada <code>0</code> parametresi, bir e-posta öğesi oluşturmak için kullanılan sabit değerdir.</p>
+<p><code>mail.Subject</code>, e-postanın başlığını belirtir.</p>
+<p><code>mail.To</code>, e-postanın gönderileceği alıcı adresini belirtir.</p>
+<p><code>mail.Attachments.Add()</code>, e-postaya bir ek ekler. Bunu hem PNG hem de XLSX için kullanıyoruz.</p>
+<p><code>attachment.PropertyAccessor.SetProperty()</code>, eklenen dosyanın özelliklerini ayarlar. <code>http://schemas.microsoft.com/mapi/proptag/0x3712001F</code>, ek dosyanın gömülü dosya ismini belirlemek için kullanılır.</p>
+<p><code>mail.HTMLBody</code>, e-postanın HTML biçimindeki gövdesini tanımlar.</p>
+<p><code>mail.Send()</code>, oluşturulan e-postayı gönderir.</p>
+<p><strong>Görev Zamanlayıcı Uygulamasına Görev Girilmesi</strong></p>
+<p>Görev Zamanlayıcı uygulamasını açıyoruz ve <code>Create Task</code>’e tıklıyoruz.</p>
+<p>General:</p>
+<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
+<p>Trigger:</p>
+<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
+<p>Actions:</p>
+<p><img src="imgs/img_5.PNG" class="img-fluid"></p>
+<p><strong>Test</strong></p>
+<p><img src="imgs/img_6.PNG" class="img-fluid"></p>
 
 
 

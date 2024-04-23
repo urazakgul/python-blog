@@ -1,0 +1,140 @@
+---
+title: "Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması"
+author: "Uraz Akgül"
+date: "2024-04-23"
+# date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Otomatize, Outlook, Görev Zamanlayıcı]
+image: "imgs/img_6.PNG"
+execute:
+  eval: false
+---
+
+İş verimliliğini artırmak için rutin görevlerin otomatize edilmesini önemsiyorum. Tekrarlayan rutin görevlerin otomatize edilmesi, çalışanların değerli zamanlarını stratejik ve yaratıcı faaliyetlere odaklamalarını sağlayabilir.
+
+Bu uygulamada, Windows Görev Zamanlayıcı (Task Scheduler) ile belirlediğimiz rutin görevin otomatik olarak çalıştırılmasını sağlayacağız.
+
+Rutin görevimiz şöyle olacak: Belirlediğimiz kripto paraların 52 + 1 haftalık kapanış fiyatlarını alacağız ve her birinin getiri ortalaması ile standart sapmasını hesaplayacağız. Getiri ortalamaları ile standart sapmaları grafik üzerine aktaracağız. Grafiği ve verileri sırasıyla PNG ve XLSX formatlarında kaydedeceğiz. Tüm bu bilgileri Microsoft Outlook uygulaması aracılığıyla göndereceğiz.
+
+**Kullanılacak Kütüphaneler**
+
+```{python}
+
+import win32com.client as win32
+import os
+from datetime import datetime, timedelta
+import yfinance as yf
+import matplotlib.pyplot as plt
+
+```
+
+**Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması**
+
+```{python}
+
+tickers = ['BTC-USD','ETH-USD','SOL-USD','XRP-USD','DOGE-USD','ADA-USD','AVAX-USD','DOT-USD','NEAR-USD','RNDR-USD']
+
+today_date = datetime.today().date()
+start_date = today_date - timedelta(weeks=53)
+
+df = yf.download(
+    tickers=tickers,
+    start=start_date,
+    end=today_date,
+    progress=False
+)
+
+daily_returns = df['Adj Close'].pct_change()
+
+# print(daily_returns)
+
+daily_returns.to_excel('cryptocurrency_returns_data.xlsx')
+
+std_devs = daily_returns.std()
+means = daily_returns.mean()
+
+plt.figure(figsize=(10, 6))
+for ticker in tickers:
+    plt.scatter(std_devs[ticker], means[ticker], s=100)
+    plt.text(std_devs[ticker], means[ticker], ticker, fontsize=8, ha='right', va='bottom')
+
+plt.title('Average and Standard Deviation of 52-Week Returns of Tracked Cryptocurrencies')
+plt.xlabel('Standard Deviation')
+plt.ylabel('Average')
+plt.grid(True)
+plt.savefig('cryptocurrency_returns_chart.png')
+# plt.show()
+
+```
+
+Gönderilecek grafik:
+
+![](imgs/img_1.png)
+
+Gönderilecek excel dosyası içeriği:
+
+![](imgs/img_2.PNG)
+
+**Outlook Mail İçeriğinin Hazırlanması**
+
+```{python}
+
+outlook = win32.Dispatch('outlook.application')
+mail = outlook.CreateItem(0)
+
+mail.Subject = 'Cryptocurrency Returns Chart as of ' + datetime.now().strftime('%#d %b %Y %H:%M')
+mail.To = 'urazdev@gmail.com'
+
+attachment = mail.Attachments.Add(os.getcwd() + '\cryptocurrency_returns_chart.png')
+attachment.PropertyAccessor.SetProperty('http://schemas.microsoft.com/mapi/proptag/0x3712001F', 'cryptocurrency_returns_chart')
+
+mail.HTMLBody = r"""
+Dear Uraz,<br><br>
+The chart illustrating the average return and standard deviation for each cryptocurrency is as follows:<br><br>
+<img src="cid:cryptocurrency_returns_chart"><br><br>
+Please find attached the Excel file containing the 52-week returns data for the tracked cryptocurrencies.<br><br>
+Best regards,<br>
+@urazdev
+"""
+
+mail.Attachments.Add(os.getcwd() + '\cryptocurrency_returns_data.xlsx')
+
+mail.Send()
+
+```
+
+`win32com.client` modülünün `Dispatch` fonksiyonu Outlook uygulaması oluşturur. Bu, Windows üzerinde Outlook'u otomatik olarak başlatmak ve programı kontrol etmek için kullanılır.
+
+`CreateItem` fonksiyonu, Outlook uygulaması üzerinden yeni bir öğe oluşturur. Burada `0` parametresi, bir e-posta öğesi oluşturmak için kullanılan sabit değerdir.
+
+`mail.Subject`, e-postanın başlığını belirtir.
+
+`mail.To`, e-postanın gönderileceği alıcı adresini belirtir.
+
+`mail.Attachments.Add()`, e-postaya bir ek ekler. Bunu hem PNG hem de XLSX için kullanıyoruz.
+
+`attachment.PropertyAccessor.SetProperty()`, eklenen dosyanın özelliklerini ayarlar. `http://schemas.microsoft.com/mapi/proptag/0x3712001F`, ek dosyanın gömülü dosya ismini belirlemek için kullanılır.
+
+`mail.HTMLBody`, e-postanın HTML biçimindeki gövdesini tanımlar.
+
+`mail.Send()`, oluşturulan e-postayı gönderir.
+
+**Görev Zamanlayıcı Uygulamasına Görev Girilmesi**
+
+Görev Zamanlayıcı uygulamasını açıyoruz ve `Create Task`'e tıklıyoruz.
+
+General:
+
+![](imgs/img_3.PNG)
+
+Trigger:
+
+![](imgs/img_4.PNG)
+
+Actions:
+
+![](imgs/img_5.PNG)
+
+**Test**
+
+![](imgs/img_6.PNG)
