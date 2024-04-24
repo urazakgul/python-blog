@@ -135,7 +135,7 @@ Actions:
 
 ![](imgs/img_5.PNG)
 
-Program/Script için Python .exe dosyasının bulunduğu dosya konumu girilmelidir. Bunun için CMD'de `where python` komutu çalıştırılabilir. Add arguments için çalıştırılacak script'in bulunduğu dosya konumu .py uzantılı dosya ile girilmelidir. Start in için çalıştırılacak script'in bulunduğu dosyanın konumu girilmelidir.
+Program/Script için Python .exe dosyasının bulunduğu dosya konumu .exe uzantılı dosya ile girilmelidir. Bunun için CMD'de `where python` komutu çalıştırılabilir. Add arguments için çalıştırılacak script'in bulunduğu dosya konumu .py uzantılı dosya ile girilmelidir. Start in için çalıştırılacak script'in bulunduğu dosyanın konumu girilmelidir.
 
 **Test**
 
