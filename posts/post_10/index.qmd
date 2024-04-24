@@ -2,7 +2,7 @@
 title: "Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması"
 author: "Uraz Akgül"
 date: "2024-04-23"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Otomatize, Outlook, Görev Zamanlayıcı]
 image: "imgs/img_6.PNG"
@@ -134,6 +134,8 @@ Trigger:
 Actions:
 
 ![](imgs/img_5.PNG)
+
+Program/Script için Python .exe dosyasının bulunduğu dosya konumu girilmelidir. Bunun için CMD'de `where python` komutu çalıştırılabilir. Add arguments için çalıştırılacak script'in bulunduğu dosya konumu .py uzantılı dosya ile girilmelidir. Start in için çalıştırılacak script'in bulunduğu dosyanın konumu girilmelidir.
 
 **Test**
 
