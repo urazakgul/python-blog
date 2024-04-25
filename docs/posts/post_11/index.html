@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Reddit Başlıklarının Duygu Analizi: r/worldnews Örneği</title>
+<title>Python Blog - TCMB Başkan Yardımcısı Cevdet Akçay’ın ‘Link Kopmuş’ Dediği Konuşmasındaki Duygu Analizi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,8 +147,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Reddit Başlıklarının Duygu Analizi: r/worldnews Örneği</h1>
+      <h1 class="title">TCMB Başkan Yardımcısı Cevdet Akçay’ın ‘Link Kopmuş’ Dediği Konuşmasındaki Duygu Analizi</h1>
                                 <div class="quarto-categories">
+                <div class="quarto-category">Yüz</div>
                 <div class="quarto-category">Duygu Analizi</div>
               </div>
                   </div>
@@ -167,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 14, 2024</p>
+        <p class="date">Nisan 25, 2024</p>
       </div>
     </div>
     
@@ -186,105 +187,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Reddit platformundan verileri çekebilmek için öncelikle <a href="https://www.reddit.com/prefs/apps" class="external" target="_blank">buradan</a> bir uygulama oluşturarak OAuth2 anahtarlarını almamız gerekiyor ki API’a ulaşabilelim.</p>
-<p>Adım 1. <code>are you a developer? create an app...</code> butonuna tıklayalım.</p>
-<p>Adım 2. <code>name</code> alanına kullanıcı ismimizi yazalım, <code>script</code>’i seçelim ve <code>redirect uri</code> alanına <code>http://localhost:8080</code> bilgisini girelim.</p>
-<p>Adım 3. <code>create app</code> butonuna tıklayalım.</p>
-<p>Bize verilen <code>personal use script</code> ve <code>secret</code> bilgilerini kullanacağız.</p>
-<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
+<p>Türkiye Cumhuriyet Merkez Bankası Başkan Yardımcısı Cevdet Akçay, 2024 yılının ilk Enflasyon Raporu bilgilendirme toplantısında şunları aktarmıştı:</p>
+<p><em>İçinde çalıştığımız setting’de, ağırlıklı ortalama fonlama maliyeti mevduat faizi linki kopmuş, politika faizi enflasyon linki kopmuş, faiz kur linki kopmuş…</em></p>
+<p>Konuşmasına şöyle devam etmişti:</p>
+<p><em>Biz yedi aydır bu kopan linkleri tekrar ihdas ediyoruz. Bu linkler tekrar ihdas edilecek. Veriler birikecek. Alan verileri kullanacaksınız, modelleme yapacaksınız. Oradan da 36’dan 38’e çıkma ihtiyacı, çok zor. Modelleme iyi bilen arkadaşlar bu dediğimi çok iyi anlayacaktır. Çok zor değil imkansıza yakın.</em></p>
+<p>Peki, bu konuşma sırasında Akçay’ın yüzünde hangi duygular oluştu?</p>
+<p>X (Twitter) profil fotoğraflarını veri seti olarak kullandığımız <a href="https://urazakgul.github.io/python-blog/posts/post_6/" class="external" target="_blank"><em>İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı</em></a> başlıklı çalışmada <code>Py-Feat</code> kütüphanesinden faydalanmıştık. Video üzerinden analiz yapacağımız bu çalışmada yine <code>Py-Feat</code> kütüphanesinden faydalanacağız. Kütüphane ile ilgili detaylı bilgi için ilgili çalışma incelenebilir. Çalışmada kullanacağımız video ise Youtube’dan indirilebilir.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="6599ecde" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> praw</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.sentiment.vader <span class="im">import</span> SentimentIntensityAnalyzer <span class="im">as</span> SIA</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="89789465" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feat <span class="im">import</span> Detector</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Subreddit Başlıklarının Çekilmesi</strong></p>
-<p><code>praw</code> kütüphanesini kullanarak Reddit API’ına erişim sağlıyoruz.</p>
-<div id="3523bd62" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reddit <span class="op">=</span> praw.Reddit(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    client_id<span class="op">=</span><span class="st">'personel_use_script'</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    client_secret<span class="op">=</span><span class="st">'secret'</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    user_agent<span class="op">=</span><span class="st">'username'</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Video, Frame ve FPS Kavramlarının Tanımlanması</strong></p>
+<p>Bir video temel olarak bir dizi fotoğrafın belirli bir hızda birbirini takip ederek oynatılmasıdır. Her bir fotoğraf karesine frame deniliyor. FPS (Frames Per Second) ise saniyedeki kare ya da frame sayısıdır. Detaylı öğrenmek isteyenler için <a href="https://www.youtube.com/watch?v=BvnzxqVcZ0g" class="external" target="_blank">şuradaki</a> videoyu tavsiye edebilirim.</p>
+<p><strong>Videonun İçe Aktarılması</strong></p>
+<p><code>cbrt_cevdet_akcay.mp4</code> isimli video içinde bulunduğumuz dizindedir.</p>
+<div id="08d837bf" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>current_dir <span class="op">=</span> os.getcwd()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>video_path <span class="op">=</span> os.path.join(current_dir, <span class="st">'cbrt_cevdet_akcay.mp4'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>topics_dict</code> isimli bir sözlük oluşturalım. Bu sözlük çekmek istediğimiz bilgileri içerecek.</p>
-<div id="0a893b70" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>topics_dict <span class="op">=</span> {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'id'</span>:[],</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>:[],</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'score'</span>:[],</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'comms_num'</span>:[], <span class="co"># kullanmayacağız ama kalsın</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'created'</span>:[]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Duyguların Tespit Edilmesi ve Görselleştirilmesi</strong></p>
+<div id="d225005f" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>detector <span class="op">=</span> Detector(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    face_model<span class="op">=</span><span class="st">'retinaface'</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    landmark_model<span class="op">=</span><span class="st">'mobilefacenet'</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    au_model<span class="op">=</span><span class="st">'xgb'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    emotion_model<span class="op">=</span><span class="st">'resmasknet'</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    facepose_model<span class="op">=</span><span class="st">'img2pose'</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    identity_model<span class="op">=</span><span class="st">'facenet'</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>video_prediction <span class="op">=</span> detector.detect_video(video_path, skip_frames<span class="op">=</span><span class="dv">24</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(video_prediction.head())</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Verileri <code>r/worldnews</code> isimli subreddit’ten çekeceğiz ve sözlüğü veri çerçevesine dönüştüreceğiz.</p>
-<div id="7ef4f8a2" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> submission <span class="kw">in</span> reddit.subreddit(<span class="st">'worldnews'</span>).new(limit<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'id'</span>].append(submission.<span class="bu">id</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'title'</span>].append(submission.title)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'score'</span>].append(submission.score)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'comms_num'</span>].append(submission.num_comments)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'created'</span>].append(submission.created)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>topics_df <span class="op">=</span> pd.DataFrame(topics_dict)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>skip_frames</code> parametresi video üzerindeki karelerin işlenmesinde atlanacak kare sayısını belirtir. Bir video genellikle saniyede çok sayıda kare içerir ve bu kareler arasında önemli ölçüde benzerlik olabilir. Özellikle video çok yüksek çözünürlüklü veya uzunsa her kareyi işlemek oldukça yoğun bir hesaplama gerektirebilir. Ancak bazı uygulamalarda her kareyi işlemek gerekli olmayabilir. Bu durumda, <code>skip_frames</code> kullanılabilir. <code>skip_frames</code> parametresi, belirli sayıda kareyi atlayarak işlem süresini azaltır. Örneğin, <code>skip_frames=24</code> ile her 24. kareye işlem yapılır.</p>
+<p><img src="imgs/img_1.png" class="img-fluid"></p>
+<p>Duygular aşağıdaki gibi çekilebilir.</p>
+<div id="4a03b3fb" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>akcay_emotions <span class="op">=</span> video_prediction.emotions</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(akcay_emotions.head())</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
-<p>Tarih ve saat bilgisi timestamp formatındaki <code>created</code> kolonunda yer almaktadır. Bunu datetime formatına dönüştürmemiz gerekiyor.</p>
-<div id="f99c8fe8" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> timestamp_to_datetime(created):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dt.datetime.fromtimestamp(created)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>topics_df[<span class="st">'datetime'</span>] <span class="op">=</span> topics_df[<span class="st">'created'</span>].<span class="bu">apply</span>(timestamp_to_datetime)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="imgs/img_2.png" class="img-fluid"></p>
+<p>Duyguları görselleştirelim.</p>
+<div id="74c24d51" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">7</span>, ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">20</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (emotion, color) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(akcay_emotions.columns, [<span class="st">'r'</span>, <span class="st">'g'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'m'</span>, <span class="st">'y'</span>, <span class="st">'k'</span>])):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> akcay_emotions.plot(y<span class="op">=</span>emotion, ax<span class="op">=</span>axes[i], color<span class="op">=</span>color, legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(emotion.capitalize())</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"TCMB Başkan Yardımcısı Cevdet Akçay'ın 'Link Kopmuş' Dediği Konuşmasındaki Duygular"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
-<p><strong>Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi</strong></p>
-<div id="94e3d5fc" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sia <span class="op">=</span> SIA()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<p><img src="imgs/img_3.png" class="img-fluid"></p>
+<p>Her karede hangi duygunun daha yüksek olduğuna bakalım.</p>
+<div id="3b891b33" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>max_emotion_per_row <span class="op">=</span> akcay_emotions.idxmax(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>emotion_distribution <span class="op">=</span> max_emotion_per_row.value_counts(normalize<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> datetime, line, score <span class="kw">in</span> <span class="bu">zip</span>(topics_df[<span class="st">'datetime'</span>], topics_df[<span class="st">'title'</span>], topics_df[<span class="st">'score'</span>]):</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    pol_score <span class="op">=</span> sia.polarity_scores(line)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    pol_score[<span class="st">'datetime'</span>] <span class="op">=</span> datetime</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    pol_score[<span class="st">'headline'</span>] <span class="op">=</span> line</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    pol_score[<span class="st">'score'</span>] <span class="op">=</span> score</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    results.append(pol_score)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame.from_records(results)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>emotion_distribution.plot(kind<span class="op">=</span><span class="st">'bar'</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Her Karede En Yüksek Duygu Kategorisinin Dağılımı'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Duygu Kategorisi'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Yüzde (%)'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
-<p>Yukarıda, öncelikle <code>SIA</code> (SentimentIntensityAnalyzer) isimli duygu analizi aracını kullanabilmek için bir nesne oluşturduk. Sonrasında her bir başlığın duygu analizini yapmak için <code>SIA</code>’in <code>polarity_scores</code> metodunu kullandık. Bu metot, bir metnin duygusal içeriğini analiz eder ve dört farklı duygu ölçüsü verir: <code>pos</code> (olumlu), <code>neg</code> (olumsuz), <code>neu</code> (nötr) ve <code>compound</code> (bileşik, tüm duyguların birleşimi). Biz <code>compound</code> ile ilgileneceğiz. Tüm bilgileri daha önce boş bir liste olarak oluşturduğumuz <code>results</code> değişkenine gönderdik ve döngü bittikten sonra <code>results</code> listesini <code>results_df</code> isimli veri çerçevesine dönüştürdük.</p>
-<p>Görselleştirmeyi iki farklı şekilde yapabiliriz.</p>
-<p>Birincisi, Reddit skorları (beğeni) ile duygu skorlarını gösterebiliriz. Şu an gündemde olduğu için başlıklarda geçen Iran veya Israel için farklı bir renk tercih edebiliriz.</p>
-<div id="c63c38ae" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(results_df[<span class="st">'compound'</span>], results_df[<span class="st">'score'</span>], alpha<span class="op">=</span><span class="fl">.1</span>, color<span class="op">=</span><span class="st">'gray'</span>, label<span class="op">=</span><span class="st">'Other Headlines'</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> results_df.iterrows():</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Iran'</span> <span class="kw">in</span> row[<span class="st">'headline'</span>] <span class="kw">or</span> <span class="st">'Israel'</span> <span class="kw">in</span> row[<span class="st">'headline'</span>]:</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        plt.scatter(row[<span class="st">'compound'</span>], row[<span class="st">'score'</span>], color<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Compound Sentiment Score'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Reddit Score'</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'r/worldnews: Sentiment Score vs. Reddit Score'</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">'log'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Other Headlines'</span>, <span class="st">'Headlines containing Iran or Israel'</span>])</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_5.png" class="img-fluid"></p>
-<p>İkincisi, duygu skorlarının ortalamada nasıl değiştiğini bir zaman serisi olarak gösterebiliriz.</p>
-<div id="e4a406d0" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">'date'</span>] <span class="op">=</span> results_df[<span class="st">'datetime'</span>].dt.date</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>daily_avg_compound <span class="op">=</span> results_df.groupby(<span class="st">'date'</span>)[<span class="st">'compound'</span>].mean()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.plot(daily_avg_compound.index, daily_avg_compound, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">8</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Daily Average Compound Score'</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'r/worldnews: Daily Average Compound Score over Time'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_6.png" class="img-fluid"></p>
+<p><img src="imgs/img_4.png" class="img-fluid"></p>
 
 
 

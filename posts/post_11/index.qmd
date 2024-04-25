@@ -1,0 +1,119 @@
+---
+title: "TCMB Başkan Yardımcısı Cevdet Akçay'ın 'Link Kopmuş' Dediği Konuşmasındaki Duygu Analizi"
+author: "Uraz Akgül"
+date: "2024-04-25"
+# date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Yüz, Duygu Analizi]
+image: "imgs/img_3.png"
+execute:
+  eval: false
+---
+
+Türkiye Cumhuriyet Merkez Bankası Başkan Yardımcısı Cevdet Akçay, 2024 yılının ilk Enflasyon Raporu bilgilendirme toplantısında şunları aktarmıştı:
+
+*İçinde çalıştığımız setting'de, ağırlıklı ortalama fonlama maliyeti mevduat faizi linki kopmuş, politika faizi enflasyon linki kopmuş, faiz kur linki kopmuş...*
+
+Konuşmasına şöyle devam etmişti:
+
+*Biz yedi aydır bu kopan linkleri tekrar ihdas ediyoruz. Bu linkler tekrar ihdas edilecek. Veriler birikecek. Alan verileri kullanacaksınız, modelleme yapacaksınız. Oradan da 36'dan 38'e çıkma ihtiyacı, çok zor. Modelleme iyi bilen arkadaşlar bu dediğimi çok iyi anlayacaktır. Çok zor değil imkansıza yakın.*
+
+Peki, bu konuşma sırasında Akçay'ın yüzünde hangi duygular oluştu?
+
+X (Twitter) profil fotoğraflarını veri seti olarak kullandığımız [*İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı*](https://urazakgul.github.io/python-blog/posts/post_6/){.external target="_blank"} başlıklı çalışmada `Py-Feat` kütüphanesinden faydalanmıştık. Video üzerinden analiz yapacağımız bu çalışmada yine `Py-Feat` kütüphanesinden faydalanacağız. Kütüphane ile ilgili detaylı bilgi için ilgili çalışma incelenebilir. Çalışmada kullanacağımız video ise Youtube'dan indirilebilir.
+
+**Kullanılacak Kütüphaneler**
+
+```{python}
+
+import os
+from feat import Detector
+import matplotlib.pyplot as plt
+
+```
+
+**Video, Frame ve FPS Kavramlarının Tanımlanması**
+
+Bir video temel olarak bir dizi fotoğrafın belirli bir hızda birbirini takip ederek oynatılmasıdır. Her bir fotoğraf karesine frame deniliyor. FPS (Frames Per Second) ise saniyedeki kare ya da frame sayısıdır. Detaylı öğrenmek isteyenler için [şuradaki](https://www.youtube.com/watch?v=BvnzxqVcZ0g){.external target="_blank"} videoyu tavsiye edebilirim.
+
+**Videonun İçe Aktarılması**
+
+`cbrt_cevdet_akcay.mp4` isimli video içinde bulunduğumuz dizindedir.
+
+```{python}
+
+current_dir = os.getcwd()
+video_path = os.path.join(current_dir, 'cbrt_cevdet_akcay.mp4')
+
+```
+
+**Duyguların Tespit Edilmesi ve Görselleştirilmesi**
+
+```{python}
+
+detector = Detector(
+    face_model='retinaface',
+    landmark_model='mobilefacenet',
+    au_model='xgb',
+    emotion_model='resmasknet',
+    facepose_model='img2pose',
+    identity_model='facenet'
+)
+
+video_prediction = detector.detect_video(video_path, skip_frames=24)
+print(video_prediction.head())
+
+```
+
+`skip_frames` parametresi video üzerindeki karelerin işlenmesinde atlanacak kare sayısını belirtir. Bir video genellikle saniyede çok sayıda kare içerir ve bu kareler arasında önemli ölçüde benzerlik olabilir. Özellikle video çok yüksek çözünürlüklü veya uzunsa her kareyi işlemek oldukça yoğun bir hesaplama gerektirebilir. Ancak bazı uygulamalarda her kareyi işlemek gerekli olmayabilir. Bu durumda, `skip_frames` kullanılabilir. `skip_frames` parametresi, belirli sayıda kareyi atlayarak işlem süresini azaltır. Örneğin, `skip_frames=24` ile her 24. kareye işlem yapılır.
+
+![](imgs/img_1.png)
+
+Duygular aşağıdaki gibi çekilebilir.
+
+```{python}
+
+akcay_emotions = video_prediction.emotions
+print(akcay_emotions.head())
+
+```
+
+![](imgs/img_2.png)
+
+Duyguları görselleştirelim.
+
+```{python}
+
+fig, axes = plt.subplots(nrows=7, ncols=1, figsize=(10, 20))
+for i, (emotion, color) in enumerate(zip(akcay_emotions.columns, ['r', 'g', 'b', 'c', 'm', 'y', 'k'])):
+    ax = akcay_emotions.plot(y=emotion, ax=axes[i], color=color, legend=False)
+    ax.set_ylabel(emotion.capitalize())
+
+axes[0].set_title("TCMB Başkan Yardımcısı Cevdet Akçay'ın 'Link Kopmuş' Dediği Konuşmasındaki Duygular", fontsize=14)
+plt.tight_layout()
+plt.show()
+
+```
+
+![](imgs/img_3.png)
+
+Her karede hangi duygunun daha yüksek olduğuna bakalım.
+
+```{python}
+
+max_emotion_per_row = akcay_emotions.idxmax(axis=1)
+emotion_distribution = max_emotion_per_row.value_counts(normalize=True) * 100
+
+plt.figure(figsize=(10, 6))
+emotion_distribution.plot(kind='bar', color='skyblue')
+plt.title('Her Karede En Yüksek Duygu Kategorisinin Dağılımı')
+plt.xlabel('Duygu Kategorisi')
+plt.ylabel('Yüzde (%)')
+plt.xticks(rotation=0)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+```
+
+![](imgs/img_4.png)
