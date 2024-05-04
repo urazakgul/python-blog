@@ -2,7 +2,7 @@
 title: "TCMB'nin Faiz Oranlarına İlişkin Duyuru Metinlerinin İçerik Analizi"
 author: "Uraz Akgül"
 date: "2024-05-04"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Metin Analizi, Duygu Analizi, Merkez Bankası]
 image: "imgs/img_6.png"

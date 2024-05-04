@@ -221,13 +221,13 @@ window.Quarto = {
 <p>İkincisi, kullanıcı için bir skorlama yapmalıyız. Bunun için RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) metriğini kullanabiliriz. RMSE skoru düştükçe başarı artacaktır.</p>
 <p>Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="591ab02d" class="cell" data-execution_count="1">
+<div id="e2a46caf" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Korelasyonlu Rassal Serilerin Üretilmesi</strong></p>
-<div id="193fc06a" class="cell" data-execution_count="2">
+<div id="82b6ef6a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
@@ -244,7 +244,7 @@ window.Quarto = {
 <p><code>correlated_data</code> değişkeni, <code>np.random.multivariate_normal</code> fonksiyonu yardımıyla üretilen verileri temsil etmektedir. Bu fonksiyon, çok değişkenli bir normal dağılımdan rassal örnekler üretir. Fonksiyonun içerisine parametre olarak ortalama, kovaryans matrisi ve örnek büyüklüğü girilir.</p>
 <p><code>generate_correlated_data</code> fonksiyonu bize <code>correlated_data</code> ve <code>rho</code> değerlerini dönüyor. <code>correlated_data</code> değişkenindeki ilk seriye <code>correlated_data[:,0]</code>; ikinci seriye <code>correlated_data[:,1]</code> ile ulaşılabilir.</p>
 <p>Fonksiyonun döndüğü değerleri kullanarak bir görselleştirme yapalım.</p>
-<div id="e3e8d702" class="cell" data-execution_count="3">
+<div id="9be2463a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f'Randomly selected correlation: {rho}')</span></span>
@@ -260,7 +260,7 @@ window.Quarto = {
 <p><img src="imgs/img_1.png" class="img-fluid"></p>
 <p>Bir diğer fonksiyonumuz olan ve RMSE değerini hesaplayan <code>calculate_rmse</code> fonksiyonuna bakalım.</p>
 <p><span class="math inline">\(\mathrm{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
-<div id="a4167fb3" class="cell" data-execution_count="4">
+<div id="db6ef818" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
@@ -270,7 +270,7 @@ window.Quarto = {
 <p>Kodların ana yapısını oluşturduk.</p>
 <p><strong>Streamlit Web Uygulamasının Yapımı</strong></p>
 <p>Web uygulaması tarafında kullanılan kodlar aşağıdadır.</p>
-<div id="5cf0b407" class="cell" data-execution_count="5">
+<div id="7af7f2d3" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Oturum durumu değişkenlerinin tanımlanması ve varsayılan değerlerin ayarlanması</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rhos'</span>, []) <span class="co"># Korelasyon katsayıları</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'guesses'</span>, []) <span class="co"># Kullanıcının tahminleri</span></span>
