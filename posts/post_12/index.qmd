@@ -124,6 +124,9 @@ governors_texts = df.groupby('Governor')['Text'].apply(' '.join)
 fig, axs = plt.subplots(7, 1, figsize=(16, 18))
 for i, governor in enumerate(unique_governors, 1):
     text = governors_texts[governor]
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    text = text.translate(str.maketrans('', '', '\n\xa0'))
+    text = text.lower()
     wordcloud = WordCloud(
         background_color='white',
         colormap='gray',

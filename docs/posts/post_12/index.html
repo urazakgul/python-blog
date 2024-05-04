@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Faiz kararları sadece sayılardan ibaret değildir. Türkiye Cumhuriyet Merkez Bankası’nın (TCMB) faiz oranlarına ilişkin basın duyuruları da büyük bir öneme sahiptir. Bu duyurular, TCMB’nin kararlarını destekleyen veya açıklayan bir metin içerir ve bu metin, ekonomi uzmanları, yatırımcılar ve piyasa analistleri için kritik bir kaynaktır. Basın duyuruları temelde, TCMB’nin ekonomik göstergeleri nasıl yorumladığını ve gelecekteki politika eğilimlerini nasıl değerlendirdiğini içerir.</p>
 <p>Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir. <code>cbrt_press_releases</code> isimli excel dosyasında bulunan veri setine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_12" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="220ec2d8" class="cell" data-execution_count="1">
+<div id="a311a13e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'fivethirtyeight'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması</strong></p>
-<div id="d9d64c1a" class="cell" data-execution_count="2">
+<div id="4f1d8a8c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">'cbrt_press_releases.xlsx'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Date'</span>], dayfirst<span class="op">=</span><span class="va">True</span>)</span>
@@ -215,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Metin İçeriğinin Analizi</strong></p>
 <p>Metin analizinde <code>NLTK</code> kütüphanesini kullanacağız. <code>NLTK</code> (Natural Language Toolkit), doğal dil işleme (NLP) görevlerini gerçekleştirmek için kullanılan bir kütüphanedir.</p>
 <p>Aşağıdaki gerekli olan indirme işlemlerini yapalım.</p>
-<div id="4d770761" class="cell" data-execution_count="3">
+<div id="4590ca01" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'stopwords'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>stopwords</code>, dilin yapısı gereği sıklıkla karşılaşılan ve genellikle metin analizi veya doğal dil işleme uygulamalarında önemsiz olarak kabul edilen kelimelerdir.</p>
 <p><em>Tarihlere ve başkanlara göre kelime sayıları</em></p>
 <p>Kelimeleri sayacak <code>word_counter</code> isimli ve <code>text</code> parametresi bulunan bir fonksiyon yazalım.</p>
-<div id="6e7200c2" class="cell" data-execution_count="4">
+<div id="00c90883" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> word_counter(text):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, string.punctuation))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, <span class="st">'</span><span class="ch">\n\xa0</span><span class="st">'</span>))</span>
@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(tokens)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yukarıda ilk olarak, metindeki noktalama işaretlerini (<code>string.punctuation</code> ile tanımlı olanlar) kaldırıyoruz. Bu, metindeki noktalama işaretlerinin (virgül, nokta, ünlem işareti vb.) kelime sayısını etkilememesini sağlıyor. Ardından, metindeki boşlukları ve diğer belirli karakterleri (newline karakteri <code>\n</code> ve non-breaking space karakteri <code>\xa0</code>) kaldırıyoruz. Bu, metindeki boşlukların kelime sayısını etkilememesini sağlıyor. Metni <code>lower()</code> ile küçük harfe dönüştürüyoruz. Bu, büyük ve küçük harflerin ayrımını kaldırarak aynı kelimenin farklı biçimlerini aynı olarak değerlendirmesini sağlıyor. Metni <code>word_tokenize()</code> ile kelime parçalarına ayırıyoruz (tokenize işlemi). Bu, metindeki her bir kelimeyi ayrı bir öğe olarak ele alarak bu öğelerin sayısını saymamızı sağlıyor. Son olarak, kelime listesinin uzunluğunu <code>len()</code> ile hesaplayarak bu değeri döndürüyoruz.</p>
-<div id="13134381" class="cell" data-execution_count="5">
+<div id="b8216f09" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Word Count'</span>] <span class="op">=</span> df[<span class="st">'Text'</span>].<span class="bu">apply</span>(word_counter)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>num_governors <span class="op">=</span> <span class="bu">len</span>(df[<span class="st">'Governor'</span>].unique())</span>
@@ -264,36 +264,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Yukarıda ilk olarak, DataFrame’de bulunan <code>Text</code> sütunundaki her bir metin için <code>word_counter</code> fonksiyonunu çağırıyoruz ve her bir metnin kelime sayısı hesaplıyoruz. Görselde kullanmak için <code>num_governors</code> değişkenine başkan sayısını, <code>colors</code> değişkenine de bu başkan sayısı kadar renk atıyoruz. <code>unique_governors</code> ise daha sonra başkanları sırasıyla kullanacağımız için oluşturduğumuz bir değişken oluyor. Görseli oluştururken lejanttaki dönemlerine göre başkan sıralamasının önemini koruyoruz.</p>
 <p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p><em>Başkanlara göre kelime bulutları</em></p>
-<div id="a2f1d49f" class="cell" data-execution_count="6">
+<div id="598a8751" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>governors_texts <span class="op">=</span> df.groupby(<span class="st">'Governor'</span>)[<span class="st">'Text'</span>].<span class="bu">apply</span>(<span class="st">' '</span>.join)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">7</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">18</span>))</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, governor <span class="kw">in</span> <span class="bu">enumerate</span>(unique_governors, <span class="dv">1</span>):</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> governors_texts[governor]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    wordcloud <span class="op">=</span> WordCloud(</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        background_color<span class="op">=</span><span class="st">'white'</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        colormap<span class="op">=</span><span class="st">'gray'</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        contour_color<span class="op">=</span><span class="st">'black'</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        contour_width<span class="op">=</span><span class="dv">1</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    ).generate(text)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    axs[i<span class="op">-</span><span class="dv">1</span>].imshow(wordcloud, interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    axs[i<span class="op">-</span><span class="dv">1</span>].set_title(<span class="ss">f'Word Cloud for Governor </span><span class="sc">{</span>governor<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    axs[i<span class="op">-</span><span class="dv">1</span>].axis(<span class="st">'off'</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.figtext(</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.99</span>,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.3</span>,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Based on CBRT's press releases on interest rates."</span>,</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span>,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>plt.gca().transAxes,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">9</span>,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, string.punctuation))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, <span class="st">'</span><span class="ch">\n\xa0</span><span class="st">'</span>))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lower()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    wordcloud <span class="op">=</span> WordCloud(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        background_color<span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        colormap<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        contour_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        contour_width<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    ).generate(text)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    axs[i<span class="op">-</span><span class="dv">1</span>].imshow(wordcloud, interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    axs[i<span class="op">-</span><span class="dv">1</span>].set_title(<span class="ss">f'Word Cloud for Governor </span><span class="sc">{</span>governor<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    axs[i<span class="op">-</span><span class="dv">1</span>].axis(<span class="st">'off'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.figtext(</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.99</span>,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.3</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Based on CBRT's press releases on interest rates."</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>plt.gca().transAxes,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yukarıda, <code>governors_texts</code> ile başkanların kendi dönemlerinde yayınlanan duyuru metinlerini bir araya getiriyoruz. Ardından, <code>WordCloud</code> nesnesi oluşturarak bir kelime bulutu oluşturma işlemini gerçekleştiriyoruz. Detaylı bakalım.</p>
 <p><code>WordCloud</code> nesnesini oluştururken aşağıdaki parametreleri ve değerlerini kullandık.</p>
@@ -308,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="imgs/img_5.PNG" class="img-fluid"></p>
 <p><code>SentimentClassifier</code> modeli, verilen bir cümlenin hane halkları, işletmeler, finans sektörü veya hükümet için olumlu mu yoksa olumsuz mu olduğunu belirlemek amacıyla tasarlanmıştır. Bu model, RoBERTa mimarisine dayanır ve doğru tahminler sağlamak için çeşitli ve kapsamlı bir veri kümesinde ince ayarlanmıştır (fine-tuned). Bir merkez bankasının iletişimini analiz etmek için duygusal içerikle ilgili uygun bir doğal dil işleme yöntemini test etmek üzere yapılan çalışmada FED, ECB ve BIS’den toplam 13,458 önceden etiketlenmiş cümle örneği kullanılmıştır.</p>
 <p>Performans metrikleri şöyledir: Accuracy: 88%, F1 Score: 0.88, Precision: 0.88 ve Recall: 0.88</p>
-<div id="fda5315b" class="cell" data-execution_count="7">
+<div id="137dacb6" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sentiment_classifier <span class="op">=</span> pipeline(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'text-classification'</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">'Moritz-Pfeifer/CentralBankRoBERTa-sentiment-classifier'</span></span>
@@ -328,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Yukarıda ilk olarak, <code>pipeline</code> fonksiyonunu çağırarak bir duygu sınıflandırma pipeline’ı oluşturuyoruz. Burada kullanılan model, Moritz Pfeifer tarafından oluşturulmuş <code>CentralBankRoBERTa</code> modelidir. Ardından, <code>classify_sentences()</code> fonksiyonunu tanımlıyoruz. Bu fonksiyon, bir metin alıyor ve metni cümlelere bölüyor. Metindeki <code>\n</code> ve <code>\xa0</code> gibi boşlukları kaldırmak için <code>replace()</code> kullanıyoruz. Metni bir nokta ve boşluk ile cümlelere bölüyoruz. Cümle nokta ile bitmiyorsa cümlenin sonunda bir nokta olmasını sağlıyoruz. Pozitif ve negatif duyguların sayısını tutmak için <code>positive_count</code> ve <code>negative_count</code> isminde iki değişken tanımlıyor ve sıfır değerini atıyoruz. Her cümle için döngü oluşturuyoruz ve <code>sentiment_classifier()</code> fonksiyonunu çağırarak cümlenin duygusu belirliyoruz. Bu işlem, cümlenin duygusunu tahmin etmek için önceden eğitilmiş modeli kullanıyor. Duygu sonuçlarına bakarak pozitif ve negatif etiket sayılarını hesaplıyoruz. <code>sentiment_result</code> içindeki her bir öğe için etiketinin <code>positive</code> veya <code>negative</code> olup olmadığını kontrol ediyor ve sonuca göre ilgili sayaçları artırıyoruz. Son olarak fonksiyonda toplam pozitif ve negatif etiket sayılarını döndürüyoruz.</p>
 <p>Aşağıda ise <code>df</code>’te, <code>Positive Count</code> ve <code>Negative Count</code> sütunları oluşturuyoruz ve <code>classify_sentences()</code> isimli <code>text</code> parametreli fonksiyonu çalıştırıyoruz.</p>
-<div id="06e11451" class="cell" data-execution_count="8">
+<div id="c16ffc6c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Positive Count'</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Negative Count'</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>

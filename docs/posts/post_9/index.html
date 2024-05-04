@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Türkiye Cumhuriyet Merkez Bankası, <em>yenievds@tcmb.gov.tr</em> adresinden bir duyuru göndermişti. Mail almayanlar için bir kısmını aşağıda paylaşıyorum.</p>
 <p><em>Önceki duyurumuzda EVDS nin web servis parametrelerinde güvenlik sebebiyle bir düzenleme yapılacağını belirtmiştik. URL adresinden giden “key” parametresinin artık http request header içinde gelmesi ve web servis kullanan uygulamalarınızda “key=xxxxxx” parametresini http request header olarak dönüştürmeniz gerektiği belirtilmişti. Bu düzenleme 05 Nisan 2024 Cuma saat 21:00 TSİ tarihinden itibaren geçerli olacaktır.</em></p>
 <p>URL adresinden gönderdiğimiz <code>key</code> parametresini artık <code>headers</code> içinden göndereceğiz.</p>
-<div id="4e9b64a2" class="cell" data-execution_count="1">
+<div id="ee697a8c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode</span>

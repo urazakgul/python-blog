@@ -204,7 +204,7 @@ mv shape_predictor_68_face_landmarks.dat model
 </code></pre>
 <p>TBMM’nin web sitesinden alınan görseller <code>.jpe</code> formatında olduğu için <code>facer</code> klasöründe bulunan <code>facer.py</code> dosyasındaki <code>glob_image_files()</code> fonksiyonuna <code>.jpe</code> uzantısını ekliyoruz.</p>
 <p>Ortalama bir yüze ulaşmak için uygulanan adımlar <a href="https://learnopencv.com/average-face-opencv-c-python-tutorial/" class="external" target="_blank">burada</a> detaylı bir şekilde veriliyor.</p>
-<div id="9c1d0c45" class="cell" data-execution_count="1">
+<div id="e469ca72" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> facer.facer <span class="im">import</span> load_images, detect_face_landmarks, create_average_face</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
