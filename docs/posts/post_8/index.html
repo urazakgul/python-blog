@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Animasyonlu haritalar, zaman içinde değişen verileri görselleştiren etkili bir yöntemdir. Örneğin, Türkiye ve çevresinde gerçekleşen depremleri animasyonlu bir harita üzerinde göstermek, deprem aktivitesinin zamanla nasıl değiştiğini ve hangi bölgelerin daha fazla risk altında olduğunu görsel olarak görmemize yardımcı olabilir.</p>
 <p>Animasyonlu haritayı oluşturmak için kullanacağımız verilere USGS (United States Geological Survey) API ile ulaşacağız.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="598782af" class="cell" data-execution_count="1">
+<div id="8b668edb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -205,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>API ile Verilerin Çekilmesi ve Kullanılabilir Formata Dönüştürülmesi</strong></p>
-<div id="e620ebda" class="cell" data-execution_count="2">
+<div id="8e2263c0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> <span class="st">'2014-01-01'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>min_mag <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lat <span class="op">=</span> <span class="fl">39.1458</span></span>
@@ -226,11 +226,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Yukarıdaki kodda, verilen parametrelerle USGS API’ını kullanarak deprem verilerini çekiyoruz. Başlangıç tarihini (<code>start</code>) <code>'2014-01-01'</code> ve minimum deprem büyüklüğünü (<code>min_mag</code>) <code>3</code> olarak belirledik. Ayrıca, enlem (<code>lat</code>) <code>39.1458</code> ve boylam (<code>lon</code>) <code>34.1614</code> olacak şekilde Türkiye’nin koordinatlarına yakın ve maksimum <code>1000</code> kilometrelik yarıçapa (<code>max_rad_km</code>) sahip bir bölgeyi sorguluyoruz. Son olarak, API’dan gelen verileri işleyerek bir DataFrame oluşturuyoruz. Bu DataFrame, depremlerin yerini (<code>Place</code>), büyüklüğünü (<code>Magnitude</code>), zamanını (<code>Time</code>) ve enlem-boylam koordinatlarını (<code>Latitude</code>-<code>Longitude</code>) içeriyor.</p>
 <p>Aylık bir seri ile çalışacağımız için tarihlerdeki (<code>Time</code> sütunu) günleri <code>01</code> ile değiştiriyoruz.</p>
-<div id="9852bbcb" class="cell" data-execution_count="3">
+<div id="d78c803e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Time'</span>] <span class="op">=</span> df[<span class="st">'Time'</span>].<span class="bu">str</span>.replace(<span class="vs">r'-\d</span><span class="sc">{2}</span><span class="vs">$'</span>, <span class="st">'-01'</span>, regex<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Haritaların Yapılması ve HTML-PNG Formatlarında Kaydedilmesi</strong></p>
-<div id="8e86781e" class="cell" data-execution_count="4">
+<div id="a5e30149" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>chrome_options <span class="op">=</span> Options()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>chrome_options.add_argument(<span class="st">'--start-fullscreen'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Döngüde 7 kod grubu bulunmaktadır. İlk grup, tarih filtresi yapıp haritayı oluşturuyor. İkinci grup, haritayı içinde bulunduğu dizine HTML formatında kaydediyor. Üçüncü grup, HTML formatında kaydedilen dosyayı tarayıcıda açıyor ve açtıktan sonra belirlenen süre kadar bekletiyor. Dördüncü grup, ekran görüntüsü alıyor ve içinde bulunduğu dizine PNG formatında kaydediyor. Beşinci grup, açılan tarayıcıyı kapatıyor. Altıncı grup, resim üzerinde yazı işlemlerini yapıyor. Yedinci ve son grup, kaydedilen HTML dosyalarını siliyor ve ekrana bilgi veriyor.</p>
 <p><strong>Animasyonlu Harita Yapımı ve GIF Formatında Kaydedilmesi</strong></p>
 <p>Çalışmanın odak noktasını bu başlık altında göreceğiz.</p>
-<div id="7322ca36" class="cell" data-execution_count="5">
+<div id="9ef2f722" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>image_path <span class="op">=</span> Path()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> <span class="bu">list</span>(image_path.glob(<span class="st">'*.png'</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>image_list <span class="op">=</span> [imageio.v3.imread(file_name) <span class="cf">for</span> file_name <span class="kw">in</span> images]</span>
