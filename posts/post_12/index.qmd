@@ -12,7 +12,7 @@ execute:
 
 Faiz kararları sadece sayılardan ibaret değildir. Türkiye Cumhuriyet Merkez Bankası'nın (TCMB) faiz oranlarına ilişkin basın duyuruları da büyük bir öneme sahiptir. Bu duyurular, TCMB'nin kararlarını destekleyen veya açıklayan bir metin içerir ve bu metin, ekonomi uzmanları, yatırımcılar ve piyasa analistleri için kritik bir kaynaktır. Basın duyuruları temelde, TCMB'nin ekonomik göstergeleri nasıl yorumladığını ve gelecekteki politika eğilimlerini nasıl değerlendirdiğini içerir.
 
-Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir. `cbrt_press_releases` isimli veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_12){.external target="_blank"} ulaşabilirsiniz.
+Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir. `cbrt_press_releases` isimli excel dosyasında bulunan veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_12){.external target="_blank"} ulaşabilirsiniz.
 
 **Kullanılacak Kütüphaneler**
 
