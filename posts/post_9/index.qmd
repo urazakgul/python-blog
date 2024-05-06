@@ -2,7 +2,7 @@
 title: "TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)"
 author: "Uraz Akgül"
 date: "2024-04-21"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [API, EVDS]
 image: "imgs/evds.PNG"
@@ -26,10 +26,10 @@ import pandas as pd
 api_key = 'api_key'
 
 series_code='TP.APIFON4' # TCMB Ağırlıklı Ortalama Fonlama Maliyeti
-start_date='01-01-2011' # başlangıç
-end_date='20-04-2024' # bitiş
-frequency='5' # aylık
-aggregationType='avg' # ortalama
+start_date='01-01-2011' # Başlangıç
+end_date='30-04-2024' # Bitiş
+frequency='5' # Aylık
+aggregationType='avg' # Ortalama
 
 params = {
     'series': series_code,
@@ -55,5 +55,40 @@ df['Tarih'] = pd.to_datetime(df['Tarih']) + pd.offsets.Day(0)
 df = df.drop(columns=['UNIXTIME'])
 df.columns = ['Tarih', 'AOFM']
 df['AOFM'] = pd.to_numeric(df['AOFM'])
+
+```
+
+Eğer birden fazla seri ile çalışmak istiyorsak, seriler arasında `-` olacak şekilde giriş yapacağız.
+
+```{python}
+
+series_code='TP.BISTTLREF.DUSUK-TP.BISTTLREF.YUKSEK-TP.BISTTLREF.KAPANIS' # Türk Lirası Gecelik Referans Faiz Oranı
+start_date='14-06-2019' # Başlangıç
+end_date='30-04-2024' # Bitiş
+frequency='5' # Aylık
+
+params = {
+    'series': series_code,
+    'startDate': start_date,
+    'endDate': end_date,
+    'frequency': frequency,
+    'type': 'json'
+}
+
+url = f'https://evds2.tcmb.gov.tr/service/evds/{urlencode(params)}'
+
+response = requests.get(url=url, headers={'key': api_key})
+
+# print(response.request.headers)
+
+formatted_response = json.loads(response.content)
+
+data = formatted_response['items']
+df = pd.DataFrame(data)
+
+df['Tarih'] = pd.to_datetime(df['Tarih']) + pd.offsets.Day(0)
+df = df.drop(columns=['UNIXTIME'])
+numeric_columns = df.columns[df.columns != 'Tarih']
+df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric)
 
 ```
