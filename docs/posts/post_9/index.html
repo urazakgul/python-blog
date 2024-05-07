@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -125,16 +125,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/urazdev" target="_blank"> <i class="bi bi-twitter-x" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Ana Sayfa</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/urazakgul" target="_blank"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Yazılar</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-paketler" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Paketler</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-paketler">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/isyatirimhisse" target="_blank">
+ <span class="dropdown-text">isyatirimhisse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/EIAOpenData" target="_blank">
+ <span class="dropdown-text">EIAOpenData</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -146,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">API</div>
@@ -156,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -182,12 +195,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -196,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Türkiye Cumhuriyet Merkez Bankası, <em>yenievds@tcmb.gov.tr</em> adresinden bir duyuru göndermişti. Mail almayanlar için bir kısmını aşağıda paylaşıyorum.</p>
 <p><em>Önceki duyurumuzda EVDS nin web servis parametrelerinde güvenlik sebebiyle bir düzenleme yapılacağını belirtmiştik. URL adresinden giden “key” parametresinin artık http request header içinde gelmesi ve web servis kullanan uygulamalarınızda “key=xxxxxx” parametresini http request header olarak dönüştürmeniz gerektiği belirtilmişti. Bu düzenleme 05 Nisan 2024 Cuma saat 21:00 TSİ tarihinden itibaren geçerli olacaktır.</em></p>
 <p>URL adresinden gönderdiğimiz <code>key</code> parametresini artık <code>headers</code> içinden göndereceğiz.</p>
-<div id="14f3e210" class="cell" data-execution_count="1">
+<div id="12e08c67" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode</span>
@@ -236,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'AOFM'</span>] <span class="op">=</span> pd.to_numeric(df[<span class="st">'AOFM'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Eğer birden fazla seri ile çalışmak istiyorsak, seriler arasında <code>-</code> olacak şekilde giriş yapacağız.</p>
-<div id="aa4fe716" class="cell" data-execution_count="2">
+<div id="0a0c9271" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>series_code<span class="op">=</span><span class="st">'TP.BISTTLREF.DUSUK-TP.BISTTLREF.YUKSEK-TP.BISTTLREF.KAPANIS'</span> <span class="co"># Türk Lirası Gecelik Referans Faiz Oranı</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>start_date<span class="op">=</span><span class="st">'14-06-2019'</span> <span class="co"># Başlangıç</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>end_date<span class="op">=</span><span class="st">'30-04-2024'</span> <span class="co"># Bitiş</span></span>

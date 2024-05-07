@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -125,16 +125,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/urazdev" target="_blank"> <i class="bi bi-twitter-x" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Ana Sayfa</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/urazakgul" target="_blank"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Yazılar</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-paketler" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Paketler</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-paketler">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/isyatirimhisse" target="_blank">
+ <span class="dropdown-text">isyatirimhisse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/EIAOpenData" target="_blank">
+ <span class="dropdown-text">EIAOpenData</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -146,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Otomatize</div>
@@ -157,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -183,12 +196,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -198,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Bu uygulamada, Windows Görev Zamanlayıcı (Task Scheduler) ile belirlediğimiz rutin görevin otomatik olarak çalıştırılmasını sağlayacağız.</p>
 <p>Rutin görevimiz şöyle olacak: Belirlediğimiz kripto paraların 52 + 1 haftalık kapanış fiyatlarını alacağız ve her birinin getiri ortalaması ile standart sapmasını hesaplayacağız. Getiri ortalamaları ile standart sapmaları grafik üzerine aktaracağız. Grafiği ve verileri sırasıyla PNG ve XLSX formatlarında kaydedeceğiz. Tüm bu bilgileri Microsoft Outlook uygulaması aracılığıyla göndereceğiz.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="e0f2ed41" class="cell" data-execution_count="1">
+<div id="1300fcfe" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> win32com.client <span class="im">as</span> win32</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
@@ -206,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</strong></p>
-<div id="d5dc4f65" class="cell" data-execution_count="2">
+<div id="e98e0f23" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [<span class="st">'BTC-USD'</span>,<span class="st">'ETH-USD'</span>,<span class="st">'SOL-USD'</span>,<span class="st">'XRP-USD'</span>,<span class="st">'DOGE-USD'</span>,<span class="st">'ADA-USD'</span>,<span class="st">'AVAX-USD'</span>,<span class="st">'DOT-USD'</span>,<span class="st">'NEAR-USD'</span>,<span class="st">'RNDR-USD'</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>today_date <span class="op">=</span> datetime.today().date()</span>
@@ -245,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Gönderilecek excel dosyası içeriği:</p>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
 <p><strong>Outlook Mail İçeriğinin Hazırlanması</strong></p>
-<div id="9463ed9f" class="cell" data-execution_count="3">
+<div id="4763373c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>outlook <span class="op">=</span> win32.Dispatch(<span class="st">'outlook.application'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mail <span class="op">=</span> outlook.CreateItem(<span class="dv">0</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>

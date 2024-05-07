@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -125,16 +125,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/urazdev" target="_blank"> <i class="bi bi-twitter-x" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Ana Sayfa</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/urazakgul" target="_blank"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Yazılar</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-paketler" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Paketler</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-paketler">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/isyatirimhisse" target="_blank">
+ <span class="dropdown-text">isyatirimhisse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/EIAOpenData" target="_blank">
+ <span class="dropdown-text">EIAOpenData</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -146,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">Reddit Başlıklarının Duygu Analizi: r/worldnews Örneği</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Duygu Analizi</div>
@@ -155,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -175,12 +188,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -193,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Bize verilen <code>personal use script</code> ve <code>secret</code> bilgilerini kullanacağız.</p>
 <p><img src="imgs/img_1.PNG" class="img-fluid"></p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="ec8daa76" class="cell" data-execution_count="1">
+<div id="cdbffbb0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> praw</span>
@@ -202,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Subreddit Başlıklarının Çekilmesi</strong></p>
 <p><code>praw</code> kütüphanesini kullanarak Reddit API’ına erişim sağlıyoruz.</p>
-<div id="fb62f486" class="cell" data-execution_count="2">
+<div id="ba233455" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reddit <span class="op">=</span> praw.Reddit(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    client_id<span class="op">=</span><span class="st">'personel_use_script'</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    client_secret<span class="op">=</span><span class="st">'secret'</span>,</span>
@@ -210,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>topics_dict</code> isimli bir sözlük oluşturalım. Bu sözlük çekmek istediğimiz bilgileri içerecek.</p>
-<div id="460bc0ca" class="cell" data-execution_count="3">
+<div id="63239a4f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>topics_dict <span class="op">=</span> {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'id'</span>:[],</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>:[],</span>
@@ -220,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Verileri <code>r/worldnews</code> isimli subreddit’ten çekeceğiz ve sözlüğü veri çerçevesine dönüştüreceğiz.</p>
-<div id="4511e55b" class="cell" data-execution_count="4">
+<div id="eeba8ede" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> submission <span class="kw">in</span> reddit.subreddit(<span class="st">'worldnews'</span>).new(limit<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'id'</span>].append(submission.<span class="bu">id</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'title'</span>].append(submission.title)</span>
@@ -232,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
 <p>Tarih ve saat bilgisi timestamp formatındaki <code>created</code> kolonunda yer almaktadır. Bunu datetime formatına dönüştürmemiz gerekiyor.</p>
-<div id="9d54e1b5" class="cell" data-execution_count="5">
+<div id="fae6ffb7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> timestamp_to_datetime(created):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dt.datetime.fromtimestamp(created)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -240,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="imgs/img_3.PNG" class="img-fluid"></p>
 <p><strong>Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi</strong></p>
-<div id="590747d3" class="cell" data-execution_count="6">
+<div id="fcc8670a" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sia <span class="op">=</span> SIA()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -257,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Yukarıda, öncelikle <code>SIA</code> (SentimentIntensityAnalyzer) isimli duygu analizi aracını kullanabilmek için bir nesne oluşturduk. Sonrasında her bir başlığın duygu analizini yapmak için <code>SIA</code>’in <code>polarity_scores</code> metodunu kullandık. Bu metot, bir metnin duygusal içeriğini analiz eder ve dört farklı duygu ölçüsü verir: <code>pos</code> (olumlu), <code>neg</code> (olumsuz), <code>neu</code> (nötr) ve <code>compound</code> (bileşik, tüm duyguların birleşimi). Biz <code>compound</code> ile ilgileneceğiz. Tüm bilgileri daha önce boş bir liste olarak oluşturduğumuz <code>results</code> değişkenine gönderdik ve döngü bittikten sonra <code>results</code> listesini <code>results_df</code> isimli veri çerçevesine dönüştürdük.</p>
 <p>Görselleştirmeyi iki farklı şekilde yapabiliriz.</p>
 <p>Birincisi, Reddit skorları (beğeni) ile duygu skorlarını gösterebiliriz. Şu an gündemde olduğu için başlıklarda geçen Iran veya Israel için farklı bir renk tercih edebiliriz.</p>
-<div id="f8452b4a" class="cell" data-execution_count="7">
+<div id="163ab43a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(results_df[<span class="st">'compound'</span>], results_df[<span class="st">'score'</span>], alpha<span class="op">=</span><span class="fl">.1</span>, color<span class="op">=</span><span class="st">'gray'</span>, label<span class="op">=</span><span class="st">'Other Headlines'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> results_df.iterrows():</span>
@@ -273,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="imgs/img_5.png" class="img-fluid"></p>
 <p>İkincisi, duygu skorlarının ortalamada nasıl değiştiğini bir zaman serisi olarak gösterebiliriz.</p>
-<div id="b224479c" class="cell" data-execution_count="8">
+<div id="e98ea230" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">'date'</span>] <span class="op">=</span> results_df[<span class="st">'datetime'</span>].dt.date</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>daily_avg_compound <span class="op">=</span> results_df.groupby(<span class="st">'date'</span>)[<span class="st">'compound'</span>].mean()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>

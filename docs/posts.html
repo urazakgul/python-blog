@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Seçim Verilerinin Türkiye Haritasında Görselleştirilmesi</title>
+<title>Python Blog -</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,61 +20,29 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,9 +70,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Aramak"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-<link rel="stylesheet" href="../../styles.css">
+    const options = {
+      valueNames: ['listing-image','listing-date','listing-title','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -115,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Python Blog</span>
     </a>
   </div>
@@ -126,11 +151,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Ana Sayfa</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html"> 
+    <a class="nav-link active" href="./posts.html" aria-current="page"> 
 <span class="menu-text">Yazılar</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -157,173 +182,344 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">Seçim Verilerinin Türkiye Haritasında Görselleştirilmesi</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Harita</div>
-                <div class="quarto-category">Seçim</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page">
-
-      <div>
-      <div class="quarto-title-meta-heading">Yazar</div>
-      <div class="quarto-title-meta-contents">
-               <p>Uraz Akgül </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 8, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Kategoriler</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">Hepsi <span class="quarto-category-count">(12)</span></div><div class="category" data-category="API">API <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Deprem">Deprem <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Diğer">Diğer <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Duygu Analizi">Duygu Analizi <span class="quarto-category-count">(4)</span></div><div class="category" data-category="EVDS">EVDS <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ekonometri">Ekonometri <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Görev Zamanlayıcı">Görev Zamanlayıcı <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Harita">Harita <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Merkez Bankası">Merkez Bankası <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Metin Analizi">Metin Analizi <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Otomatize">Otomatize <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Outlook">Outlook <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Oyun">Oyun <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Seçim">Seçim <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Web Uygulaması">Web Uygulaması <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Yüz">Yüz <span class="quarto-category-count">(3)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
-<p>31 Mart 2024 yerel seçimlerini geride bıraktık ancak biz Türkiye’de yaşayanlar için iki seçim arası kısa bir reklam arası gibi. Önümüzdeki seçimlere hazırlıklı olmak için bu arayı değerlendirmeye devam ediyoruz.</p>
-<p>Bu uygulamada, CHP’nin iller bazında aldığı oyları harita üzerinde göstereceğiz. <code>local_elections_province_20240331</code> isimli JSON dosyasında bulunan verilere <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_4" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<p>Harita üzerinde görselleştirme yapmak için <code>geopandas</code> kütüphanesini kullanacağız. <code>geopandas</code>, isminden de anlaşılacağı üzere, popüler veri bilimi kütüphanesi <code>pandas</code>’ı jeo-uzamsal veriler ile destekleyip genişletiyor.</p>
-<p>Haritada görselleştirmek için öncelikle Türkiye’nin <code>.shp</code> uzantılı dosyasını bulmamız gerekiyor. <code>.shp</code>, coğrafi verileri depolamak için kullanılan bir vektör veri formatıdır. <a href="https://data.humdata.org/dataset/cod-ab-tur?" class="external" target="_blank">Buradan</a> <code>turkey_administrativelevels0_1_2.zip</code> isimli dosyayı indirebilirsiniz. Eğer bir problem ile karşılaşırsanız <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_4" class="external" target="_blank">burada</a> bulunan dosyayı da indirebilirsiniz.</p>
-<p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="41e277ac" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Verilerin Hazırlanması</strong></p>
-<p><code>read_file()</code> fonksiyonu ile <code>.shp</code> uzantılı dosyayı içeri aktaralım.</p>
-<div id="b00faf39" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shapefile_tr <span class="op">=</span> gpd.read_file(<span class="st">'turkey_administrativelevels0_1_2/tur_polbnda_adm1.shp'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shapefile_tr)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
-<p><code>shapefile_tr</code> ile birleştireceğimiz seçim verilerinin yer aldığı JSON dosyasını içe aktaralım.</p>
-<div id="ce4149f8" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'local_elections_province_20240331.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">'Data'</span>])</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
-<p><code>shapefile_tr</code> tablosundaki <code>adm1_tr</code> sütunu ile <code>df</code> tablosundaki <code>PROVINCE</code> sütununu kullanarak iki tabloyu birleştireceğiz.</p>
-<div id="d43b1b73" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.merge(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  shapefile_tr,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  df,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  left_on<span class="op">=</span><span class="st">'adm1_tr'</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  right_on<span class="op">=</span><span class="st">'PROVINCE'</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  how<span class="op">=</span><span class="st">'left'</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
-<p>Birleştirdikten sonra harita aşamasına geçebiliriz.</p>
-<p><strong>Haritanın Oluşturulması</strong></p>
-<p>Haritayı en temiz haliyle görelim.</p>
-<div id="076f98df" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>merged_df.plot(ax<span class="op">=</span>ax)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_4.png" class="img-fluid"></p>
-<p>Şimdi verileri haritaya gönderelim ve görselin daha profesyonel görünmesini sağlayalım.</p>
-<div id="c4d065fd" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>merged_df.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'CHP'</span>, cmap<span class="op">=</span><span class="st">'Reds'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'31 Mart 2024 Yerel Seçimleri - Cumhuriyet Halk Partisi Oy Dağılımı'</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    fontdict <span class="op">=</span> {<span class="st">'fontsize'</span>: <span class="dv">8</span>}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.95</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.01</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Veriler Yeni Şafak'ın web sitesinden alınmıştır."</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">6</span>,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">'right'</span>,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    va<span class="op">=</span><span class="st">'bottom'</span>,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>ax.transAxes</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_5.png" class="img-fluid"></p>
-<p>Neler yaptık? İnceleyelim.</p>
-<p>Öncelikle, <code>plt.subplots()</code> ile bir <code>Figure</code> ve <code>Axes</code> nesnesi oluşturuyoruz. Sonrasında, <code>merged_df</code> isimli DataFrame’den gelen verileri kullanarak harita oluşturuyoruz ve bu işlemi <code>plot()</code> ile gerçekleştiriyoruz. <code>column</code> parametresi haritada renk kodlaması yapılacak sütunu belirtirken, <code>cmap</code> parametresi renk haritasını belirler. Sadece haritanın görüntülenmesini sağlamak için <code>ax.axis()</code> ile eksenleri kapalı hale getiriyoruz. <code>ax.set_title()</code> ile haritanın başlığını ayarlıyoruz. Son olarak, <code>ax.text()</code> ile sağ alt köşeye bir metin ekliyoruz ve <code>plt.show()</code> ile grafiği görüntülüyoruz.</p>
-<p>Yukarıda sürekli verileri kullandık. Peki, kategorik verileri harita üzerinde nasıl gösterebiliriz?</p>
-<p>CHP’nin %50’den az ve çok aldığı illeri görselleştirmek istediğimizi varsayalım.</p>
-<div id="2186f30a" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>merged_df[<span class="st">'CHP_50'</span>] <span class="op">=</span> merged_df[<span class="st">'CHP'</span>].<span class="bu">apply</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">lambda</span> x: <span class="st">'%50</span><span class="ch">\'</span><span class="st">den az'</span> <span class="cf">if</span> x <span class="op">&lt;</span> <span class="dv">50</span> <span class="cf">else</span> <span class="st">'%50</span><span class="ch">\'</span><span class="st">den çok'</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_6.PNG" class="img-fluid"></p>
-<div id="67ef610f" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"%50'den az"</span>: <span class="st">"gray"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"%50'den çok"</span>: <span class="st">"black"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> ListedColormap(<span class="bu">list</span>(colors.values()))</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>merged_df.plot(</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ax<span class="op">=</span>ax,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  column<span class="op">=</span><span class="st">'CHP_50'</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  cmap<span class="op">=</span>cmap,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  legend<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  legend_kwds<span class="op">=</span>{<span class="st">'loc'</span>: <span class="st">'lower left'</span>, <span class="st">'fontsize'</span>: <span class="dv">8</span>}</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"31 Mart 2024 Yerel Seçimleri - Cumhuriyet Halk Partisi'nin %50'den Az ve Çok Aldığı İller"</span>,</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    fontdict <span class="op">=</span> {<span class="st">'fontsize'</span>: <span class="dv">8</span>}</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.95</span>,</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.01</span>,</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Veriler Yeni Şafak'ın web sitesinden alınmıştır."</span>,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">6</span>,</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span>,</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">'right'</span>,</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    va<span class="op">=</span><span class="st">'bottom'</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>ax.transAxes</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_7.png" class="img-fluid"></p>
-<p>Farklı neler yaptık? İnceleyelim.</p>
-<p><code>colors</code> isminde bir sözlük tanımladık. Bu sözlük, görselleştirmede kullanılacak renkleri ve bunlara karşılık gelen kategorileri içeriyor. Ayrıca, <code>cmap</code> isminde bir <code>ListedColormap</code> nesnesi oluşturduk. Bu, renk paletini belirtiyor ve <code>colors</code> sözlüğünden alınan renklerle oluşturuluyor. Önceki haritada olmayan, bu haritada sol alt köşede bulunan lejant ise kategorilerin tanımlarını içeriyor.</p>
 
 
 
-</main> <!-- /main -->
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Sıralama Öğesi" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Sıralama Öğesi</option>
+       <option value="index" data-direction="asc">Varsayılan</option>
+         <option value="listing-date-sort" data-direction="asc">
+          Tarih - En eski
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Tarih - En yeni
+        </option>
+     </select>
+  </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Metin Analizi,Duygu Analizi,Merkez Bankası" data-listing-date-sort="1714770000000" data-listing-file-modified-sort="1714858405173" data-listing-date-modified-sort="1714858405000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1238">
+<div class="thumbnail">
+<p><a href="./posts/post_12/index.html" class="no-external"></a></p><a href="./posts/post_12/index.html" class="no-external">
+<p><img src="./posts/post_12/imgs/img_6.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_12/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_12/index.html" class="no-external">TCMB’nin Faiz Oranlarına İlişkin Duyuru Metinlerinin İçerik Analizi</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_12/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_12/index.html" class="no-external">
+<div class="listing-date">
+Mayıs 4, 2024
+</div>
+<div class="listing-reading-time">
+7 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Yüz,Duygu Analizi,Merkez Bankası" data-listing-date-sort="1713992400000" data-listing-file-modified-sort="1714829563452" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="374">
+<div class="thumbnail">
+<p><a href="./posts/post_11/index.html" class="no-external"></a></p><a href="./posts/post_11/index.html" class="no-external">
+<p><img src="./posts/post_11/imgs/img_3.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_11/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_11/index.html" class="no-external">TCMB Başkan Yardımcısı Cevdet Akçay’ın ‘Link Kopmuş’ Dediği Konuşmasının Duygu Analizi</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_11/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_11/index.html" class="no-external">
+<div class="listing-date">
+Nisan 25, 2024
+</div>
+<div class="listing-reading-time">
+2 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="Otomatize,Outlook,Görev Zamanlayıcı" data-listing-date-sort="1713819600000" data-listing-file-modified-sort="1713942647946" data-listing-date-modified-sort="1713942647000" data-listing-reading-time-sort="2" data-listing-word-count-sort="365">
+<div class="thumbnail">
+<p><a href="./posts/post_10/index.html" class="no-external"></a></p><a href="./posts/post_10/index.html" class="no-external">
+<p><img src="./posts/post_10/imgs/img_6.PNG" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_10/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_10/index.html" class="no-external">Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_10/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_10/index.html" class="no-external">
+<div class="listing-date">
+Nisan 23, 2024
+</div>
+<div class="listing-reading-time">
+2 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="API,EVDS" data-listing-date-sort="1713646800000" data-listing-file-modified-sort="1715012542683" data-listing-date-modified-sort="1715012542000" data-listing-reading-time-sort="2" data-listing-word-count-sort="231">
+<div class="thumbnail">
+<p><a href="./posts/post_9/index.html" class="no-external"></a></p><a href="./posts/post_9/index.html" class="no-external">
+<p><img src="./posts/post_9/imgs/evds.PNG" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_9/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_9/index.html" class="no-external">TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_9/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_9/index.html" class="no-external">
+<div class="listing-date">
+Nisan 21, 2024
+</div>
+<div class="listing-reading-time">
+2 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="Harita,Deprem" data-listing-date-sort="1713560400000" data-listing-file-modified-sort="1713622965391" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="669">
+<div class="thumbnail">
+<p><a href="./posts/post_8/index.html" class="no-external"></a></p><a href="./posts/post_8/index.html" class="no-external">
+<p><img src="./posts/post_8/imgs/feb_23.PNG" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_8/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_8/index.html" class="no-external">Türkiye ve Çevresinde Gerçekleşen Depremlerin Animasyonlu Harita ile Gösterilmesi</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_8/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_8/index.html" class="no-external">
+<div class="listing-date">
+Nisan 20, 2024
+</div>
+<div class="listing-reading-time">
+4 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="Duygu Analizi" data-listing-date-sort="1713042000000" data-listing-file-modified-sort="1713093134244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="408">
+<div class="thumbnail">
+<p><a href="./posts/post_7/index.html" class="no-external"></a></p><a href="./posts/post_7/index.html" class="no-external">
+<p><img src="./posts/post_7/imgs/img_6.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_7/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_7/index.html" class="no-external">Reddit Başlıklarının Duygu Analizi: r/worldnews Örneği</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_7/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_7/index.html" class="no-external">
+<div class="listing-date">
+Nisan 14, 2024
+</div>
+<div class="listing-reading-time">
+3 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="Yüz,Duygu Analizi" data-listing-date-sort="1712955600000" data-listing-file-modified-sort="1713052152045" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="480">
+<div class="thumbnail">
+<p><a href="./posts/post_6/index.html" class="no-external"></a></p><a href="./posts/post_6/index.html" class="no-external">
+<p><img src="./posts/post_6/imgs/emotions_heatmap.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_6/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_6/index.html" class="no-external">İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_6/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_6/index.html" class="no-external">
+<div class="listing-date">
+Nisan 13, 2024
+</div>
+<div class="listing-reading-time">
+3 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="Yüz" data-listing-date-sort="1712696400000" data-listing-file-modified-sort="1712747766836" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="278">
+<div class="thumbnail">
+<p><a href="./posts/post_5/index.html" class="no-external"></a></p><a href="./posts/post_5/index.html" class="no-external">
+<p><img src="./posts/post_5/imgs/kadin-erkek-mv.jpg" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_5/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_5/index.html" class="no-external">Partilere Göre Milletvekillerinin Ortalama Yüzü: Türkiye Örneği</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_5/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_5/index.html" class="no-external">
+<div class="listing-date">
+Nisan 10, 2024
+</div>
+<div class="listing-reading-time">
+2 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="Harita,Seçim" data-listing-date-sort="1712523600000" data-listing-file-modified-sort="1712593468229" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="521">
+<div class="thumbnail">
+<p><a href="./posts/post_4/index.html" class="no-external"></a></p><a href="./posts/post_4/index.html" class="no-external">
+<p><img src="./posts/post_4/imgs/img_5.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_4/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_4/index.html" class="no-external">Seçim Verilerinin Türkiye Haritasında Görselleştirilmesi</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_4/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_4/index.html" class="no-external">
+<div class="listing-date">
+Nisan 8, 2024
+</div>
+<div class="listing-reading-time">
+3 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="Ekonometri,Seçim" data-listing-date-sort="1712437200000" data-listing-file-modified-sort="1712494589709" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1693">
+<div class="thumbnail">
+<p><a href="./posts/post_3/index.html" class="no-external"></a></p><a href="./posts/post_3/index.html" class="no-external">
+<p><img src="./posts/post_3/imgs/img_6.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_3/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_3/index.html" class="no-external">Anlık Veri Akışı ile Oy Öngörüsü</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_3/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_3/index.html" class="no-external">
+<div class="listing-date">
+Nisan 7, 2024
+</div>
+<div class="listing-reading-time">
+9 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="Oyun,Web Uygulaması" data-listing-date-sort="1711227600000" data-listing-file-modified-sort="1711295424633" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="698">
+<div class="thumbnail">
+<p><a href="./posts/post_2/index.html" class="no-external"></a></p><a href="./posts/post_2/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\post_2\imgs\img_1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/post_2/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_2/index.html" class="no-external">Korelasyon Tahmin Oyunu</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_2/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_2/index.html" class="no-external">
+<div class="listing-date">
+Mart 24, 2024
+</div>
+<div class="listing-reading-time">
+4 dakika
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-categories="Diğer" data-listing-date-sort="1711141200000" data-listing-file-modified-sort="1711294396366" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="10">
+<div class="thumbnail">
+<p><a href="./posts/post_1/index.html" class="no-external"></a></p><a href="./posts/post_1/index.html" class="no-external">
+<p><img src="./posts/post_1/python.jpg" class="thumbnail-image"></p>
+</a><p><a href="./posts/post_1/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post_1/index.html" class="no-external">Python Dünyama Hoş Geldin!</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post_1/index.html" class="no-external"></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post_1/index.html" class="no-external">
+<div class="listing-date">
+Mart 23, 2024
+</div>
+<div class="listing-reading-time">
+1 dakika
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+Eşleşen öğe yok
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -1,12 +1,23 @@
 ---
-lang: tr
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: true
+title: ""
+image: images/profile.jpg
+toc: false
+about:
+  template: jolla
+  image-shape: round
+  image-width: 14em
+  links:
+    - icon: twitter-x
+      text: Twitter
+      href: https://twitter.com/urazdev
+      target: _blank
+    - icon: github
+      text: GitHub
+      href: https://github.com/urazakgul
+      target: _blank
+    - icon: envelope
+      text: Email
+      href: mailto:urazdev@gmail.com
 ---
+
+world.urazdev()

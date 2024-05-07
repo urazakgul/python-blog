@@ -6,15 +6,22 @@ website:
   title: "Python Blog"
   navbar:
     right:
-      - icon: twitter-x
-        href: https://twitter.com/urazdev
-        target: _blank
-      - icon: github
-        href: https://github.com/urazakgul
-        target: _blank
+      - text: Ana Sayfa
+        href: index.qmd
+      - text: Yazılar
+        href: posts.qmd
+      - text: Paketler
+        menu:
+          - text: isyatirimhisse
+            href: https://github.com/urazakgul/isyatirimhisse
+            target: _blank
+          - text: EIAOpenData
+            href: https://github.com/urazakgul/EIAOpenData
+            target: _blank
 
 format:
   html:
+    page-layout: full
     lang: tr
     date-format: "MMMM D, YYYY"
     theme:

@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -125,16 +125,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/urazdev" target="_blank"> <i class="bi bi-twitter-x" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Ana Sayfa</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/urazakgul" target="_blank"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Yazılar</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-paketler" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Paketler</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-paketler">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/isyatirimhisse" target="_blank">
+ <span class="dropdown-text">isyatirimhisse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/EIAOpenData" target="_blank">
+ <span class="dropdown-text">EIAOpenData</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -146,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">TCMB’nin Faiz Oranlarına İlişkin Duyuru Metinlerinin İçerik Analizi</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Metin Analizi</div>
@@ -157,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -183,12 +196,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -197,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Faiz kararları sadece sayılardan ibaret değildir. Türkiye Cumhuriyet Merkez Bankası’nın (TCMB) faiz oranlarına ilişkin basın duyuruları da büyük bir öneme sahiptir. Bu duyurular, TCMB’nin kararlarını destekleyen veya açıklayan bir metin içerir ve bu metin, ekonomi uzmanları, yatırımcılar ve piyasa analistleri için kritik bir kaynaktır. Basın duyuruları temelde, TCMB’nin ekonomik göstergeleri nasıl yorumladığını ve gelecekteki politika eğilimlerini nasıl değerlendirdiğini içerir.</p>
 <p>Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir. <code>cbrt_press_releases</code> isimli excel dosyasında bulunan veri setine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_12" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
 <p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="2d18a293" class="cell" data-execution_count="1">
+<div id="03a675f0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
@@ -210,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'fivethirtyeight'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması</strong></p>
-<div id="59138407" class="cell" data-execution_count="2">
+<div id="f09d854d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">'cbrt_press_releases.xlsx'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Date'</span>], dayfirst<span class="op">=</span><span class="va">True</span>)</span>
@@ -221,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Metin İçeriğinin Analizi</strong></p>
 <p>Metin analizinde <code>NLTK</code> kütüphanesini kullanacağız. <code>NLTK</code> (Natural Language Toolkit), doğal dil işleme (NLP) görevlerini gerçekleştirmek için kullanılan bir kütüphanedir.</p>
 <p>Aşağıdaki gerekli olan indirme işlemlerini yapalım.</p>
-<div id="b8b469d1" class="cell" data-execution_count="3">
+<div id="ad708c24" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'punkt'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'stopwords'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -229,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>stopwords</code>, dilin yapısı gereği sıklıkla karşılaşılan ve genellikle metin analizi veya doğal dil işleme uygulamalarında önemsiz olarak kabul edilen kelimelerdir.</p>
 <p><em>Tarihlere ve başkanlara göre kelime sayıları</em></p>
 <p>Kelimeleri sayacak <code>word_counter</code> isimli ve <code>text</code> parametresi bulunan bir fonksiyon yazalım.</p>
-<div id="b3056bba" class="cell" data-execution_count="4">
+<div id="84d1f9bc" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> word_counter(text):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, string.punctuation))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, <span class="st">'</span><span class="ch">\n\xa0</span><span class="st">'</span>))</span>
@@ -238,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(tokens)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yukarıda ilk olarak, metindeki noktalama işaretlerini (<code>string.punctuation</code> ile tanımlı olanlar) kaldırıyoruz. Bu, metindeki noktalama işaretlerinin (virgül, nokta, ünlem işareti vb.) kelime sayısını etkilememesini sağlıyor. Ardından, metindeki boşlukları ve diğer belirli karakterleri (newline karakteri <code>\n</code> ve non-breaking space karakteri <code>\xa0</code>) kaldırıyoruz. Bu, metindeki boşlukların kelime sayısını etkilememesini sağlıyor. Metni <code>lower()</code> ile küçük harfe dönüştürüyoruz. Bu, büyük ve küçük harflerin ayrımını kaldırarak aynı kelimenin farklı biçimlerini aynı olarak değerlendirmesini sağlıyor. Metni <code>word_tokenize()</code> ile kelime parçalarına ayırıyoruz (tokenize işlemi). Bu, metindeki her bir kelimeyi ayrı bir öğe olarak ele alarak bu öğelerin sayısını saymamızı sağlıyor. Son olarak, kelime listesinin uzunluğunu <code>len()</code> ile hesaplayarak bu değeri döndürüyoruz.</p>
-<div id="d1435a75" class="cell" data-execution_count="5">
+<div id="c38e1990" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Word Count'</span>] <span class="op">=</span> df[<span class="st">'Text'</span>].<span class="bu">apply</span>(word_counter)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>num_governors <span class="op">=</span> <span class="bu">len</span>(df[<span class="st">'Governor'</span>].unique())</span>
@@ -270,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Yukarıda ilk olarak, DataFrame’de bulunan <code>Text</code> sütunundaki her bir metin için <code>word_counter</code> fonksiyonunu çağırıyoruz ve her bir metnin kelime sayısı hesaplıyoruz. Görselde kullanmak için <code>num_governors</code> değişkenine başkan sayısını, <code>colors</code> değişkenine de bu başkan sayısı kadar renk atıyoruz. <code>unique_governors</code> ise daha sonra başkanları sırasıyla kullanacağımız için oluşturduğumuz bir değişken oluyor. Görseli oluştururken lejanttaki dönemlerine göre başkan sıralamasının önemini koruyoruz.</p>
 <p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p><em>Başkanlara göre kelime bulutları</em></p>
-<div id="c0a2e37f" class="cell" data-execution_count="6">
+<div id="7fba8857" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>governors_texts <span class="op">=</span> df.groupby(<span class="st">'Governor'</span>)[<span class="st">'Text'</span>].<span class="bu">apply</span>(<span class="st">' '</span>.join)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">7</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">18</span>))</span>
@@ -317,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="imgs/img_5.PNG" class="img-fluid"></p>
 <p><code>SentimentClassifier</code> modeli, verilen bir cümlenin hane halkları, işletmeler, finans sektörü veya hükümet için olumlu mu yoksa olumsuz mu olduğunu belirlemek amacıyla tasarlanmıştır. Bu model, RoBERTa mimarisine dayanır ve doğru tahminler sağlamak için çeşitli ve kapsamlı bir veri kümesinde ince ayarlanmıştır (fine-tuned). Bir merkez bankasının iletişimini analiz etmek için duygusal içerikle ilgili uygun bir doğal dil işleme yöntemini test etmek üzere yapılan çalışmada FED, ECB ve BIS’den toplam 13,458 önceden etiketlenmiş cümle örneği kullanılmıştır.</p>
 <p>Performans metrikleri şöyledir: Accuracy: 88%, F1 Score: 0.88, Precision: 0.88 ve Recall: 0.88</p>
-<div id="ba0ca631" class="cell" data-execution_count="7">
+<div id="e0af44b9" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sentiment_classifier <span class="op">=</span> pipeline(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'text-classification'</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">'Moritz-Pfeifer/CentralBankRoBERTa-sentiment-classifier'</span></span>
@@ -337,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Yukarıda ilk olarak, <code>pipeline</code> fonksiyonunu çağırarak bir duygu sınıflandırma pipeline’ı oluşturuyoruz. Burada kullanılan model, Moritz Pfeifer tarafından oluşturulmuş <code>CentralBankRoBERTa</code> modelidir. Ardından, <code>classify_sentences()</code> fonksiyonunu tanımlıyoruz. Bu fonksiyon, bir metin alıyor ve metni cümlelere bölüyor. Metindeki <code>\n</code> ve <code>\xa0</code> gibi boşlukları kaldırmak için <code>replace()</code> kullanıyoruz. Metni bir nokta ve boşluk ile cümlelere bölüyoruz. Cümle nokta ile bitmiyorsa cümlenin sonunda bir nokta olmasını sağlıyoruz. Pozitif ve negatif duyguların sayısını tutmak için <code>positive_count</code> ve <code>negative_count</code> isminde iki değişken tanımlıyor ve sıfır değerini atıyoruz. Her cümle için döngü oluşturuyoruz ve <code>sentiment_classifier()</code> fonksiyonunu çağırarak cümlenin duygusu belirliyoruz. Bu işlem, cümlenin duygusunu tahmin etmek için önceden eğitilmiş modeli kullanıyor. Duygu sonuçlarına bakarak pozitif ve negatif etiket sayılarını hesaplıyoruz. <code>sentiment_result</code> içindeki her bir öğe için etiketinin <code>positive</code> veya <code>negative</code> olup olmadığını kontrol ediyor ve sonuca göre ilgili sayaçları artırıyoruz. Son olarak fonksiyonda toplam pozitif ve negatif etiket sayılarını döndürüyoruz.</p>
 <p>Aşağıda ise <code>df</code>’te, <code>Positive Count</code> ve <code>Negative Count</code> sütunları oluşturuyoruz ve <code>classify_sentences()</code> isimli <code>text</code> parametreli fonksiyonu çalıştırıyoruz.</p>
-<div id="11feee73" class="cell" data-execution_count="8">
+<div id="0a5c6f33" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Positive Count'</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Negative Count'</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
