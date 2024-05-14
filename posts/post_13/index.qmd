@@ -166,7 +166,7 @@ plt.scatter(
     c=df['Gunning_Fog_Index'],
     cmap='coolwarm'
 )
-plt.title('Comparison of Gunning Fog Index Calculation: Manual vs. Using textstat Package', fontsize=14)
+plt.title("Comparison of Gunning's Fog Index Calculation: Manual vs. Using textstat Package", fontsize=14)
 plt.xlabel('Manual')
 plt.ylabel('textstat Package')
 plt.text(
