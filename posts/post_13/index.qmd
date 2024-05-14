@@ -186,7 +186,7 @@ plt.show()
 
 ![](imgs/img_4.png)
 
-Teyit etmek için son duyuru metnini alalım.
+Teyit etmek için son duyuru metnini (25/04/2024) alalım.
 
 ```{python}
 
