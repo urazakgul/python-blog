@@ -159,16 +159,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Reddit Başlıklarının Duygu Analizi: r/worldnews Örneği</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Duygu Analizi</div>
+                <div class="quarto-category">Reddit</div>
               </div>
                   </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -184,6 +185,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Değiştirilmiş</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">Mayıs 13, 2024</p>
+      </div>
+    </div>
       
     </div>
     
@@ -191,31 +198,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Bu sayfada</h2>
+   
+  <ul>
+  <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
+  <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
+  <li><a href="#subreddit-başlıklarının-çekilmesi" id="toc-subreddit-başlıklarının-çekilmesi" class="nav-link" data-scroll-target="#subreddit-başlıklarının-çekilmesi">Subreddit Başlıklarının Çekilmesi</a></li>
+  <li><a href="#duygu-skorlarının-elde-edilmesi-ve-verilerin-görselleştirilmesi" id="toc-duygu-skorlarının-elde-edilmesi-ve-verilerin-görselleştirilmesi" class="nav-link" data-scroll-target="#duygu-skorlarının-elde-edilmesi-ve-verilerin-görselleştirilmesi">Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
+<section id="giriş" class="level1">
+<h1>Giriş</h1>
 <p>Reddit platformundan verileri çekebilmek için öncelikle <a href="https://www.reddit.com/prefs/apps" class="external" target="_blank">buradan</a> bir uygulama oluşturarak OAuth2 anahtarlarını almamız gerekiyor ki API’a ulaşabilelim.</p>
 <p>Adım 1. <code>are you a developer? create an app...</code> butonuna tıklayalım.</p>
 <p>Adım 2. <code>name</code> alanına kullanıcı ismimizi yazalım, <code>script</code>’i seçelim ve <code>redirect uri</code> alanına <code>http://localhost:8080</code> bilgisini girelim.</p>
 <p>Adım 3. <code>create app</code> butonuna tıklayalım.</p>
 <p>Bize verilen <code>personal use script</code> ve <code>secret</code> bilgilerini kullanacağız.</p>
 <p><img src="imgs/img_1.PNG" class="img-fluid"></p>
-<p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="cdbffbb0" class="cell" data-execution_count="1">
+</section>
+<section id="kullanılacak-kütüphaneler" class="level1">
+<h1>Kullanılacak Kütüphaneler</h1>
+<div id="32b1b244" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime <span class="im">as</span> dt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> praw</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.sentiment.vader <span class="im">import</span> SentimentIntensityAnalyzer <span class="im">as</span> SIA</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Subreddit Başlıklarının Çekilmesi</strong></p>
+</section>
+<section id="subreddit-başlıklarının-çekilmesi" class="level1">
+<h1>Subreddit Başlıklarının Çekilmesi</h1>
 <p><code>praw</code> kütüphanesini kullanarak Reddit API’ına erişim sağlıyoruz.</p>
-<div id="ba233455" class="cell" data-execution_count="2">
+<div id="5ad22f33" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reddit <span class="op">=</span> praw.Reddit(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    client_id<span class="op">=</span><span class="st">'personel_use_script'</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    client_secret<span class="op">=</span><span class="st">'secret'</span>,</span>
@@ -223,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>topics_dict</code> isimli bir sözlük oluşturalım. Bu sözlük çekmek istediğimiz bilgileri içerecek.</p>
-<div id="63239a4f" class="cell" data-execution_count="3">
+<div id="f6c5dd5d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>topics_dict <span class="op">=</span> {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'id'</span>:[],</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'title'</span>:[],</span>
@@ -233,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Verileri <code>r/worldnews</code> isimli subreddit’ten çekeceğiz ve sözlüğü veri çerçevesine dönüştüreceğiz.</p>
-<div id="eeba8ede" class="cell" data-execution_count="4">
+<div id="f6f43c64" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> submission <span class="kw">in</span> reddit.subreddit(<span class="st">'worldnews'</span>).new(limit<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'id'</span>].append(submission.<span class="bu">id</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    topics_dict[<span class="st">'title'</span>].append(submission.title)</span>
@@ -245,15 +269,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
 <p>Tarih ve saat bilgisi timestamp formatındaki <code>created</code> kolonunda yer almaktadır. Bunu datetime formatına dönüştürmemiz gerekiyor.</p>
-<div id="fae6ffb7" class="cell" data-execution_count="5">
+<div id="a074d29c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> timestamp_to_datetime(created):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dt.datetime.fromtimestamp(created)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>topics_df[<span class="st">'datetime'</span>] <span class="op">=</span> topics_df[<span class="st">'created'</span>].<span class="bu">apply</span>(timestamp_to_datetime)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_3.PNG" class="img-fluid"></p>
-<p><strong>Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi</strong></p>
-<div id="fcc8670a" class="cell" data-execution_count="6">
+</section>
+<section id="duygu-skorlarının-elde-edilmesi-ve-verilerin-görselleştirilmesi" class="level1">
+<h1>Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi</h1>
+<div id="81704255" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sia <span class="op">=</span> SIA()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -270,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Yukarıda, öncelikle <code>SIA</code> (SentimentIntensityAnalyzer) isimli duygu analizi aracını kullanabilmek için bir nesne oluşturduk. Sonrasında her bir başlığın duygu analizini yapmak için <code>SIA</code>’in <code>polarity_scores</code> metodunu kullandık. Bu metot, bir metnin duygusal içeriğini analiz eder ve dört farklı duygu ölçüsü verir: <code>pos</code> (olumlu), <code>neg</code> (olumsuz), <code>neu</code> (nötr) ve <code>compound</code> (bileşik, tüm duyguların birleşimi). Biz <code>compound</code> ile ilgileneceğiz. Tüm bilgileri daha önce boş bir liste olarak oluşturduğumuz <code>results</code> değişkenine gönderdik ve döngü bittikten sonra <code>results</code> listesini <code>results_df</code> isimli veri çerçevesine dönüştürdük.</p>
 <p>Görselleştirmeyi iki farklı şekilde yapabiliriz.</p>
 <p>Birincisi, Reddit skorları (beğeni) ile duygu skorlarını gösterebiliriz. Şu an gündemde olduğu için başlıklarda geçen Iran veya Israel için farklı bir renk tercih edebiliriz.</p>
-<div id="163ab43a" class="cell" data-execution_count="7">
+<div id="24bde39b" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(results_df[<span class="st">'compound'</span>], results_df[<span class="st">'score'</span>], alpha<span class="op">=</span><span class="fl">.1</span>, color<span class="op">=</span><span class="st">'gray'</span>, label<span class="op">=</span><span class="st">'Other Headlines'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> results_df.iterrows():</span>
@@ -286,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="imgs/img_5.png" class="img-fluid"></p>
 <p>İkincisi, duygu skorlarının ortalamada nasıl değiştiğini bir zaman serisi olarak gösterebiliriz.</p>
-<div id="e98ea230" class="cell" data-execution_count="8">
+<div id="eee7e730" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>results_df[<span class="st">'date'</span>] <span class="op">=</span> results_df[<span class="st">'datetime'</span>].dt.date</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>daily_avg_compound <span class="op">=</span> results_df.groupby(<span class="st">'date'</span>)[<span class="st">'compound'</span>].mean()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -298,8 +324,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_6.png" class="img-fluid"></p>
+<p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

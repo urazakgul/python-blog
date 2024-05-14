@@ -2,7 +2,7 @@
 title: "Türkiye ve Çevresinde Gerçekleşen Depremlerin Animasyonlu Harita ile Gösterilmesi"
 author: "Uraz Akgül"
 date: "2024-04-20"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Harita, Deprem]
 image: "imgs/feb_23.PNG"
@@ -10,11 +10,13 @@ execute:
   eval: false
 ---
 
+# Giriş
+
 Animasyonlu haritalar, zaman içinde değişen verileri görselleştiren etkili bir yöntemdir. Örneğin, Türkiye ve çevresinde gerçekleşen depremleri animasyonlu bir harita üzerinde göstermek, deprem aktivitesinin zamanla nasıl değiştiğini ve hangi bölgelerin daha fazla risk altında olduğunu görsel olarak görmemize yardımcı olabilir.
 
 Animasyonlu haritayı oluşturmak için kullanacağımız verilere USGS (United States Geological Survey) API ile ulaşacağız.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -33,7 +35,7 @@ import shutil
 
 ```
 
-**API ile Verilerin Çekilmesi ve Kullanılabilir Formata Dönüştürülmesi**
+# API ile Verilerin Çekilmesi ve Kullanılabilir Formata Dönüştürülmesi
 
 ```{python}
 
@@ -67,7 +69,7 @@ df['Time'] = df['Time'].str.replace(r'-\d{2}$', '-01', regex=True)
 
 ```
 
-**Haritaların Yapılması ve HTML-PNG Formatlarında Kaydedilmesi**
+# Haritaların Yapılması ve HTML-PNG Formatlarında Kaydedilmesi
 
 ```{python}
 
@@ -118,7 +120,7 @@ Yukarıdaki kodda, her bir tarih döngüde kullanılacağı için tekil tarihler
 
 Döngüde 7 kod grubu bulunmaktadır. İlk grup, tarih filtresi yapıp haritayı oluşturuyor. İkinci grup, haritayı içinde bulunduğu dizine HTML formatında kaydediyor. Üçüncü grup, HTML formatında kaydedilen dosyayı tarayıcıda açıyor ve açtıktan sonra belirlenen süre kadar bekletiyor. Dördüncü grup, ekran görüntüsü alıyor ve içinde bulunduğu dizine PNG formatında kaydediyor. Beşinci grup, açılan tarayıcıyı kapatıyor. Altıncı grup, resim üzerinde yazı işlemlerini yapıyor. Yedinci ve son grup, kaydedilen HTML dosyalarını siliyor ve ekrana bilgi veriyor.
 
-**Animasyonlu Harita Yapımı ve GIF Formatında Kaydedilmesi**
+# Animasyonlu Harita Yapımı ve GIF Formatında Kaydedilmesi
 
 Çalışmanın odak noktasını bu başlık altında göreceğiz.
 
@@ -137,3 +139,5 @@ shutil.move('Turkey_Earthquake.gif', 'imgs/Turkey_Earthquake.gif')
 Yukarıdaki kodda ilk olarak, `Path()` fonksiyonunu çağırarak bir dosya yolu nesnesi oluşturuyor ve bunu `image_path` değişkenine atıyoruz. Ardından, bu dosya yolu nesnesi üzerinde `.glob()` yöntemini kullanarak tüm PNG dosyalarını alıyor ve `images` listesine atıyoruz. `imageio` modülünü kullanarak her bir PNG dosyasını `imageio.v3.imread()` fonksiyonuyla okuyor ve bu okunan görüntüleri `image_list` listesine ekliyoruz. `imageio.mimwrite()` fonksiyonuyla `image_list` içindeki görüntüleri kullanarak bir GIF dosyası oluşturuyoruz. Oluşturduğumuz GIF dosyasının ismini `'Turkey_Earthquake.gif'` olarak belirliyor ve saniyede 2 kare (`fps=2`) hızında olacak şekilde ayarlıyoruz. Daha sonra, artık gereksiz hale gelmiş olan PNG dosyalarını tek tek sildiriyoruz. Bu işlem için bir liste dönülüyor ve her bir dosya `unlink()` yöntemi kullanılarak siliniyor. Son olarak, `shutil.move()` fonksiyonunu kullanarak oluşturduğumuz GIF dosyasını `'imgs/'` dizini altına taşıyoruz.
 
 ![](imgs/Turkey_Earthquake.gif)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

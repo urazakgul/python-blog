@@ -2,13 +2,15 @@
 title: "Korelasyon Tahmin Oyunu"
 author: "Uraz Akgül"
 date: "2024-03-24"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
-categories: [Oyun, Web Uygulaması]
+categories: [İstatistik, Oyun, Web Uygulaması]
 # image: ""
 execute:
   eval: false
 ---
+
+# Giriş
 
 Korelasyon tahmin oyunu yapımında nelere ihtiyacımız olabilir?
 
@@ -18,7 +20,7 @@ Birincisi, iki adet rassal seri üretmeliyiz ve bu serileri üretirken korelasyo
 
 Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -28,7 +30,7 @@ import matplotlib.pyplot as plt
 
 ```
 
-**Korelasyonlu Rassal Serilerin Üretilmesi**
+# Korelasyonlu Rassal Serilerin Üretilmesi
 
 ```{python}
 
@@ -93,7 +95,7 @@ def calculate_rmse(predictions, actuals):
 
 Kodların ana yapısını oluşturduk.
 
-**Streamlit Web Uygulamasının Yapımı**
+# Streamlit Web Uygulamasının Yapımı
 
 Web uygulaması tarafında kullanılan kodlar aşağıdadır.
 

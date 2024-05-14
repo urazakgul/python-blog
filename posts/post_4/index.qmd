@@ -2,13 +2,15 @@
 title: "Seçim Verilerinin Türkiye Haritasında Görselleştirilmesi"
 author: "Uraz Akgül"
 date: "2024-04-08"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Harita, Seçim]
 image: "imgs/img_5.png"
 execute:
   eval: false
 ---
+
+# Giriş
 
 31 Mart 2024 yerel seçimlerini geride bıraktık ancak biz Türkiye'de yaşayanlar için iki seçim arası kısa bir reklam arası gibi. Önümüzdeki seçimlere hazırlıklı olmak için bu arayı değerlendirmeye devam ediyoruz.
 
@@ -18,7 +20,7 @@ Harita üzerinde görselleştirme yapmak için `geopandas` kütüphanesini kulla
 
 Haritada görselleştirmek için öncelikle Türkiye'nin `.shp` uzantılı dosyasını bulmamız gerekiyor. `.shp`, coğrafi verileri depolamak için kullanılan bir vektör veri formatıdır. [Buradan](https://data.humdata.org/dataset/cod-ab-tur?){.external target="_blank"} `turkey_administrativelevels0_1_2.zip` isimli dosyayı indirebilirsiniz. Eğer bir problem ile karşılaşırsanız [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} bulunan dosyayı da indirebilirsiniz.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -30,7 +32,7 @@ from matplotlib.colors import ListedColormap
 
 ```
 
-**Verilerin Hazırlanması**
+# Verilerin Hazırlanması
 
 `read_file()` fonksiyonu ile `.shp` uzantılı dosyayı içeri aktaralım.
 
@@ -77,7 +79,7 @@ merged_df = pd.merge(
 
 Birleştirdikten sonra harita aşamasına geçebiliriz.
 
-**Haritanın Oluşturulması**
+# Haritanın Oluşturulması
 
 Haritayı en temiz haliyle görelim.
 
@@ -179,3 +181,5 @@ plt.show()
 Farklı neler yaptık? İnceleyelim.
 
 `colors` isminde bir sözlük tanımladık. Bu sözlük, görselleştirmede kullanılacak renkleri ve bunlara karşılık gelen kategorileri içeriyor. Ayrıca, `cmap` isminde bir `ListedColormap` nesnesi oluşturduk. Bu, renk paletini belirtiyor ve `colors` sözlüğünden alınan renklerle oluşturuluyor. Önceki haritada olmayan, bu haritada sol alt köşede bulunan lejant ise kategorilerin tanımlarını içeriyor.
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

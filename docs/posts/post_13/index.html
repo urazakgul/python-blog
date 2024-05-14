@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Korelasyon Tahmin Oyunu</title>
+<title>Python Blog - TCMB’nin Faiz Oranlarına İlişkin Duyuru Metinlerinin Okunabilirliği</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -189,11 +189,10 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Korelasyon Tahmin Oyunu</h1>
+      <h1 class="title">TCMB’nin Faiz Oranlarına İlişkin Duyuru Metinlerinin Okunabilirliği</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">İstatistik</div>
-                <div class="quarto-category">Oyun</div>
-                <div class="quarto-category">Web Uygulaması</div>
+                <div class="quarto-category">Metin Analizi</div>
+                <div class="quarto-category">Merkez Bankası</div>
               </div>
                   </div>
   </div>
@@ -211,14 +210,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Mart 24, 2024</p>
+        <p class="date">Mayıs 14, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Mayıs 13, 2024</p>
+        <p class="date-modified">Mayıs 14, 2024</p>
       </div>
     </div>
       
@@ -234,9 +233,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
+  <li><a href="#gunningin-fog-indeksi" id="toc-gunningin-fog-indeksi" class="nav-link" data-scroll-target="#gunningin-fog-indeksi">Gunning’in Fog İndeksi</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#korelasyonlu-rassal-serilerin-üretilmesi" id="toc-korelasyonlu-rassal-serilerin-üretilmesi" class="nav-link" data-scroll-target="#korelasyonlu-rassal-serilerin-üretilmesi">Korelasyonlu Rassal Serilerin Üretilmesi</a></li>
-  <li><a href="#streamlit-web-uygulamasının-yapımı" id="toc-streamlit-web-uygulamasının-yapımı" class="nav-link" data-scroll-target="#streamlit-web-uygulamasının-yapımı">Streamlit Web Uygulamasının Yapımı</a></li>
+  <li><a href="#veri-setinin-içe-aktarılması-ve-bazı-ayarların-yapılması" id="toc-veri-setinin-içe-aktarılması-ve-bazı-ayarların-yapılması" class="nav-link" data-scroll-target="#veri-setinin-içe-aktarılması-ve-bazı-ayarların-yapılması">Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması</a></li>
+  <li><a href="#indeksin-hesaplanması" id="toc-indeksin-hesaplanması" class="nav-link" data-scroll-target="#indeksin-hesaplanması">İndeksin Hesaplanması</a></li>
+  <li><a href="#indeksin-görselleştirilmesi" id="toc-indeksin-görselleştirilmesi" class="nav-link" data-scroll-target="#indeksin-görselleştirilmesi">İndeksin Görselleştirilmesi</a></li>
+  <li><a href="#textstat-paketini-neden-kullanmadık" id="toc-textstat-paketini-neden-kullanmadık" class="nav-link" data-scroll-target="#textstat-paketini-neden-kullanmadık"><code>textstat</code> Paketini Neden Kullanmadık?</a></li>
+  <li><a href="#türkçeye-uyarlanan-okunabilirlik-formülleri" id="toc-türkçeye-uyarlanan-okunabilirlik-formülleri" class="nav-link" data-scroll-target="#türkçeye-uyarlanan-okunabilirlik-formülleri">Türkçeye Uyarlanan Okunabilirlik Formülleri</a></li>
   </ul>
 </nav>
     </div>
@@ -249,136 +252,208 @@ window.Quarto = {
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>Korelasyon tahmin oyunu yapımında nelere ihtiyacımız olabilir?</p>
-<p>Birincisi, iki adet rassal seri üretmeliyiz ve bu serileri üretirken korelasyon katsayısını dikkate almalıyız. Buradaki korelasyon katsayısı Pearson’ı ifade etmektedir. Rassal serileri üretmek için <code>numpy</code> kütüphanesinin <code>np.random.multivariate_normal</code> fonksiyonundan faydalanabiliriz.</p>
-<p>İkincisi, kullanıcı için bir skorlama yapmalıyız. Bunun için RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) metriğini kullanabiliriz. RMSE skoru düştükçe başarı artacaktır.</p>
-<p>Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.</p>
+<p>Okunabilirlik, bir metni okumanın ve anlamanın ne kadar kolay olduğunu ifade eder. Metinlerin okunabilirliği, bilgi iletişiminde kritik bir rol oynayabilir ve bir metin ne kadar açık ve anlaşılır olursa, o kadar etkili bir iletişim sağlanabilir. Bu bağlamda, Türkiye Cumhuriyet Merkez Bankası’nın (TCMB) faiz oranlarına ilişkin duyuru metinlerinin ve tabi ki diğer metinlerin okunabilirliği üzerine odaklanmak, hem finansal anlamda hem de genel olarak kamuoyuyla iletişim açısından önem taşıyabilir.</p>
+<p>Bank of Canada (Kanada Merkez Bankası), <a href="https://www.bankofcanada.ca/2018/06/staff-analytical-note-2018-20/" class="external" target="_blank">Readability and the Bank of Canada</a> başlıklı bir çalışmalarında, banka yayınlarının 2015-2017 yılları için okunabilirliğini incelemiş ve genel olarak banka yayınlarının normalde bankanın kitlelerinin tükettiği haber makaleleri ve diğer içerikler kadar kolay okunmadığını bulmuş. Ancak aynı zamanda bankanın uluslararasında iyi bir konumda yer aldığı sonucuna da ulaşmış.</p>
+<p>Okunabilirliğini inceleyeceğimiz metinler <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_13" class="external" target="_blank">burada</a>, <code>cbrt_press_releases.xlsx</code> isimli excel dosyasında bulunmaktadır. Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir.</p>
+</section>
+<section id="gunningin-fog-indeksi" class="level1">
+<h1>Gunning’in Fog İndeksi</h1>
+<p>İndeks, 1952 yılında Gunning Fog tarafından geliştirilmiştir ve aşağıdaki gibi hesaplanmaktadır.</p>
+<p><span class="math inline">\(GFI = 0.4[(\frac{Total\ words}{Total\ Sentences}) + 100(\frac{Complex\ words}{Total\ words})]\)</span></p>
+<p>Complex words ile kastedilen üç ve daha fazla heceli kelimelerdir.</p>
+<p>İndeksin seviyeleri aşağıdadır.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="imgs/img_1.PNG" class="img-fluid figure-img"></p>
+<figcaption>https://clickhelp.com/software-documentation-tool/user-manual/gunning-fog-index.html</figcaption>
+</figure>
+</div>
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="50283be6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="909351e4" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> syllapy</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textstat</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'fivethirtyeight'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="korelasyonlu-rassal-serilerin-üretilmesi" class="level1">
-<h1>Korelasyonlu Rassal Serilerin Üretilmesi</h1>
-<div id="39ddcd75" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.array([[<span class="dv">1</span>, rho], [rho, <span class="dv">1</span>]])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    correlated_data <span class="op">=</span> np.random.multivariate_normal(mean<span class="op">=</span>mu, cov<span class="op">=</span>cov_matrix, size<span class="op">=</span>num_points)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correlated_data, rho</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="veri-setinin-içe-aktarılması-ve-bazı-ayarların-yapılması" class="level1">
+<h1>Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması</h1>
+<div id="0a506c95" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">'cbrt_press_releases.xlsx'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Date'</span>], dayfirst<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'Date'</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Date'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Fonksiyonumuzun ismini <code>generate_correlated_data</code> olarak belirledik ve fonksiyonumuzun herhangi bir parametresi bulunmamaktadır.</p>
-<p><code>num_points</code> değişkeni, 100 ile 1000 arasında olmak üzere rassal olarak üretilecek serilere ait verilerin uzunluğunu temsil etmektedir. Bu değeri üretebilmek için <code>numpy</code> kütüphanesinin <code>np.random.uniform</code> fonksiyonunu kullandık ve <code>int()</code> ile değerin tam sayı veri tipinde olmasını sağladık.</p>
-<p><code>rho</code> değişkeni, -1 ile 1 arasında rassal olarak olarak üretilmiş bir korelasyon katsayısını temsil etmektedir. Bu değeri üretebilmek için <code>np.random.uniform</code> fonksiyonunu kullandık. <code>rho</code> değerini noktadan sonra iki rakam gelecek şekilde ayarladık.</p>
-<p><code>cov_matrix</code> değişkeni, 2x2’lik bir kovaryans matrisini temsil etmektedir.</p>
-<p><code>mu</code> değişkeni, veri kümesinin her bir boyutu için belirlenen ortalama değeri temsil etmektedir. Bu değer 0 olacağı için X ve Y <code>[0, 0]</code>’dır.</p>
-<p><code>correlated_data</code> değişkeni, <code>np.random.multivariate_normal</code> fonksiyonu yardımıyla üretilen verileri temsil etmektedir. Bu fonksiyon, çok değişkenli bir normal dağılımdan rassal örnekler üretir. Fonksiyonun içerisine parametre olarak ortalama, kovaryans matrisi ve örnek büyüklüğü girilir.</p>
-<p><code>generate_correlated_data</code> fonksiyonu bize <code>correlated_data</code> ve <code>rho</code> değerlerini dönüyor. <code>correlated_data</code> değişkenindeki ilk seriye <code>correlated_data[:,0]</code>; ikinci seriye <code>correlated_data[:,1]</code> ile ulaşılabilir.</p>
-<p>Fonksiyonun döndüğü değerleri kullanarak bir görselleştirme yapalım.</p>
-<div id="2aa0a3a6" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f'Randomly selected correlation: {rho}')</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_1.png" class="img-fluid"></p>
-<p>Bir diğer fonksiyonumuz olan ve RMSE değerini hesaplayan <code>calculate_rmse</code> fonksiyonuna bakalım.</p>
-<p><span class="math inline">\(\mathrm{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
-<div id="8fbbbcdf" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>calculate_rmse</code> fonksiyonu, <code>predictions</code> ve <code>actuals</code> olmak üzere 2 adet parametre alıyor. Önce <code>mse</code> değişkenine tahminler ile gerçek değerler arasındaki farkların karelerinin ortalamasını gönderiyoruz. Ardından da bu ortalamanın karekökünü <code>rmse</code> değişkenine atıyoruz ve bu değeri noktadan sonra 4 rakam olacak şekilde döndürüyoruz.</p>
-<p>Kodların ana yapısını oluşturduk.</p>
 </section>
-<section id="streamlit-web-uygulamasının-yapımı" class="level1">
-<h1>Streamlit Web Uygulamasının Yapımı</h1>
-<p>Web uygulaması tarafında kullanılan kodlar aşağıdadır.</p>
-<div id="24e23551" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Oturum durumu değişkenlerinin tanımlanması ve varsayılan değerlerin ayarlanması</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rhos'</span>, []) <span class="co"># Korelasyon katsayıları</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'guesses'</span>, []) <span class="co"># Kullanıcının tahminleri</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rmse_values'</span>, []) <span class="co"># RMSE değeri</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'plots'</span>, []) <span class="co"># Görseller</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Korelasyonlu veri oluşturan fonksiyon</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.array([[<span class="dv">1</span>, rho], [rho, <span class="dv">1</span>]])</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    correlated_data <span class="op">=</span> np.random.multivariate_normal(mean<span class="op">=</span>mu, cov<span class="op">=</span>cov_matrix, size<span class="op">=</span>num_points)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correlated_data, rho</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE hesaplayan fonksiyon</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 'rhos' listesi boş ise yeni bir korelasyonlu veri oluşturulması ve korelasyon katsayısının kaydedilmesi</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(st.session_state[<span class="st">'rhos'</span>]) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rhos'</span>].append(rho)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 'plots' listesi boşsa ilk görselin oluşturulması ve kaydedilmesi</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(st.session_state[<span class="st">'plots'</span>]) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'plots'</span>].append(plt)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    st.pyplot(st.session_state[<span class="st">'plots'</span>][<span class="dv">0</span>])</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Kullanıcının tahmini</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>user_guess <span class="op">=</span> st.sidebar.text_input(</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'Your Guess:'</span>,</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="st">'0.0'</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Kullanıcı tahmininin ondalık sayıya dönüştürülmesi</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>user_guess <span class="op">=</span> <span class="bu">float</span>(user_guess)</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Tahmin butonunun oluşturulması</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>guess_button <span class="op">=</span> st.sidebar.button(label<span class="op">=</span><span class="st">'Guess'</span>)</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Tahmin butonuna basıldığında yapılacaklar</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> guess_button:</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rhos'</span>].append(rho)</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'guesses'</span>].append(user_guess)</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> calculate_rmse(np.array(st.session_state[<span class="st">'rhos'</span>][:<span class="op">-</span><span class="dv">1</span>]), np.array(st.session_state[<span class="st">'guesses'</span>]))</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rmse_values'</span>].append(rmse)</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    st.subheader(<span class="ss">f'Guess: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"guesses"</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">, Actual: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"rhos"</span>][<span class="op">-</span><span class="dv">2</span>]<span class="sc">}</span><span class="ss">, RMSE: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"rmse_values"</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'plots'</span>].append(plt)</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    st.pyplot(st.session_state[<span class="st">'plots'</span>][<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="indeksin-hesaplanması" class="level1">
+<h1>İndeksin Hesaplanması</h1>
+<div id="59f1fb39" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gunning_fog_index(text):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="vs">r'(\b\d+)\.(\d+\b)'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(pattern, <span class="vs">r'\1,\2'</span>, text)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, <span class="st">'</span><span class="ch">\n\xa0</span><span class="st">'</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    sentences <span class="op">=</span> re.split(<span class="vs">r'(?&lt;=[.!?])\s+'</span>, text)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    num_sentences <span class="op">=</span> <span class="bu">len</span>(sentences)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> re.findall(<span class="vs">r'\b(?:[a-zA-Z]+(?:-[a-zA-Z]+)?|-)\b'</span>, text)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    num_words <span class="op">=</span> <span class="bu">len</span>(words)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    avg_words_per_sentence <span class="op">=</span> num_words <span class="op">/</span> num_sentences</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    num_complex_words <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> word <span class="kw">in</span> words <span class="cf">if</span> syllapy.count(word) <span class="op">&gt;=</span> <span class="dv">3</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    gfi <span class="op">=</span> <span class="fl">0.4</span> <span class="op">*</span> (avg_words_per_sentence <span class="op">+</span> <span class="dv">100</span> <span class="op">*</span> (num_complex_words <span class="op">/</span> num_words))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">round</span>(gfi, <span class="dv">2</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Gunning_Fog_Index'</span>] <span class="op">=</span> df[<span class="st">'Text'</span>].<span class="bu">apply</span>(gunning_fog_index)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Windows/Visual Studio Code için bir not: Streamlit uygulamasının yapımında kullanılacak olan kodları <code>.py</code> uzantılı <code>app.py</code> isminde bir script’e kaydedip terminalden <code>streamlit run app.py</code> komutu ile çalıştırabilirsiniz.</p>
+</section>
+<section id="indeksin-görselleştirilmesi" class="level1">
+<h1>İndeksin Görselleştirilmesi</h1>
+<div id="0529e3a0" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(df.index, df[<span class="st">'Gunning_Fog_Index'</span>], c<span class="op">=</span>df[<span class="st">'Gunning_Fog_Index'</span>], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"CBRT's Clarity Rating by Gunning's Fog Index"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.text(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.99</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.1</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Based on CBRT's press releases on interest rates."</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>plt.gca().transAxes,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.colorbar()</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_2.png" class="img-fluid"></p>
+<p>İndeks değeri arttıkça okunabilirliğin zorlaştığını söyleyebiliriz. Tarihsel bazda baktığımızda okunabilirliğin gittikçe zorlaştığını görüyoruz.</p>
+<div id="e1d7f156" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>governor_stats <span class="op">=</span> df.groupby(<span class="st">'Governor'</span>)[<span class="st">'Gunning_Fog_Index'</span>].agg([<span class="st">'mean'</span>, <span class="st">'std'</span>])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(governor_stats[<span class="st">'mean'</span>], governor_stats[<span class="st">'std'</span>], color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, s<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, governor <span class="kw">in</span> <span class="bu">enumerate</span>(governor_stats.index):</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    plt.text(governor_stats[<span class="st">'mean'</span>][i], governor_stats[<span class="st">'std'</span>][i], governor, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Governors' Gunning's Fog Index Rating"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Average'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Standard Deviation'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.text(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.99</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.2</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Based on CBRT's press releases on interest rates."</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>plt.gca().transAxes,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_3.png" class="img-fluid"></p>
+<p>Erdem Başçı ve Murat Çetinkaya dönemlerindeki metinler diğer dönemlere kıyasla daha kolay okunabilir duruyor. Çetinkaya’nın döneminde standart sapma daha düşük olduğu için kolay okunabilirlik Başçı’ya göre daha homojendir. Diğer taraftan, Naci Ağbal ve Yaşar Fatih Karahan dönemlerindeki metinler diğer dönemlere kıyasla daha zor okunabilir duruyor. Karahan’ın döneminde standart sapma daha düşük olduğu için zor okunabilirlik Ağbal’a göre daha homojendir.</p>
+</section>
+<section id="textstat-paketini-neden-kullanmadık" class="level1">
+<h1><code>textstat</code> Paketini Neden Kullanmadık?</h1>
+<p><code>textstat</code> paketi yaygın olarak kullanılsa da aşağıdaki görselde görüleceği üzere indeks değerleri arasında ciddi farklılıklar oluşmaktadır.</p>
+<div id="1f13c67c" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> textstat_gunning_fog_index(text):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="vs">r'(\b\d+)\.(\d+\b)'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(pattern, <span class="vs">r'\1,\2'</span>, text)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, <span class="st">'</span><span class="ch">\n\xa0</span><span class="st">'</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    gfi <span class="op">=</span> textstat.gunning_fog(text)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">round</span>(gfi, <span class="dv">2</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Gunning_Fog_Index_textstat'</span>] <span class="op">=</span> df[<span class="st">'Text'</span>].<span class="bu">apply</span>(textstat_gunning_fog_index)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Gunning_Fog_Index'</span>],</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Gunning_Fog_Index_textstat'</span>],</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span>df[<span class="st">'Gunning_Fog_Index'</span>],</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparison of Gunning Fog Index Calculation: Manual vs. Using textstat Package'</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Manual'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'textstat Package'</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>plt.text(</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.99</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span><span class="fl">0.2</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Based on CBRT's press releases on interest rates."</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>plt.gca().transAxes,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    fontstyle<span class="op">=</span><span class="st">'italic'</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_4.png" class="img-fluid"></p>
+<p>Teyit etmek için son duyuru metnini alalım.</p>
+<div id="44481bcb" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> df.loc[<span class="st">'2024-04-25'</span>,<span class="st">'Text'</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r'(\b\d+)\.(\d+\b)'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> re.sub(pattern, <span class="vs">r'\1,\2'</span>, text)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> text.translate(<span class="bu">str</span>.maketrans(<span class="st">''</span>, <span class="st">''</span>, <span class="st">'</span><span class="ch">\n\xa0</span><span class="st">'</span>))</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Benchmark olarak <a href="https://charactercalculator.com/gunning-fog-index/" class="external" target="_blank">şuradaki</a> web sitesini alabiliriz. İlgili web sitesinin yukarıdaki örnek metin için çıktısı aşağıdaki gibidir.</p>
+<p><img src="imgs/img_5.PNG" class="img-fluid"></p>
+<p>Manuel hesaplama ile yukarıdaki sonuçları karşılaştıralım.</p>
+<p>Cümle sayısı 17.</p>
+<div id="58a623c2" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> re.split(<span class="vs">r'(?&lt;=[.!?])\s+'</span>, text)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>num_sentences <span class="op">=</span> <span class="bu">len</span>(sentences)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(num_sentences)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Kelime sayısı 379. 2 kelime farkı sayılardan geliyor. Sayıları çıkarmıştık.</p>
+<div id="68f17f9f" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> re.findall(<span class="vs">r'\b(?:[a-zA-Z]+(?:-[a-zA-Z]+)?|-)\b'</span>, text)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>num_words <span class="op">=</span> <span class="bu">len</span>(words)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(num_words)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Hece sayısı 750. 3 hecelik fark web sitesi ile kullandığımız <code>syllapy</code> paketi arasındaki yöntem farklılığından kaynaklanıyor. Örneğin, web sitesinde “ongoing” için hece sayısını 2 verirken, paket ve online ortamdaki kaynaklar 3 veriyor.</p>
+<div id="2b9bc67e" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>syllable_counter <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    word_syllable <span class="op">=</span> syllapy.count(word)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    syllable_counter <span class="op">+=</span> word_syllable</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>word_syllable<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllable_counter)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>İndeks değerini 22.53 buluyoruz. Benchmark aldığımız web sitesi 21.98 buluyor. Pek farklılık yok.</p>
+<div id="115ec164" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gunning_fog_index(text)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>textstat</code> paketi ise sonucu 15.15 veriyor ki ciddi anlamda sapıyor.</p>
+<div id="628adc61" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>textstat.gunning_fog(text)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="türkçeye-uyarlanan-okunabilirlik-formülleri" class="level1">
+<h1>Türkçeye Uyarlanan Okunabilirlik Formülleri</h1>
+<p>Çalışmayı İngilizce metinler üzerinden yapsak da Türkçe metinler üzerinden de okunabilirlik ölçülebilir.</p>
+<ul>
+<li>Ateşman Okunabilirlik Formülü (ülkemizde bu alanda yapılan ilk çalışma)</li>
+<li>Çetinkaya-Uzun Okunabilirlik Formülü</li>
+<li>Bezirci-Yılmaz Okunabilirlik Formülü</li>
+<li>Sönmez Formülü</li>
+</ul>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 

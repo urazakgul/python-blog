@@ -10,11 +10,13 @@ execute:
   eval: false
 ---
 
+# Giriş
+
 Faiz kararları sadece sayılardan ibaret değildir. Türkiye Cumhuriyet Merkez Bankası'nın (TCMB) faiz oranlarına ilişkin basın duyuruları da büyük bir öneme sahiptir. Bu duyurular, TCMB'nin kararlarını destekleyen veya açıklayan bir metin içerir ve bu metin, ekonomi uzmanları, yatırımcılar ve piyasa analistleri için kritik bir kaynaktır. Basın duyuruları temelde, TCMB'nin ekonomik göstergeleri nasıl yorumladığını ve gelecekteki politika eğilimlerini nasıl değerlendirdiğini içerir.
 
 Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir. `cbrt_press_releases` isimli excel dosyasında bulunan veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_12){.external target="_blank"} ulaşabilirsiniz.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -31,7 +33,7 @@ plt.style.use('fivethirtyeight')
 
 ```
 
-**Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması**
+# Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması
 
 ```{python}
 
@@ -45,7 +47,7 @@ df = df.set_index('Date')
 
 ![](imgs/img_1.PNG)
 
-**Metin İçeriğinin Analizi**
+# Metin İçeriğinin Analizi
 
 Metin analizinde `NLTK` kütüphanesini kullanacağız. `NLTK` (Natural Language Toolkit), doğal dil işleme (NLP) görevlerini gerçekleştirmek için kullanılan bir kütüphanedir.
 
@@ -62,7 +64,7 @@ nltk.download('stopwords')
 
 `stopwords`, dilin yapısı gereği sıklıkla karşılaşılan ve genellikle metin analizi veya doğal dil işleme uygulamalarında önemsiz olarak kabul edilen kelimelerdir.
 
-*Tarihlere ve başkanlara göre kelime sayıları*
+## Tarihlere ve başkanlara göre kelime sayıları
 
 Kelimeleri sayacak `word_counter` isimli ve `text` parametresi bulunan bir fonksiyon yazalım.
 
@@ -115,7 +117,7 @@ Yukarıda ilk olarak, DataFrame'de bulunan `Text` sütunundaki her bir metin iç
 
 ![](imgs/img_2.png)
 
-*Başkanlara göre kelime bulutları*
+## Başkanlara göre kelime bulutları
 
 ```{python}
 
@@ -164,7 +166,7 @@ Yukarıda, `governors_texts` ile başkanların kendi dönemlerinde yayınlanan d
 
 ![](imgs/img_3.png)
 
-*Tarihlere göre metinlerdeki pozitif/negatif duygu değişimleri*
+## Tarihlere göre metinlerdeki pozitif/negatif duygu değişimleri
 
 `CentralBankRoBERTa`, bir LLM'dir (large language model veya büyük dil modeli).
 
@@ -235,3 +237,5 @@ plt.show()
 ```
 
 ![](imgs/img_6.png)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

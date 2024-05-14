@@ -2,13 +2,15 @@
 title: "Anlık Veri Akışı ile Oy Öngörüsü"
 author: "Uraz Akgül"
 date: "2024-04-07"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Ekonometri, Seçim]
 image: "imgs/img_6.png"
 execute:
   eval: false
 ---
+
+# Giriş
 
 Seçim öngörüleri için seçim anketlerini kullanabilir veya seçim sonucuna etkisi olan değişkenler ile modelleme yapabiliriz. Modellemeye seçim anketleri de dahil edilebilir pek tabi.
 
@@ -20,7 +22,7 @@ Yukarıdaki iki yönteme ek olarak, seçim akşamı gelen veri akışı da hangi
 
 Yapacağımız uygulamada İstanbul ilini ve Anadolu Ajansı verilerini baz alacağız. Verileri 31 Mart 2024 akşamı izlediğim NOW kanalından aldım. Veri seti, açılan sandık oranı ve adayların oy oranları ile aralarındaki farkları içermektedir. `aa_20240331_istanbul` isimli JSON verisine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_3){.external target="_blank"} ulaşabilirsiniz.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -34,7 +36,7 @@ import matplotlib.pyplot as plt
 
 ```
 
-**Açılan Sandık Oranlarına Göre Adayların Oy Oranları ve Aralarındaki Farklar**
+# Açılan Sandık Oranlarına Göre Adayların Oy Oranları ve Aralarındaki Farklar
 
 ```{python}
 
@@ -118,7 +120,7 @@ plt.show()
 
 ![](imgs/img_3.png)
 
-**Modelin Geliştirilmesi**
+# Modelin Geliştirilmesi
 
 Veri setimizde bulunan gözlem sayısı 50'dir ancak biz tamamını kullanmayacağız. Öngörülerimizi olabildiğince erken yapmalıyız. Bunun için açılan sandık oranının aşağı yukarı %50 olmasını bekleyebiliriz. Bu da 20 adet gözlem sayısına denk gelecektir. Oldukça küçük fakat kullanılamaz değil.
 
@@ -423,3 +425,5 @@ print(forecast_df)
 Açılan sandık oranı %83.1 olduğunda istatistiksel olarak anlamlı bir kırılım yaşandığını görüyoruz. Bu noktada öngörülerimizi kukla değişkenli yapıyoruz. Açılan sandık oranı %60.4 iken 0.098 olan RMSE değerini açılan sandık oranı %83.1'e geldiğinde 0.076'ya düşürüyoruz. Bu model ile daha önce yapılan öngörüyü %50.84'e revize edebiliriz. Gerçek oy oranı %51.14'tür. Öngörü, gerçek oyun yaklaşık 0.3 puan kadar altında kalmıştır.
 
 ![](imgs/img_9.png)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

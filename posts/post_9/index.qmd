@@ -10,11 +10,15 @@ execute:
   eval: false
 ---
 
+# Giriş
+
 Türkiye Cumhuriyet Merkez Bankası, *yenievds@tcmb.gov.tr* adresinden bir duyuru göndermişti. Mail almayanlar için bir kısmını aşağıda paylaşıyorum.
 
 *Önceki duyurumuzda EVDS nin web servis parametrelerinde güvenlik sebebiyle bir düzenleme yapılacağını belirtmiştik. URL adresinden giden "key" parametresinin artık http request header içinde gelmesi ve web servis kullanan uygulamalarınızda "key=xxxxxx" parametresini http request header olarak dönüştürmeniz gerektiği belirtilmişti. Bu düzenleme 05 Nisan 2024 Cuma saat 21:00 TSİ tarihinden itibaren geçerli olacaktır.*
 
 URL adresinden gönderdiğimiz `key` parametresini artık `headers` içinden göndereceğiz.
+
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -22,6 +26,14 @@ import requests
 import json
 from urllib.parse import urlencode
 import pandas as pd
+
+```
+
+# Verilerin Çekilmesi
+
+## Tek Serili Örnek
+
+```{python}
 
 api_key = 'api_key'
 
@@ -58,6 +70,8 @@ df['AOFM'] = pd.to_numeric(df['AOFM'])
 
 ```
 
+## Çok Serili Örnek
+
 Eğer birden fazla seri ile çalışmak istiyorsak, seriler arasında `-` olacak şekilde giriş yapacağız.
 
 ```{python}
@@ -92,3 +106,5 @@ numeric_columns = df.columns[df.columns != 'Tarih']
 df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric)
 
 ```
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

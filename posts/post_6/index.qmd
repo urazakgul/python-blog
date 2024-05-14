@@ -2,7 +2,7 @@
 title: "İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı"
 author: "Uraz Akgül"
 date: "2024-04-13"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Yüz, Duygu Analizi]
 image: "imgs/emotions_heatmap.png"
@@ -10,11 +10,13 @@ execute:
   eval: false
 ---
 
+# Giriş
+
 Yapılan çalışmaların yanında içinde profil fotoğrafının da olduğu sosyal medya kullanımı da önemli olabiliyor.
 
 Bu uygulamada, İstanbul ilçe belediye başkanlarının X (Twitter) profillerindeki duygularını inceleyeceğiz. Duyguların tespitinde `Py-Feat` kütüphanesinden faydalanacağız.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -27,7 +29,7 @@ import matplotlib.pyplot as plt
 
 ```
 
-**Fotoğrafların İçe Aktarılması**
+# Fotoğrafların İçe Aktarılması
 
 [Buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_6){.external target="_blank"} ulaşabileceğiniz fotoğraflar ilçe belediye başkanlarının X (Twitter) hesaplarından indirilmiştir.
 
@@ -38,7 +40,7 @@ image_files = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
 
 ```
 
-**Duyguların Tespit Edilmesi ve Görselleştirilmesi**
+# Duyguların Tespit Edilmesi ve Görselleştirilmesi
 
 `Py-Feat`, görüntülerden ve videolardan yüz ifadelerini kolayca tespit etmek, yüz ifadesi verilerini önceden işlemek ve analiz etmek ve yüz ifadesi verilerini görselleştirmek için kapsamlı bir araç ve model seti sağlar. `Py-Feat` önceden eğitilmiş çeşitli modelleri içeriyor.
 
@@ -162,3 +164,5 @@ plt.show()
 ![](imgs/emotions_heatmap.png)
 
 Profil fotoğraflarında doğal olarak en güçlü duygunun `happiness` olduğunu görüyoruz. `neutral` pozlar da kendini göstermektedir.
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

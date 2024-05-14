@@ -10,13 +10,15 @@ execute:
   eval: false
 ---
 
+# Giriş
+
 İş verimliliğini artırmak için rutin görevlerin otomatize edilmesini önemsiyorum. Tekrarlayan rutin görevlerin otomatize edilmesi, çalışanların değerli zamanlarını stratejik ve yaratıcı faaliyetlere odaklamalarını sağlayabilir.
 
 Bu uygulamada, Windows Görev Zamanlayıcı (Task Scheduler) ile belirlediğimiz rutin görevin otomatik olarak çalıştırılmasını sağlayacağız.
 
 Rutin görevimiz şöyle olacak: Belirlediğimiz kripto paraların 52 + 1 haftalık kapanış fiyatlarını alacağız ve her birinin getiri ortalaması ile standart sapmasını hesaplayacağız. Getiri ortalamaları ile standart sapmaları grafik üzerine aktaracağız. Grafiği ve verileri sırasıyla PNG ve XLSX formatlarında kaydedeceğiz. Tüm bu bilgileri Microsoft Outlook uygulaması aracılığıyla göndereceğiz.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -28,7 +30,7 @@ import matplotlib.pyplot as plt
 
 ```
 
-**Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması**
+# Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması
 
 ```{python}
 
@@ -75,7 +77,7 @@ Gönderilecek excel dosyası içeriği:
 
 ![](imgs/img_2.PNG)
 
-**Outlook Mail İçeriğinin Hazırlanması**
+# Outlook Mail İçeriğinin Hazırlanması
 
 ```{python}
 
@@ -119,7 +121,7 @@ mail.Send()
 
 `mail.Send()`, oluşturulan e-postayı gönderir.
 
-**Görev Zamanlayıcı Uygulamasına Görev Girilmesi**
+# Görev Zamanlayıcı Uygulamasına Görev Girilmesi
 
 Görev Zamanlayıcı uygulamasını açıyoruz ve `Create Task`'e tıklıyoruz.
 
@@ -137,6 +139,8 @@ Actions:
 
 Program/Script için Python .exe dosyasının bulunduğu dosya konumu .exe uzantılı dosya ile girilmelidir. Bunun için CMD'de `where python` komutu çalıştırılabilir. Add arguments için çalıştırılacak script'in bulunduğu dosya konumu .py uzantılı dosya ile girilmelidir. Start in için çalıştırılacak script'in bulunduğu dosyanın konumu girilmelidir.
 
-**Test**
+# Test
 
 ![](imgs/img_6.PNG)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

@@ -2,13 +2,15 @@
 title: "TCMB Başkan Yardımcısı Cevdet Akçay'ın 'Link Kopmuş' Dediği Konuşmasının Duygu Analizi"
 author: "Uraz Akgül"
 date: "2024-04-25"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Yüz, Duygu Analizi, Merkez Bankası]
 image: "imgs/img_3.png"
 execute:
   eval: false
 ---
+
+# Giriş
 
 Türkiye Cumhuriyet Merkez Bankası Başkan Yardımcısı Cevdet Akçay, 2024 yılının ilk Enflasyon Raporu bilgilendirme toplantısında şunları aktarmıştı:
 
@@ -22,7 +24,7 @@ Peki, bu konuşma sırasında Akçay'ın yüzünde hangi duygular oluştu?
 
 X (Twitter) profil fotoğraflarını veri seti olarak kullandığımız [*İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı*](https://urazakgul.github.io/python-blog/posts/post_6/){.external target="_blank"} başlıklı çalışmada `Py-Feat` kütüphanesinden faydalanmıştık. Video üzerinden analiz yapacağımız bu çalışmada yine `Py-Feat` kütüphanesinden faydalanacağız. Kütüphane ile ilgili detaylı bilgi için ilgili çalışma incelenebilir. Çalışmada kullanacağımız video ise Youtube'dan indirilebilir.
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -32,11 +34,11 @@ import matplotlib.pyplot as plt
 
 ```
 
-**Video, Frame ve FPS Kavramlarının Tanımlanması**
+# Video, Frame ve FPS Kavramlarının Tanımlanması
 
 Bir video temel olarak bir dizi fotoğrafın belirli bir hızda birbirini takip ederek oynatılmasıdır. Her bir fotoğraf karesine frame deniliyor. FPS (Frames Per Second) ise saniyedeki kare ya da frame sayısıdır. Detaylı öğrenmek isteyenler için [şuradaki](https://www.youtube.com/watch?v=BvnzxqVcZ0g){.external target="_blank"} videoyu tavsiye edebilirim.
 
-**Videonun İçe Aktarılması**
+# Videonun İçe Aktarılması
 
 `cbrt_cevdet_akcay.mp4` isimli video içinde bulunduğumuz dizindedir.
 
@@ -47,7 +49,7 @@ video_path = os.path.join(current_dir, 'cbrt_cevdet_akcay.mp4')
 
 ```
 
-**Duyguların Tespit Edilmesi ve Görselleştirilmesi**
+# Duyguların Tespit Edilmesi ve Görselleştirilmesi
 
 ```{python}
 
@@ -117,3 +119,5 @@ plt.show()
 ```
 
 ![](imgs/img_4.png)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

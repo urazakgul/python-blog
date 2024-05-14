@@ -2,7 +2,7 @@
 title: "Partilere Göre Milletvekillerinin Ortalama Yüzü: Türkiye Örneği"
 author: "Uraz Akgül"
 date: "2024-04-10"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Yüz]
 image: "imgs/kadin-erkek-mv.jpg"
@@ -10,11 +10,15 @@ execute:
   eval: false
 ---
 
+# Giriş
+
 1800'lü yıllarda Francis Galton, belirli bir grup insanda ortak olan yüz özelliklerini görselleştirmek amacıyla birçok farklı bireyin yüz fotoğraflarını tek bir fotoğraf filmi üzerine yansıtmış ve bu yüzlerin kompozit görüntülerini oluşturmuştur.
 
 Bugün benzer bir yaklaşım, belirli bir grup insanın -örneğin, milletvekilleri gibi- ortak yüz özelliklerini incelemek amacıyla modern tekniklerle gerçekleştirilebilir.
 
 Bu uygulamada, 28. dönem AKP, CHP, DEM ve MHP milletvekillerinin fotoğraflarını kullanarak parti ve cinsiyet kategorisinde ortalama bir yüz yaratacağız. Uygulamayı GitHub'ta bulunan [şu](https://github.com/johnwmillr/Facer){.external target="_blank"} repo yardımı ile yapacağız. Uygulamanın veri seti olan fotoğraflara ise [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_5){.external target="_blank"} bulunan `tbmm_28` isimli klasör ile ulaşabilirsiniz.
+
+# Reponun Klonlanması
 
 Öncelikle repoyu proje klasörümüze klonlayalım.
 
@@ -42,11 +46,19 @@ TBMM'nin web sitesinden alınan görseller `.jpe` formatında olduğu için `fac
 
 Ortalama bir yüze ulaşmak için uygulanan adımlar [burada](https://learnopencv.com/average-face-opencv-c-python-tutorial/){.external target="_blank"} detaylı bir şekilde veriliyor.
 
+# Kullanılacak Kütüphaneler
+
 ```{python}
 
 from facer.facer import load_images, detect_face_landmarks, create_average_face
 import matplotlib.pyplot as plt
 import os
+
+```
+
+# Ortalama Yüzün Hesaplanması
+
+```{python}
 
 folders = [
     './tbmm_28/akp/kadin',
@@ -77,3 +89,5 @@ for folder in folders:
 ```
 
 ![](imgs/kadin-erkek-mv.jpg)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

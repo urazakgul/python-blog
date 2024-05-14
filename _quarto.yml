@@ -28,6 +28,7 @@ format:
       light: litera
       dark: solar
     css: styles.css
+    toc: true
 
 execute:
   freeze: auto

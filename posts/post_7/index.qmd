@@ -2,13 +2,15 @@
 title: "Reddit Başlıklarının Duygu Analizi: r/worldnews Örneği"
 author: "Uraz Akgül"
 date: "2024-04-14"
-# date-modified: last-modified
+date-modified: last-modified
 date-format: "MMMM D, YYYY"
-categories: [Duygu Analizi]
+categories: [Duygu Analizi, Reddit]
 image: "imgs/img_6.png"
 execute:
   eval: false
 ---
+
+# Giriş
 
 Reddit platformundan verileri çekebilmek için öncelikle [buradan](https://www.reddit.com/prefs/apps){.external target="_blank"} bir uygulama oluşturarak OAuth2 anahtarlarını almamız gerekiyor ki API'a ulaşabilelim.
 
@@ -22,7 +24,7 @@ Bize verilen `personal use script` ve `secret` bilgilerini kullanacağız.
 
 ![](imgs/img_1.PNG)
 
-**Kullanılacak Kütüphaneler**
+# Kullanılacak Kütüphaneler
 
 ```{python}
 
@@ -34,7 +36,7 @@ import matplotlib.pyplot as plt
 
 ```
 
-**Subreddit Başlıklarının Çekilmesi**
+# Subreddit Başlıklarının Çekilmesi
 
 `praw` kütüphanesini kullanarak Reddit API'ına erişim sağlıyoruz.
 
@@ -92,7 +94,7 @@ topics_df['datetime'] = topics_df['created'].apply(timestamp_to_datetime)
 
 ![](imgs/img_3.PNG)
 
-**Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi**
+# Duygu Skorlarının Elde Edilmesi ve Verilerin Görselleştirilmesi
 
 ```{python}
 
@@ -154,3 +156,5 @@ plt.show()
 ```
 
 ![](imgs/img_6.png)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Otomatize</div>
@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -189,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Nisan 24, 2024</p>
+        <p class="date-modified">Mayıs 13, 2024</p>
       </div>
     </div>
       
@@ -199,27 +199,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Bu sayfada</h2>
+   
+  <ul>
+  <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
+  <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
+  <li><a href="#gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması" id="toc-gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması" class="nav-link" data-scroll-target="#gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması">Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</a></li>
+  <li><a href="#outlook-mail-içeriğinin-hazırlanması" id="toc-outlook-mail-içeriğinin-hazırlanması" class="nav-link" data-scroll-target="#outlook-mail-içeriğinin-hazırlanması">Outlook Mail İçeriğinin Hazırlanması</a></li>
+  <li><a href="#görev-zamanlayıcı-uygulamasına-görev-girilmesi" id="toc-görev-zamanlayıcı-uygulamasına-görev-girilmesi" class="nav-link" data-scroll-target="#görev-zamanlayıcı-uygulamasına-görev-girilmesi">Görev Zamanlayıcı Uygulamasına Görev Girilmesi</a></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test">Test</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
+<section id="giriş" class="level1">
+<h1>Giriş</h1>
 <p>İş verimliliğini artırmak için rutin görevlerin otomatize edilmesini önemsiyorum. Tekrarlayan rutin görevlerin otomatize edilmesi, çalışanların değerli zamanlarını stratejik ve yaratıcı faaliyetlere odaklamalarını sağlayabilir.</p>
 <p>Bu uygulamada, Windows Görev Zamanlayıcı (Task Scheduler) ile belirlediğimiz rutin görevin otomatik olarak çalıştırılmasını sağlayacağız.</p>
 <p>Rutin görevimiz şöyle olacak: Belirlediğimiz kripto paraların 52 + 1 haftalık kapanış fiyatlarını alacağız ve her birinin getiri ortalaması ile standart sapmasını hesaplayacağız. Getiri ortalamaları ile standart sapmaları grafik üzerine aktaracağız. Grafiği ve verileri sırasıyla PNG ve XLSX formatlarında kaydedeceğiz. Tüm bu bilgileri Microsoft Outlook uygulaması aracılığıyla göndereceğiz.</p>
-<p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="1300fcfe" class="cell" data-execution_count="1">
+</section>
+<section id="kullanılacak-kütüphaneler" class="level1">
+<h1>Kullanılacak Kütüphaneler</h1>
+<div id="415525b2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> win32com.client <span class="im">as</span> win32</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</strong></p>
-<div id="e98e0f23" class="cell" data-execution_count="2">
+</section>
+<section id="gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması" class="level1">
+<h1>Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</h1>
+<div id="48c23677" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [<span class="st">'BTC-USD'</span>,<span class="st">'ETH-USD'</span>,<span class="st">'SOL-USD'</span>,<span class="st">'XRP-USD'</span>,<span class="st">'DOGE-USD'</span>,<span class="st">'ADA-USD'</span>,<span class="st">'AVAX-USD'</span>,<span class="st">'DOT-USD'</span>,<span class="st">'NEAR-USD'</span>,<span class="st">'RNDR-USD'</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>today_date <span class="op">=</span> datetime.today().date()</span>
@@ -257,8 +276,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="imgs/img_1.png" class="img-fluid"></p>
 <p>Gönderilecek excel dosyası içeriği:</p>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
-<p><strong>Outlook Mail İçeriğinin Hazırlanması</strong></p>
-<div id="4763373c" class="cell" data-execution_count="3">
+</section>
+<section id="outlook-mail-içeriğinin-hazırlanması" class="level1">
+<h1>Outlook Mail İçeriğinin Hazırlanması</h1>
+<div id="d8f6953b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>outlook <span class="op">=</span> win32.Dispatch(<span class="st">'outlook.application'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mail <span class="op">=</span> outlook.CreateItem(<span class="dv">0</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -289,7 +310,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>attachment.PropertyAccessor.SetProperty()</code>, eklenen dosyanın özelliklerini ayarlar. <code>http://schemas.microsoft.com/mapi/proptag/0x3712001F</code>, ek dosyanın gömülü dosya ismini belirlemek için kullanılır.</p>
 <p><code>mail.HTMLBody</code>, e-postanın HTML biçimindeki gövdesini tanımlar.</p>
 <p><code>mail.Send()</code>, oluşturulan e-postayı gönderir.</p>
-<p><strong>Görev Zamanlayıcı Uygulamasına Görev Girilmesi</strong></p>
+</section>
+<section id="görev-zamanlayıcı-uygulamasına-görev-girilmesi" class="level1">
+<h1>Görev Zamanlayıcı Uygulamasına Görev Girilmesi</h1>
 <p>Görev Zamanlayıcı uygulamasını açıyoruz ve <code>Create Task</code>’e tıklıyoruz.</p>
 <p>General:</p>
 <p><img src="imgs/img_3.PNG" class="img-fluid"></p>
@@ -298,10 +321,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Actions:</p>
 <p><img src="imgs/img_5.PNG" class="img-fluid"></p>
 <p>Program/Script için Python .exe dosyasının bulunduğu dosya konumu .exe uzantılı dosya ile girilmelidir. Bunun için CMD’de <code>where python</code> komutu çalıştırılabilir. Add arguments için çalıştırılacak script’in bulunduğu dosya konumu .py uzantılı dosya ile girilmelidir. Start in için çalıştırılacak script’in bulunduğu dosyanın konumu girilmelidir.</p>
-<p><strong>Test</strong></p>
+</section>
+<section id="test" class="level1">
+<h1>Test</h1>
 <p><img src="imgs/img_6.PNG" class="img-fluid"></p>
+<p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

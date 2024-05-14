@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">Türkiye ve Çevresinde Gerçekleşen Depremlerin Animasyonlu Harita ile Gösterilmesi</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Harita</div>
@@ -169,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Yazar</div>
@@ -185,6 +185,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Değiştirilmiş</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">Mayıs 13, 2024</p>
+      </div>
+    </div>
       
     </div>
     
@@ -192,18 +198,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Bu sayfada</h2>
+   
+  <ul>
+  <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
+  <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
+  <li><a href="#api-ile-verilerin-çekilmesi-ve-kullanılabilir-formata-dönüştürülmesi" id="toc-api-ile-verilerin-çekilmesi-ve-kullanılabilir-formata-dönüştürülmesi" class="nav-link" data-scroll-target="#api-ile-verilerin-çekilmesi-ve-kullanılabilir-formata-dönüştürülmesi">API ile Verilerin Çekilmesi ve Kullanılabilir Formata Dönüştürülmesi</a></li>
+  <li><a href="#haritaların-yapılması-ve-html-png-formatlarında-kaydedilmesi" id="toc-haritaların-yapılması-ve-html-png-formatlarında-kaydedilmesi" class="nav-link" data-scroll-target="#haritaların-yapılması-ve-html-png-formatlarında-kaydedilmesi">Haritaların Yapılması ve HTML-PNG Formatlarında Kaydedilmesi</a></li>
+  <li><a href="#animasyonlu-harita-yapımı-ve-gif-formatında-kaydedilmesi" id="toc-animasyonlu-harita-yapımı-ve-gif-formatında-kaydedilmesi" class="nav-link" data-scroll-target="#animasyonlu-harita-yapımı-ve-gif-formatında-kaydedilmesi">Animasyonlu Harita Yapımı ve GIF Formatında Kaydedilmesi</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
+<section id="giriş" class="level1">
+<h1>Giriş</h1>
 <p>Animasyonlu haritalar, zaman içinde değişen verileri görselleştiren etkili bir yöntemdir. Örneğin, Türkiye ve çevresinde gerçekleşen depremleri animasyonlu bir harita üzerinde göstermek, deprem aktivitesinin zamanla nasıl değiştiğini ve hangi bölgelerin daha fazla risk altında olduğunu görsel olarak görmemize yardımcı olabilir.</p>
 <p>Animasyonlu haritayı oluşturmak için kullanacağımız verilere USGS (United States Geological Survey) API ile ulaşacağız.</p>
-<p><strong>Kullanılacak Kütüphaneler</strong></p>
-<div id="18de37d5" class="cell" data-execution_count="1">
+</section>
+<section id="kullanılacak-kütüphaneler" class="level1">
+<h1>Kullanılacak Kütüphaneler</h1>
+<div id="f70bcb98" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -217,8 +239,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> imageio</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>API ile Verilerin Çekilmesi ve Kullanılabilir Formata Dönüştürülmesi</strong></p>
-<div id="29333a3c" class="cell" data-execution_count="2">
+</section>
+<section id="api-ile-verilerin-çekilmesi-ve-kullanılabilir-formata-dönüştürülmesi" class="level1">
+<h1>API ile Verilerin Çekilmesi ve Kullanılabilir Formata Dönüştürülmesi</h1>
+<div id="91567b41" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> <span class="st">'2014-01-01'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>min_mag <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lat <span class="op">=</span> <span class="fl">39.1458</span></span>
@@ -239,11 +263,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Yukarıdaki kodda, verilen parametrelerle USGS API’ını kullanarak deprem verilerini çekiyoruz. Başlangıç tarihini (<code>start</code>) <code>'2014-01-01'</code> ve minimum deprem büyüklüğünü (<code>min_mag</code>) <code>3</code> olarak belirledik. Ayrıca, enlem (<code>lat</code>) <code>39.1458</code> ve boylam (<code>lon</code>) <code>34.1614</code> olacak şekilde Türkiye’nin koordinatlarına yakın ve maksimum <code>1000</code> kilometrelik yarıçapa (<code>max_rad_km</code>) sahip bir bölgeyi sorguluyoruz. Son olarak, API’dan gelen verileri işleyerek bir DataFrame oluşturuyoruz. Bu DataFrame, depremlerin yerini (<code>Place</code>), büyüklüğünü (<code>Magnitude</code>), zamanını (<code>Time</code>) ve enlem-boylam koordinatlarını (<code>Latitude</code>-<code>Longitude</code>) içeriyor.</p>
 <p>Aylık bir seri ile çalışacağımız için tarihlerdeki (<code>Time</code> sütunu) günleri <code>01</code> ile değiştiriyoruz.</p>
-<div id="e2862216" class="cell" data-execution_count="3">
+<div id="59e72a6a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Time'</span>] <span class="op">=</span> df[<span class="st">'Time'</span>].<span class="bu">str</span>.replace(<span class="vs">r'-\d</span><span class="sc">{2}</span><span class="vs">$'</span>, <span class="st">'-01'</span>, regex<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Haritaların Yapılması ve HTML-PNG Formatlarında Kaydedilmesi</strong></p>
-<div id="fe3f0566" class="cell" data-execution_count="4">
+</section>
+<section id="haritaların-yapılması-ve-html-png-formatlarında-kaydedilmesi" class="level1">
+<h1>Haritaların Yapılması ve HTML-PNG Formatlarında Kaydedilmesi</h1>
+<div id="967bdc6f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>chrome_options <span class="op">=</span> Options()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>chrome_options.add_argument(<span class="st">'--start-fullscreen'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -287,9 +313,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Yukarıdaki kodda, her bir tarih döngüde kullanılacağı için tekil tarihleri <code>unique_dates</code> değişkenine gönderip bu tarihleri eskiden yeniye doğru olacak şekilde sıralıyoruz. Türkiye’nin koordinatlarını tanımladığımız ve haritaların merkezi olacak değerler <code>turkey_latlon</code> değişkeninde bulunuyor. Her işlemde <code>5</code> saniyelik bir bekleme süresi olacak. Bunu <code>delay</code> değişkeninde tutuyoruz. Resimlerin üzerinde görünecek yazılara ait varsayılan font ve font büyüklüğü değerleri olan <code>arial.ttf</code> ve <code>36</code> sırasıyla <code>font</code> ve <code>font_size</code> değişkenlerinde bulunuyor. Her döngüde açılacak tarayıcıların ekranı kapsayacak şekilde olmasını istediğimiz için <code>'--start-fullscreen'</code> olacak şekilde ayarlama da yaptık.</p>
 <p>Döngüde 7 kod grubu bulunmaktadır. İlk grup, tarih filtresi yapıp haritayı oluşturuyor. İkinci grup, haritayı içinde bulunduğu dizine HTML formatında kaydediyor. Üçüncü grup, HTML formatında kaydedilen dosyayı tarayıcıda açıyor ve açtıktan sonra belirlenen süre kadar bekletiyor. Dördüncü grup, ekran görüntüsü alıyor ve içinde bulunduğu dizine PNG formatında kaydediyor. Beşinci grup, açılan tarayıcıyı kapatıyor. Altıncı grup, resim üzerinde yazı işlemlerini yapıyor. Yedinci ve son grup, kaydedilen HTML dosyalarını siliyor ve ekrana bilgi veriyor.</p>
-<p><strong>Animasyonlu Harita Yapımı ve GIF Formatında Kaydedilmesi</strong></p>
+</section>
+<section id="animasyonlu-harita-yapımı-ve-gif-formatında-kaydedilmesi" class="level1">
+<h1>Animasyonlu Harita Yapımı ve GIF Formatında Kaydedilmesi</h1>
 <p>Çalışmanın odak noktasını bu başlık altında göreceğiz.</p>
-<div id="3c5b6c58" class="cell" data-execution_count="5">
+<div id="e53a6229" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>image_path <span class="op">=</span> Path()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> <span class="bu">list</span>(image_path.glob(<span class="st">'*.png'</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>image_list <span class="op">=</span> [imageio.v3.imread(file_name) <span class="cf">for</span> file_name <span class="kw">in</span> images]</span>
@@ -300,8 +328,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Yukarıdaki kodda ilk olarak, <code>Path()</code> fonksiyonunu çağırarak bir dosya yolu nesnesi oluşturuyor ve bunu <code>image_path</code> değişkenine atıyoruz. Ardından, bu dosya yolu nesnesi üzerinde <code>.glob()</code> yöntemini kullanarak tüm PNG dosyalarını alıyor ve <code>images</code> listesine atıyoruz. <code>imageio</code> modülünü kullanarak her bir PNG dosyasını <code>imageio.v3.imread()</code> fonksiyonuyla okuyor ve bu okunan görüntüleri <code>image_list</code> listesine ekliyoruz. <code>imageio.mimwrite()</code> fonksiyonuyla <code>image_list</code> içindeki görüntüleri kullanarak bir GIF dosyası oluşturuyoruz. Oluşturduğumuz GIF dosyasının ismini <code>'Turkey_Earthquake.gif'</code> olarak belirliyor ve saniyede 2 kare (<code>fps=2</code>) hızında olacak şekilde ayarlıyoruz. Daha sonra, artık gereksiz hale gelmiş olan PNG dosyalarını tek tek sildiriyoruz. Bu işlem için bir liste dönülüyor ve her bir dosya <code>unlink()</code> yöntemi kullanılarak siliniyor. Son olarak, <code>shutil.move()</code> fonksiyonunu kullanarak oluşturduğumuz GIF dosyasını <code>'imgs/'</code> dizini altına taşıyoruz.</p>
 <p><img src="imgs/Turkey_Earthquake.gif" class="img-fluid"></p>
+<p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
