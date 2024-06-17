@@ -101,9 +101,9 @@ plt.show()
 
 Kullanacağımız veri setini Kaggle'dan indirebilirsiniz.
 
-[International football results from 1872 to 2024](https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017)
+[International football results from 1872 to 2024](https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017){.external target="_blank"}
 
-Tüm veri setlerine ise [buradan](https://urazakgul.github.io/python-blog/posts/post_16/){.external target="_blank"} ulaşabilirsiniz.
+Tüm veri setlerine ise [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_16){.external target="_blank"} ulaşabilirsiniz.
 
 Verileri yükleyecek ve düzenlemeleri yapacak fonksiyon `load_data`'dır.
 
