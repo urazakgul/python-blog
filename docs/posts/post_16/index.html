@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Uraz Akgül">
+
+<title>Python Blog - Poisson Dağılımı ile 2024 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sonuç yok",
+    "search-matching-documents-text": "eşleşen belgeler",
+    "search-copy-link-title": "Aramak için bağlantıyı kopyalayın",
+    "search-hide-matches-text": "Ek eşleşmeleri gizle",
+    "search-more-match-text": "bu belgede daha fazla eşleşme",
+    "search-more-matches-text": "bu belgede daha fazla eşleşmeler",
+    "search-clear-button-title": "Temizle",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "İptal et",
+    "search-submit-button-title": "Göndermek",
+    "search-label": "Aramak"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Python Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Aramak"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Gezinmeyi değiştir" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Ana Sayfa</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Yazılar</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-paketler" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Paketler</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-paketler">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/isyatirimhisse" target="_blank">
+ <span class="dropdown-text">isyatirimhisse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/EIAOpenData" target="_blank">
+ <span class="dropdown-text">EIAOpenData</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Karanlık modu değiştir"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Poisson Dağılımı ile 2024 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Futbol</div>
+                <div class="quarto-category">İstatistik</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">Yazar</div>
+      <div class="quarto-title-meta-contents">
+               <p>Uraz Akgül </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Haziran 17, 2024</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Değiştirilmiş</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">Haziran 17, 2024</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Bu sayfada</h2>
+   
+  <ul>
+  <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
+  <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
+  <li><a href="#poisson-dağılımı" id="toc-poisson-dağılımı" class="nav-link" data-scroll-target="#poisson-dağılımı">Poisson Dağılımı</a>
+  <ul class="collapse">
+  <li><a href="#poisson-dağılımının-tanımı" id="toc-poisson-dağılımının-tanımı" class="nav-link" data-scroll-target="#poisson-dağılımının-tanımı">Poisson Dağılımının Tanımı</a></li>
+  <li><a href="#futbol-maçlarında-poisson-dağılımının-kullanımı" id="toc-futbol-maçlarında-poisson-dağılımının-kullanımı" class="nav-link" data-scroll-target="#futbol-maçlarında-poisson-dağılımının-kullanımı">Futbol Maçlarında Poisson Dağılımının Kullanımı</a></li>
+  </ul></li>
+  <li><a href="#veri-setlerinin-içe-aktarılması-ve-düzenlenmesi" id="toc-veri-setlerinin-içe-aktarılması-ve-düzenlenmesi" class="nav-link" data-scroll-target="#veri-setlerinin-içe-aktarılması-ve-düzenlenmesi">Veri Setlerinin İçe Aktarılması ve Düzenlenmesi</a></li>
+  <li><a href="#hesaplama-ve-öngörü" id="toc-hesaplama-ve-öngörü" class="nav-link" data-scroll-target="#hesaplama-ve-öngörü">Hesaplama ve Öngörü</a>
+  <ul class="collapse">
+  <li><a href="#hesaplamanın-matematiği" id="toc-hesaplamanın-matematiği" class="nav-link" data-scroll-target="#hesaplamanın-matematiği">Hesaplamanın Matematiği</a></li>
+  <li><a href="#avrupa-futbol-şampiyonası-grup-maçları-öngörüleri" id="toc-avrupa-futbol-şampiyonası-grup-maçları-öngörüleri" class="nav-link" data-scroll-target="#avrupa-futbol-şampiyonası-grup-maçları-öngörüleri">2020 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</a>
+  <ul class="collapse">
+  <li><a href="#örnek-türkiye-italya" id="toc-örnek-türkiye-italya" class="nav-link" data-scroll-target="#örnek-türkiye-italya">Örnek (Türkiye-İtalya)</a></li>
+  <li><a href="#öngörüleri-ne-kadar-başarılı-olurdu" id="toc-öngörüleri-ne-kadar-başarılı-olurdu" class="nav-link" data-scroll-target="#öngörüleri-ne-kadar-başarılı-olurdu">2020 Öngörüleri Ne Kadar Başarılı Olurdu?</a></li>
+  </ul></li>
+  <li><a href="#avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1" id="toc-avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1" class="nav-link" data-scroll-target="#avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1">2024 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="giriş" class="level1">
+<h1>Giriş</h1>
+<p>Poisson dağılımının nasıl çalıştığını ve 2024 Avrupa Futbol Şampiyonası grup maçları ya da genel olarak futbol maçları için nasıl öngörülerde bulunabileceğimizi öğreneceğiz.</p>
+</section>
+<section id="kullanılacak-kütüphaneler" class="level1">
+<h1>Kullanılacak Kütüphaneler</h1>
+<div id="01d0bc0f" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> poisson</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="poisson-dağılımı" class="level1">
+<h1>Poisson Dağılımı</h1>
+<section id="poisson-dağılımının-tanımı" class="level2">
+<h2 class="anchored" data-anchor-id="poisson-dağılımının-tanımı">Poisson Dağılımının Tanımı</h2>
+<p>Poisson dağılımı, istatistik ve olasılık teorisinde sıkça kullanılan bir olasılık dağılımıdır. Adını Fransız matematikçi Siméon Denis Poisson’dan alan bu dağılım, belirli bir zaman dilimi içinde belirli bir olayın meydana gelme olasılığını modellemek için kullanılır. Özellikle nadir olayların incelenmesinde etkilidir.</p>
+<p>Poisson dağılımı, aşağıdaki gibi çeşitli alanlarda geniş bir uygulama yelpazesine sahiptir.</p>
+<ul>
+<li>Telekomünikasyon: Bir telefon hattında belirli bir süre içinde alınan çağrıların sayısını modellemek.</li>
+<li>Web Trafiği: Bir web sitesinde belirli bir süre içinde gerçekleşen tıklama sayısını tahmin etmek.</li>
+<li>Kalite Kontrol: Üretim hattında belirli bir zaman diliminde meydana gelen hata veya kusur sayısını izlemek.</li>
+<li>Sağlık Hizmetleri: Acil servise belirli bir zaman diliminde gelen hasta sayısını tahmin etmek.</li>
+<li>Doğal Afetler: Belirli bir bölgede meydana gelen deprem veya sel gibi olayların sayısını modellemek.</li>
+</ul>
+<p>Poisson dağılımını kullanmak için aşağıdaki koşulların sağlanıp sağlanmadığına bakmak gerekiyor.</p>
+<ul>
+<li>Olaylar belirli bir zaman diliminde veya alanda bağımsız olarak meydana gelir. Bir maçta atılan gollerin sayısı, maçtaki diğer olaylardan (örneğin, kart gösterme, faul yapma, köşe vuruşu kullanma) etkilenmez. Her gol atışı birbirinden bağımsızdır ve diğer olayları etkilemez.</li>
+<li>Bir olayın meydana gelme olasılığı, belirli bir zaman dilimi veya alan içinde sabittir. Örneğin, bir takımın ortalama olarak maç başına 2 gol attığını düşünelim. Bu, belirli bir zaman aralığında (örneğin, sezon boyunca) sabit bir gol oranı olduğunu gösterir.</li>
+<li>İki veya daha fazla olayın aynı anda meydana gelme olasılığı ihmal edilecek kadar küçüktür. Örneğin, aynı an içinde iki takımın da birer gol atması çok nadir bir durumdur. Bu durum, Poisson dağılımının uygulanabilirliği için gerekli olan nadirlik koşulunu sağlar.</li>
+</ul>
+<p>Poisson dağılımında ortalama ve varyans birbirine eşittir. Yani, <span class="math inline">\(E(X) = Var(X)\)</span> olacaktır.</p>
+<p>Poisson dağılımının olasılık kütle fonksiyonu (PMF) aşağıdaki gibi ifade edilir.</p>
+<p><span class="math inline">\(P(X=k) = \frac{\lambda^ke^{-\lambda}}{k!}\)</span></p>
+<ul>
+<li><span class="math inline">\(X\)</span>: Belirli bir zaman diliminde meydana gelen olayların sayısı</li>
+<li><span class="math inline">\(k\)</span>: Olay sayısı (0, 1, 2, …)</li>
+<li><span class="math inline">\(\lambda\)</span>: Belirli bir zaman diliminde beklenen olay sayısı (ortalama)</li>
+<li><span class="math inline">\(e\)</span>: Euler sabiti (~2.71828)</li>
+</ul>
+</section>
+<section id="futbol-maçlarında-poisson-dağılımının-kullanımı" class="level2">
+<h2 class="anchored" data-anchor-id="futbol-maçlarında-poisson-dağılımının-kullanımı">Futbol Maçlarında Poisson Dağılımının Kullanımı</h2>
+<p>Poisson dağılımı, futbol maçlarında bir takımın belirli bir maçta atacağı gol sayısını öngörmek ve sonuç olasılıklarını hesaplamak için kullanılabilir. Örneğin, belirli bir takımın ortalama olarak 2.5 gol attığını varsayalım (<span class="math inline">\(\lambda\)</span>=2.5). Bu durumda, bu takımın 0, 1, 2, 3, … gol atma olasılıklarını hesaplayabiliriz.</p>
+<p>Bir takımın ortalama olarak 2.5 gol attığını düşünelim ve 0’dan 10’a kadar gol atma olasılıklarını hesaplayalım.</p>
+<div id="4f1fb4d0" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lambda_goals <span class="op">=</span> <span class="fl">2.5</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>goal_counts <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>poisson_probabilities <span class="op">=</span> poisson.pmf(goal_counts, lambda_goals)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, p <span class="kw">in</span> <span class="bu">zip</span>(goal_counts, poisson_probabilities):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Probability of scoring </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> goals: </span><span class="sc">{</span>p<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.bar(goal_counts, poisson_probabilities, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Number of Goals'</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Probability'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Goal Scoring Probabilities Using Poisson Distribution'</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.xticks(goal_counts)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Çıktı:</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 0 goals: 0.0821</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 1 goals: 0.2052</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 2 goals: 0.2565</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 3 goals: 0.2138</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 4 goals: 0.1336</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 5 goals: 0.0668</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 6 goals: 0.0278</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 7 goals: 0.0099</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 8 goals: 0.0031</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 9 goals: 0.0009</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of scoring 10 goals: 0.0002</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_1.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="veri-setlerinin-içe-aktarılması-ve-düzenlenmesi" class="level1">
+<h1>Veri Setlerinin İçe Aktarılması ve Düzenlenmesi</h1>
+<p>Kullanacağımız veri setini Kaggle’dan indirebilirsiniz.</p>
+<p><a href="https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017">International football results from 1872 to 2024</a></p>
+<p>Tüm veri setlerine ise <a href="https://urazakgul.github.io/python-blog/posts/post_16/" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
+<p>Verileri yükleyecek ve düzenlemeleri yapacak fonksiyon <code>load_data</code>’dır.</p>
+<div id="19eb7958" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data(historical_file):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    historical_results <span class="op">=</span> pd.read_csv(historical_file)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    historical_results[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(historical_results[<span class="st">'date'</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    historical_results[<span class="st">'home_team'</span>] <span class="op">=</span> historical_results[<span class="st">'home_team'</span>].replace(<span class="st">'Czech Republic'</span>, <span class="st">'Czechia'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    historical_results[<span class="st">'away_team'</span>] <span class="op">=</span> historical_results[<span class="st">'away_team'</span>].replace(<span class="st">'Czech Republic'</span>, <span class="st">'Czechia'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    historical_results <span class="op">=</span> historical_results[historical_results[<span class="st">'tournament'</span>].isin([<span class="st">'UEFA Euro'</span>,<span class="st">'UEFA Euro qualification'</span>,<span class="st">'UEFA Nations League'</span>])]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    historical_results <span class="op">=</span> historical_results.dropna(subset<span class="op">=</span>[<span class="st">'home_score'</span>,<span class="st">'away_score'</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    historical_results[<span class="st">'home_score'</span>] <span class="op">=</span> historical_results[<span class="st">'home_score'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    historical_results[<span class="st">'away_score'</span>] <span class="op">=</span> historical_results[<span class="st">'away_score'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> historical_results</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>historical_results <span class="op">=</span> load_data(<span class="st">'historical_results.csv'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yıllara özel filtreleme yapacak fonksiyon ise <code>filter_historical_data</code>’dır.</p>
+<div id="b4494866" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_historical_data(historical_results, cutoff_date, countries):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    filtered_results <span class="op">=</span> historical_results[historical_results[<span class="st">'date'</span>] <span class="op">&lt;</span> cutoff_date]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    filtered_results <span class="op">=</span> filtered_results[</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        (filtered_results[<span class="st">'home_team'</span>].isin(countries[<span class="st">'country'</span>])) <span class="op">&amp;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        (filtered_results[<span class="st">'away_team'</span>].isin(countries[<span class="st">'country'</span>]))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> filtered_results</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="hesaplama-ve-öngörü" class="level1">
+<h1>Hesaplama ve Öngörü</h1>
+<section id="hesaplamanın-matematiği" class="level2">
+<h2 class="anchored" data-anchor-id="hesaplamanın-matematiği">Hesaplamanın Matematiği</h2>
+<p>Turnuvadaki ortalama gol beklentisini (average goal expectancy), her iki taraf için de saldırı gücü (attack strength) ve savunma gücünü (defence strength) hesaplamamız gerekiyor. Takımın gol beklentisi, hem takımın saldırı gücü ve savunma gücüne hem de karşı takımın saldırı ve savunma gücüne bağlıdır.</p>
+<p><code>calculate_strengths</code> ve <code>calculate_goal_expectancy</code> fonksiyonları ile yukarıda belirttiğimiz hesaplamaları yapacağız.</p>
+<div id="7d55de8f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_strengths(historical_results_df):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_strengths_for_team(historical_results_df, column_team, column_score):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        team_strength <span class="op">=</span> {}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        total_goals <span class="op">=</span> historical_results_df[column_score].<span class="bu">sum</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        total_matches <span class="op">=</span> <span class="bu">len</span>(historical_results_df[column_team])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        total_avg <span class="op">=</span> total_goals <span class="op">/</span> total_matches</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> team <span class="kw">in</span> historical_results_df[column_team].unique():</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            team_goals <span class="op">=</span> historical_results_df.loc[historical_results_df[column_team] <span class="op">==</span> team, column_score].<span class="bu">sum</span>()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            team_matches <span class="op">=</span> <span class="bu">len</span>(historical_results_df[historical_results_df[column_team] <span class="op">==</span> team])</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            team_avg <span class="op">=</span> team_goals <span class="op">/</span> team_matches</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            team_strength[team] <span class="op">=</span> team_avg <span class="op">/</span> total_avg</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> team_strength</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    home_attack_strength <span class="op">=</span> calculate_strengths_for_team(historical_results_df, <span class="st">'home_team'</span>, <span class="st">'home_score'</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    away_attack_strength <span class="op">=</span> calculate_strengths_for_team(historical_results_df, <span class="st">'away_team'</span>, <span class="st">'away_score'</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    home_defence_strength <span class="op">=</span> calculate_strengths_for_team(historical_results_df, <span class="st">'home_team'</span>, <span class="st">'away_score'</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    away_defence_strength <span class="op">=</span> calculate_strengths_for_team(historical_results_df, <span class="st">'away_team'</span>, <span class="st">'home_score'</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> home_attack_strength, away_attack_strength, home_defence_strength, away_defence_strength</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_goal_expectancy(matches, strengths, historical_results_df):</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    home_attack_strength, away_attack_strength, home_defence_strength, away_defence_strength <span class="op">=</span> strengths</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    goal_expectancy <span class="op">=</span> []</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index, match <span class="kw">in</span> matches.iterrows():</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        team1 <span class="op">=</span> match[<span class="st">'team1'</span>]</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        team2 <span class="op">=</span> match[<span class="st">'team2'</span>]</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        team1_attack_strength <span class="op">=</span> home_attack_strength.get(team1, <span class="fl">1.0</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        team2_defence_strength <span class="op">=</span> away_defence_strength.get(team2, <span class="fl">1.0</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        home_goals_avg <span class="op">=</span> historical_results_df[<span class="st">'home_score'</span>].<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(historical_results_df[<span class="st">'home_team'</span>])</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        team1_expectancy <span class="op">=</span> team1_attack_strength <span class="op">*</span> team2_defence_strength <span class="op">*</span> home_goals_avg</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        team2_attack_strength <span class="op">=</span> away_attack_strength.get(team2, <span class="fl">1.0</span>)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>        team1_defence_strength <span class="op">=</span> home_defence_strength.get(team1, <span class="fl">1.0</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        away_goals_avg <span class="op">=</span> historical_results_df[<span class="st">'away_score'</span>].<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(historical_results_df[<span class="st">'away_team'</span>])</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        team2_expectancy <span class="op">=</span> team2_attack_strength <span class="op">*</span> team1_defence_strength <span class="op">*</span> away_goals_avg</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        goal_expectancy.append((team1, team2, team1_expectancy, team2_expectancy))</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(goal_expectancy, columns<span class="op">=</span>[<span class="st">'Team1'</span>, <span class="st">'Team2'</span>, <span class="st">'Team1_Expectancy'</span>, <span class="st">'Team2_Expectancy'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Son olarak, <code>match_probabilities</code> fonksiyonu ile olasılıkları hesaplayıp <code>calculate_match_probabilities</code> ile veri çerçevesini ortaya çıkaracağız.</p>
+<div id="e6c12262" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> match_probabilities(lambda1, lambda2, max_goals<span class="op">=</span><span class="dv">5</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> np.zeros((max_goals<span class="op">+</span><span class="dv">1</span>, max_goals<span class="op">+</span><span class="dv">1</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(max_goals<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(max_goals<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            probs[i, j] <span class="op">=</span> (np.exp(<span class="op">-</span>lambda1) <span class="op">*</span> lambda1<span class="op">**</span>i <span class="op">/</span> np.math.factorial(i)) <span class="op">*</span> (np.exp(<span class="op">-</span>lambda2) <span class="op">*</span> lambda2<span class="op">**</span>j <span class="op">/</span> np.math.factorial(j))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> probs <span class="op">/</span> np.<span class="bu">sum</span>(probs)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_match_probabilities(goal_expectancy_df):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    goal_expectancy_df[<span class="st">'Team1_Win_Prob'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    goal_expectancy_df[<span class="st">'Team2_Win_Prob'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    goal_expectancy_df[<span class="st">'Draw_Prob'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index, row <span class="kw">in</span> goal_expectancy_df.iterrows():</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        lambda1 <span class="op">=</span> row[<span class="st">'Team1_Expectancy'</span>]</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        lambda2 <span class="op">=</span> row[<span class="st">'Team2_Expectancy'</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        match_probs <span class="op">=</span> match_probabilities(lambda1, lambda2)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        goal_expectancy_df.at[index, <span class="st">'Team1_Win_Prob'</span>] <span class="op">=</span> np.<span class="bu">sum</span>(np.tril(match_probs, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        goal_expectancy_df.at[index, <span class="st">'Team2_Win_Prob'</span>] <span class="op">=</span> np.<span class="bu">sum</span>(np.triu(match_probs, <span class="dv">1</span>))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        goal_expectancy_df.at[index, <span class="st">'Draw_Prob'</span>] <span class="op">=</span> np.<span class="bu">sum</span>(np.diag(match_probs))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> goal_expectancy_df</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri" class="level2">
+<h2 class="anchored" data-anchor-id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri">2020 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</h2>
+<p>2020 yılına ait verileri içe aktaralım.</p>
+<div id="7b8adea5" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>euro_2020_countries <span class="op">=</span> pd.read_excel(<span class="st">'euro_2020_countries.xlsx'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>matches_2020 <span class="op">=</span> pd.read_excel(<span class="st">'matches_2020.xlsx'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>cutoff_date <span class="op">=</span> <span class="st">'2021-06-11'</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>historical_results_2020 <span class="op">=</span> filter_historical_data(historical_results, cutoff_date, euro_2020_countries)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>strengths_2020 <span class="op">=</span> calculate_strengths(historical_results_2020)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2020 <span class="op">=</span> calculate_goal_expectancy(matches_2020, strengths_2020, historical_results_2020)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2020 <span class="op">=</span> calculate_match_probabilities(goal_expectancy_df_2020)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="örnek-türkiye-italya" class="level3">
+<h3 class="anchored" data-anchor-id="örnek-türkiye-italya">Örnek (Türkiye-İtalya)</h3>
+<p>Daha net anlamak adına Türkiye-İtalya maçı örneğine bakalım.</p>
+<ul>
+<li>Ev sahibi takım Türkiye ve deplasman takımı İtalya’nın saldırı gücü nedir?</li>
+</ul>
+<p>Ev sahibi takım için saldırı gücü, ev sahibi takımın attığı ortalama gol sayısının turnuvadaki ev sahibi takımların attığı ortalama gol sayısına bölümüdür.</p>
+<p>Türkiye 39 maçta 44 gol atarken, tüm takımlar 859 maçta 1284 gol atmıştır. Türkiye’nin saldırı gücü = (44/39) / (1284/859) = 0.7547727454269509’dur.</p>
+<p>Deplasman takımı için saldırı gücü, deplasman takımının attığı ortalama gol sayısının turnuvadaki deplasman takımlarının attığı ortalama gol sayısına bölümüdür.</p>
+<p>İtalya 48 maçta 45 gol atarken, tüm takımlar 859 maçta 911 gol atmıştır. İtalya’nın saldırı gücü = (45/48) / (911/859) = 0.8839873765093305’tir.</p>
+<ul>
+<li>Ev sahibi takım Türkiye ve deplasman takımı İtalya’nın savunma gücü nedir?</li>
+</ul>
+<p>Ev sahibi takım için savunma gücü, ev sahibi takımın yediği ortalama gol sayısının turnuvadaki ev sahibi takımların yediği ortalama gol sayısına bölümüdür.</p>
+<p>Türkiye 39 maçta 46 gol yerken, tüm takımlar 859 maçta 911 gol yemiştir. Türkiye’nin savunma gücü = (46/39) / (911/859) = 1.1121618959160122’dir.</p>
+<p>Deplasman takımı için savunma gücü, deplasman takımının yediği ortalama gol sayısının turnuvadaki deplasman takımlarının yediği ortalama gol sayısına bölümüdür.</p>
+<p>İtalya 48 maçta 44 gol yerken, tüm takımlar 859 maçta 1284 gol yemiştir. İtalya’nın savunma gücü = (44/48) / (1284/859) = 0.6132528556593977’dir.</p>
+<ul>
+<li>Ev sahibi takım Türkiye ve deplasman takımı İtalya’nın gol beklentisi nedir?</li>
+</ul>
+<p>Ev sahibi takım için gol beklentisi, takımın saldırı gücü, rakibin savunma gücü ve ev sahibi takımların ortalama gol sayısının çarpımıdır.</p>
+<p>Türkiye’nin saldırı gücü 0.7547727454269509, İtalya’nın savunma gücü 0.6132528556593977 ve ev sahibi takımların ortalama gol sayısı 1.4947613504074506’dır. Bu durumda Türkiye’nin gol beklentisi 0.6918750166413717’dir.</p>
+<p>Deplasman takımı için gol beklentisi, takımın saldırı gücü, rakibin savunma gücü ve deplasman takımlarının ortalama gol sayısının çarpımıdır.</p>
+<p>İtalya’nın saldırı gücü 0.8839873765093305, Türkiye’nin savunma gücücü 1.1121618959160122 ve ev sahibi takımların ortalama gol sayısı 1.060535506402794’tür. Bu durumda İtalya’nın gol beklentisi 1.0426517774212616’dır.</p>
+<p>Peki, sonuçlar gerçekten de hesapladığımız gibi mi?</p>
+<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
+<p>Sağlamasını yapmış olduk.</p>
+<p>Sonrasında, maksimum 5 gol için olasılıkları hesaplayacağız.</p>
+<p>Türkiye’nin gol beklentisine <span class="math inline">\(\lambda_T\)</span>; İtalya’nın gol beklentisine <span class="math inline">\(\lambda_I\)</span> diyelim.</p>
+<p><span class="math inline">\(\lambda_T\)</span> = 0.6918750166413717 ve <span class="math inline">\(\lambda_I\)</span> = 1.0426517774212616’dır.</p>
+<p><span class="math inline">\(P(k; \lambda_T) = \frac{\lambda^ke^{-\lambda}}{k!}\)</span></p>
+<p>Türkiye için gol olasılıkları:</p>
+<p><span class="math inline">\(P(0; \lambda_T) = \frac{0.6918750166413717^0 e^{-0.6918750166413717}}{0!}\)</span></p>
+<p><span class="math inline">\(P(1; \lambda_T) = \frac{0.6918750166413717^1 e^{-0.6918750166413717}}{1!}\)</span></p>
+<p><span class="math inline">\(P(2; \lambda_T) = \frac{0.6918750166413717^2 e^{-0.6918750166413717}}{2!}\)</span></p>
+<p><span class="math inline">\(P(3; \lambda_T) = \frac{0.6918750166413717^3 e^{-0.6918750166413717}}{3!}\)</span></p>
+<p><span class="math inline">\(P(4; \lambda_T) = \frac{0.6918750166413717^4 e^{-0.6918750166413717}}{4!}\)</span></p>
+<p><span class="math inline">\(P(5; \lambda_T) = \frac{0.6918750166413717^5 e^{-0.6918750166413717}}{5!}\)</span></p>
+<p>İtalya için gol olasılıkları:</p>
+<p><span class="math inline">\(P(0; \lambda_I) = \frac{1.0426517774212616^0 e^{-1.0426517774212616}}{0!}\)</span></p>
+<p><span class="math inline">\(P(1; \lambda_I) = \frac{1.0426517774212616^1 e^{-1.0426517774212616}}{1!}\)</span></p>
+<p><span class="math inline">\(P(2; \lambda_I) = \frac{1.0426517774212616^2 e^{-1.0426517774212616}}{2!}\)</span></p>
+<p><span class="math inline">\(P(3; \lambda_I) = \frac{1.0426517774212616^3 e^{-1.0426517774212616}}{3!}\)</span></p>
+<p><span class="math inline">\(P(4; \lambda_I) = \frac{1.0426517774212616^4 e^{-1.0426517774212616}}{4!}\)</span></p>
+<p><span class="math inline">\(P(5; \lambda_I) = \frac{1.0426517774212616^5 e^{-1.0426517774212616}}{5!}\)</span></p>
+<p>Maç için gol olasılıkları:</p>
+<p>Her iki takımın olasılıklarının çarpımıdır. Örneğin, sonucun 1-2 olma olasılığına bakalım.</p>
+<p><span class="math inline">\(P(Türkiye=1) * P(İtalya=2) = 0.34637788 * 0.19161551 = 0.0663713741289188\)</span></p>
+<p>Kod kullanarak aşağıdaki gibi hesaplnabilir.</p>
+<div id="91301a37" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lambda_T <span class="op">=</span> <span class="fl">0.6918750166413717</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lambda_I <span class="op">=</span> <span class="fl">1.0426517774212616</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>goals <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">6</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>probabilities_T <span class="op">=</span> poisson.pmf(goals, lambda_T)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>probabilities_I <span class="op">=</span> poisson.pmf(goals, lambda_I)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>prob_matrix <span class="op">=</span> np.outer(probabilities_T, probabilities_I)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.imshow(prob_matrix, cmap<span class="op">=</span><span class="st">'viridis'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(prob_matrix.shape[<span class="dv">0</span>]):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(prob_matrix.shape[<span class="dv">1</span>]):</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        plt.text(j, i, <span class="ss">f'</span><span class="sc">{</span>prob_matrix[i, j]<span class="sc">:.4f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, color<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Italy Goals'</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Turkey Goals'</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Goal Probability Matrix Heatmap'</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.xticks(np.arange(<span class="bu">len</span>(goals)), goals)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.yticks(np.arange(<span class="bu">len</span>(goals)), goals)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Probability'</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_3.png" class="img-fluid"></p>
+<p>0-0, 1-1, 2-2, 3-3, 4-4 ve 5-5 birleşiminin altında kalan alanın toplamı Türkiye’nin, üstünde kalan alanın toplamı ise İtalya’nın kazanma olasılıklarıdır. Aynı gol sayılarının kesişimlerinin toplamı ise beraberlik olasılığıdır.</p>
+<p>Örneğimizde, Türkiye’nin kazanma olasılığı 0.239113, İtalya’nın kazanma olasılığı 0.431935 ve beraberlik olasılığı 0.328952 çıkacaktır. Bu maçın sonucunda İtalya 3-0 kazanmıştı.</p>
+</section>
+<section id="öngörüleri-ne-kadar-başarılı-olurdu" class="level3">
+<h3 class="anchored" data-anchor-id="öngörüleri-ne-kadar-başarılı-olurdu">2020 Öngörüleri Ne Kadar Başarılı Olurdu?</h3>
+<div id="d686aa72" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> determine_winner_prob(row):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'Team1_Win_Prob'</span>] <span class="op">&gt;</span> row[<span class="st">'Team2_Win_Prob'</span>] <span class="kw">and</span> row[<span class="st">'Team1_Win_Prob'</span>] <span class="op">&gt;</span> row[<span class="st">'Draw_Prob'</span>]:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'Team1'</span>]<span class="sc">}</span><span class="ss"> wins"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row[<span class="st">'Team2_Win_Prob'</span>] <span class="op">&gt;</span> row[<span class="st">'Team1_Win_Prob'</span>] <span class="kw">and</span> row[<span class="st">'Team2_Win_Prob'</span>] <span class="op">&gt;</span> row[<span class="st">'Draw_Prob'</span>]:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'Team2'</span>]<span class="sc">}</span><span class="ss"> wins"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"No Winner"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2020[<span class="st">'result'</span>] <span class="op">=</span> goal_expectancy_df_2020.<span class="bu">apply</span>(determine_winner_prob, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> determine_winner(row):</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'team1_score'</span>] <span class="op">&gt;</span> row[<span class="st">'team2_score'</span>]:</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'team1'</span>]<span class="sc">}</span><span class="ss"> wins"</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row[<span class="st">'team2_score'</span>] <span class="op">&gt;</span> row[<span class="st">'team1_score'</span>]:</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'team2'</span>]<span class="sc">}</span><span class="ss"> wins"</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"No Winner"</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>matches_2020[<span class="st">'result'</span>] <span class="op">=</span> matches_2020.<span class="bu">apply</span>(determine_winner, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>matches_2020[<span class="st">'prob_result'</span>] <span class="op">=</span> goal_expectancy_df_2020[<span class="st">'result'</span>]</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>matches_equal_prob <span class="op">=</span> matches_2020[matches_2020[<span class="st">'result'</span>] <span class="op">==</span> matches_2020[<span class="st">'prob_result'</span>]]</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>matching_count <span class="op">=</span> <span class="bu">len</span>(matches_equal_prob)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> matching_count <span class="op">/</span> <span class="bu">len</span>(matches_2020)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Başarı oranı %56 olmuştur ki bu da neredeyse yazı-tura atmak ile aynıdır.</p>
+</section>
+</section>
+<section id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1" class="level2">
+<h2 class="anchored" data-anchor-id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1">2024 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</h2>
+<p>Her ne kadar 2020 öngörüleri tatmin edici bir sonuç vermese de 2024 yılı için de öngörülerimizi yapalım.</p>
+<div id="775a3d8e" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>euro_2024_countries <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_countries.xlsx'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>matches_2024 <span class="op">=</span> pd.read_excel(<span class="st">'matches_2024.xlsx'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>cutoff_date <span class="op">=</span> <span class="st">'2024-06-14'</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>historical_results_2024 <span class="op">=</span> filter_historical_data(historical_results, cutoff_date, euro_2024_countries)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>strengths_2024 <span class="op">=</span> calculate_strengths(historical_results_2024)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2024 <span class="op">=</span> calculate_goal_expectancy(matches_2024, strengths_2024, historical_results_2024)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2024 <span class="op">=</span> calculate_match_probabilities(goal_expectancy_df_2024)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2024[<span class="st">'Result'</span>] <span class="op">=</span> goal_expectancy_df_2024.<span class="bu">apply</span>(determine_winner_prob, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Sonuçları daha güzel gösterebiliriz.</p>
+<div id="48f8fc33" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> highlight_max_prob(row):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    max_prob <span class="op">=</span> row[[<span class="st">'Team1_Win_Prob'</span>, <span class="st">'Team2_Win_Prob'</span>, <span class="st">'Draw_Prob'</span>]].<span class="bu">max</span>()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">'background-color: red'</span> <span class="cf">if</span> v <span class="op">==</span> max_prob <span class="cf">else</span> <span class="st">''</span> <span class="cf">for</span> v <span class="kw">in</span> row]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>styled_matches <span class="op">=</span> goal_expectancy_df_2024.style.<span class="bu">apply</span>(highlight_max_prob, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>html_styled_matches <span class="op">=</span> styled_matches.to_html()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'styled_matches.html'</span>, <span class="st">'w'</span>) <span class="im">as</span> f:</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    f.write(html_styled_matches)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
+<p>Yapılabilecek ilk eleştiri, beraberlik sonucunun çıkmaması olabilir. İkinci bir eleştiri, Poisson dağılıma uygun olduğu varsayımı yapılıp herhangi bir testin yapılmaması olabilir.</p>
+<p>Başarısızlıktan öte, Poisson dağılımını anlamak var olanı ya da yeni yöntemleri geliştirmede etkili olacaktır. Bu, eğer atmadıysanız ilk adımınız olsun.</p>
+<p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Kopyalandı");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopyalandı");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

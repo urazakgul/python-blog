@@ -118,3 +118,5 @@ styled_df = df.style.applymap(color_label, subset=['Label'])
 ```
 
 ![](imgs/img_1.PNG)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*
