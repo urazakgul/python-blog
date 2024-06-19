@@ -135,7 +135,7 @@ Türkiye:
 
 * PC1 (2.390800): Topa sahip olma, pas doğruluğu, pas sayısı gibi metriklerde yüksek değerlere sahip.
 * PC2 (-1.030163): Mesafe kat etme ve belirli savunma istatistiklerinde etkili olabilir.
-* Türkiye, hücum ve topa sahip olma konularında güçlü görünüyor. Ancak, savunma zafiyetleri veya düşük mesafe kat etme gibi konularda eksiklikleri olabilir.
+* Türkiye, hücum ve topa sahip olma konularında güçlü görünüyor. Ancak savunma zafiyetleri veya düşük mesafe kat etme gibi konularda eksiklikleri olabilir.
 
 Portekiz:
 
@@ -143,7 +143,7 @@ Portekiz:
 * PC2 (-0.983510): Mesafe kat etme ve savunma istatistiklerinde zayıflık olabilir.
 * Portekiz, hücum ve topa sahip olma konularında mükemmel bir performans sergiliyor. Ancak savunma veya mesafe kat etme gibi konularda bazı eksiklikler olabilir.
 
-Portekiz oldukça güçlü bir rakip, özellikle hücumda çok etkili oldukları görülüyor. Ancak, savunma zafiyetleri onların zayıf noktası olabilir. Türkiye'nin bu zayıflıkları kullanması gerekiyor.
+Portekiz oldukça güçlü bir rakip, özellikle hücumda çok etkili oldukları görülüyor. Ancak savunma zafiyetleri onların zayıf noktası olabilir. Türkiye'nin bu zayıflıkları kullanması gerekiyor.
 
 Çekya:
 

@@ -258,7 +258,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="ce46d4b1" class="cell" data-execution_count="1">
+<div id="5a2fe961" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> syllapy</span>
@@ -282,7 +282,7 @@ window.Quarto = {
 </section>
 <section id="veri-setinin-içe-aktarılması-ve-bazı-ayarların-yapılması" class="level1">
 <h1>Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması</h1>
-<div id="149ede9b" class="cell" data-execution_count="2">
+<div id="01d7bc47" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">'cbrt_press_releases.xlsx'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Date'</span>], dayfirst<span class="op">=</span><span class="va">True</span>)</span>
@@ -292,7 +292,7 @@ window.Quarto = {
 </section>
 <section id="indeksin-hesaplanması" class="level1">
 <h1>İndeksin Hesaplanması</h1>
-<div id="2d373476" class="cell" data-execution_count="3">
+<div id="ee353e3d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gunning_fog_index(text):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="vs">r'(\b\d+)\.(\d+\b)'</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(pattern, <span class="vs">r'\1,\2'</span>, text)</span>
@@ -317,7 +317,7 @@ window.Quarto = {
 </section>
 <section id="indeksin-görselleştirilmesi" class="level1">
 <h1>İndeksin Görselleştirilmesi</h1>
-<div id="b65bc94f" class="cell" data-execution_count="4">
+<div id="4f545303" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(df.index, df[<span class="st">'Gunning_Fog_Index'</span>], c<span class="op">=</span>df[<span class="st">'Gunning_Fog_Index'</span>], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"CBRT's Clarity Rating by Gunning's Fog Index"</span>)</span>
@@ -337,7 +337,7 @@ window.Quarto = {
 </div>
 <p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p>İndeks değeri arttıkça okunabilirliğin zorlaştığını söyleyebiliriz. Tarihsel bazda baktığımızda okunabilirliğin gittikçe zorlaştığını görüyoruz.</p>
-<div id="afeaa179" class="cell" data-execution_count="5">
+<div id="466d4d32" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>governor_stats <span class="op">=</span> df.groupby(<span class="st">'Governor'</span>)[<span class="st">'Gunning_Fog_Index'</span>].agg([<span class="st">'mean'</span>, <span class="st">'std'</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -369,7 +369,7 @@ window.Quarto = {
 <section id="textstat-paketini-neden-kullanmadık" class="level1">
 <h1><code>textstat</code> Paketini Neden Kullanmadık?</h1>
 <p><code>textstat</code> paketi yaygın olarak kullanılsa da aşağıdaki görselde görüleceği üzere indeks değerleri arasında ciddi farklılıklar oluşmaktadır.</p>
-<div id="101bc273" class="cell" data-execution_count="6">
+<div id="6f0bbd6a" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> textstat_gunning_fog_index(text):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="vs">r'(\b\d+)\.(\d+\b)'</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> re.sub(pattern, <span class="vs">r'\1,\2'</span>, text)</span>
@@ -406,7 +406,7 @@ window.Quarto = {
 </div>
 <p><img src="imgs/img_4.png" class="img-fluid"></p>
 <p>Teyit etmek için son duyuru metnini (25/04/2024) alalım.</p>
-<div id="c35810ea" class="cell" data-execution_count="7">
+<div id="6c1e07ab" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> df.loc[<span class="st">'2024-04-25'</span>,<span class="st">'Text'</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r'(\b\d+)\.(\d+\b)'</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> re.sub(pattern, <span class="vs">r'\1,\2'</span>, text)</span>
@@ -416,19 +416,19 @@ window.Quarto = {
 <p><img src="imgs/img_5.PNG" class="img-fluid"></p>
 <p>Manuel hesaplama ile yukarıdaki sonuçları karşılaştıralım.</p>
 <p>Cümle sayısı 17.</p>
-<div id="b62fe4cf" class="cell" data-execution_count="8">
+<div id="5de93400" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> re.split(<span class="vs">r'(?&lt;=[.!?])\s+'</span>, text)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>num_sentences <span class="op">=</span> <span class="bu">len</span>(sentences)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(num_sentences)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Kelime sayısı 379. 2 kelime farkı sayılardan geliyor. Sayıları çıkarmıştık.</p>
-<div id="a9827be8" class="cell" data-execution_count="9">
+<div id="3274cdd5" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> re.findall(<span class="vs">r'\b(?:[a-zA-Z]+(?:-[a-zA-Z]+)?|-)\b'</span>, text)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>num_words <span class="op">=</span> <span class="bu">len</span>(words)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(num_words)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Hece sayısı 750. 3 hecelik fark web sitesi ile kullandığımız <code>syllapy</code> paketi arasındaki yöntem farklılığından kaynaklanıyor. Örneğin, web sitesinde “ongoing” için hece sayısını 2 verirken, paket ve online ortamdaki kaynaklar 3 veriyor.</p>
-<div id="f2952f64" class="cell" data-execution_count="10">
+<div id="76d26554" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>syllable_counter <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> words:</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    word_syllable <span class="op">=</span> syllapy.count(word)</span>
@@ -437,11 +437,11 @@ window.Quarto = {
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllable_counter)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>İndeks değerini 22.53 buluyoruz. Benchmark aldığımız web sitesi 21.98 buluyor. Pek farklılık yok.</p>
-<div id="364ae4c2" class="cell" data-execution_count="11">
+<div id="9eeb1641" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gunning_fog_index(text)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>textstat</code> paketi ise sonucu 15.15 veriyor ki ciddi anlamda sapıyor.</p>
-<div id="29091e83" class="cell" data-execution_count="12">
+<div id="24835b0f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>textstat.gunning_fog(text)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
