@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Korelasyon Tahmin Oyunu</title>
+<title>Python Blog - Temel Bileşenler Analizi ile 2024 Avrupa Futbol Şampiyonası İlk Grup Maçları Sonrası Takım Konumlarının Belirlenmesi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,35 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -189,11 +160,10 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Korelasyon Tahmin Oyunu</h1>
+      <h1 class="title">Temel Bileşenler Analizi ile 2024 Avrupa Futbol Şampiyonası İlk Grup Maçları Sonrası Takım Konumlarının Belirlenmesi</h1>
                                 <div class="quarto-categories">
+                <div class="quarto-category">Futbol</div>
                 <div class="quarto-category">İstatistik</div>
-                <div class="quarto-category">Oyun</div>
-                <div class="quarto-category">Web Uygulaması</div>
               </div>
                   </div>
   </div>
@@ -211,14 +181,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Mart 24, 2024</p>
+        <p class="date">Haziran 19, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Mayıs 13, 2024</p>
+        <p class="date-modified">Haziran 19, 2024</p>
       </div>
     </div>
       
@@ -235,8 +205,13 @@ window.Quarto = {
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#korelasyonlu-rassal-serilerin-üretilmesi" id="toc-korelasyonlu-rassal-serilerin-üretilmesi" class="nav-link" data-scroll-target="#korelasyonlu-rassal-serilerin-üretilmesi">Korelasyonlu Rassal Serilerin Üretilmesi</a></li>
-  <li><a href="#streamlit-web-uygulamasının-yapımı" id="toc-streamlit-web-uygulamasının-yapımı" class="nav-link" data-scroll-target="#streamlit-web-uygulamasının-yapımı">Streamlit Web Uygulamasının Yapımı</a></li>
+  <li><a href="#veri-setinin-içe-aktarılması" id="toc-veri-setinin-içe-aktarılması" class="nav-link" data-scroll-target="#veri-setinin-içe-aktarılması">Veri Setinin İçe Aktarılması</a></li>
+  <li><a href="#temel-bileşenler-analizi" id="toc-temel-bileşenler-analizi" class="nav-link" data-scroll-target="#temel-bileşenler-analizi">Temel Bileşenler Analizi</a>
+  <ul class="collapse">
+  <li><a href="#tanım" id="toc-tanım" class="nav-link" data-scroll-target="#tanım">Tanım</a></li>
+  <li><a href="#uygulama" id="toc-uygulama" class="nav-link" data-scroll-target="#uygulama">Uygulama</a></li>
+  <li><a href="#yüklemeler-ve-takım-konumlarının-belirlenmesi" id="toc-yüklemeler-ve-takım-konumlarının-belirlenmesi" class="nav-link" data-scroll-target="#yüklemeler-ve-takım-konumlarının-belirlenmesi">Yüklemeler ve Takım Konumlarının Belirlenmesi</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -249,139 +224,139 @@ window.Quarto = {
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>Korelasyon tahmin oyunu yapımında nelere ihtiyacımız olabilir?</p>
-<p>Birincisi, iki adet rassal seri üretmeliyiz ve bu serileri üretirken korelasyon katsayısını dikkate almalıyız. Buradaki korelasyon katsayısı Pearson’ı ifade etmektedir. Rassal serileri üretmek için <code>numpy</code> kütüphanesinin <code>np.random.multivariate_normal</code> fonksiyonundan faydalanabiliriz.</p>
-<p>İkincisi, kullanıcı için bir skorlama yapmalıyız. Bunun için RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) metriğini kullanabiliriz. RMSE skoru düştükçe başarı artacaktır.</p>
-<p>Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.</p>
+<p>Futbol istatistikleri genellikle çok boyutlu verilerden oluşur ve her bir takımın başarısını anlamak için bu verileri etkili bir şekilde işlemek zor olabilir. İşte bu noktada, Temel Bileşenler Analizi devreye girebilir. Bu metodoloji, futbol maçları sırasında elde edilen çeşitli istatistikleri (pas yüzdesi, topa sahip olma süresi, şut sayısı gibi) bir araya getirerek her bir takımın genel performansını özetleyen temel bileşenleri belirler.</p>
+<p>Temel Bileşenler Analizi’nin en büyük avantajlarından biri, büyük miktarda veriyi daha küçük bir sete indirgeyerek veri setinin karmaşıklığını azaltmasıdır. Bu sayede, her bir takımın grup aşamasındaki performansını karşılaştırmak ve görsel olarak analiz etmek daha kolay hale gelir. Grafiksel olarak sunulan bu veriler, takımların güçlü ve zayıf yönlerini daha net bir şekilde ortaya koymamıza olanak tanır.</p>
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="71a6dc8d" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="df3ac571" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="korelasyonlu-rassal-serilerin-üretilmesi" class="level1">
-<h1>Korelasyonlu Rassal Serilerin Üretilmesi</h1>
-<div id="0bcc188a" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.array([[<span class="dv">1</span>, rho], [rho, <span class="dv">1</span>]])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    correlated_data <span class="op">=</span> np.random.multivariate_normal(mean<span class="op">=</span>mu, cov<span class="op">=</span>cov_matrix, size<span class="op">=</span>num_points)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correlated_data, rho</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="veri-setinin-içe-aktarılması" class="level1">
+<h1>Veri Setinin İçe Aktarılması</h1>
+<div id="bee8c45c" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_key_stats.xlsx'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">'Team'</span>).drop(columns<span class="op">=</span>[<span class="st">'Category'</span>, <span class="st">'Match'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Fonksiyonumuzun ismini <code>generate_correlated_data</code> olarak belirledik ve fonksiyonumuzun herhangi bir parametresi bulunmamaktadır.</p>
-<p><code>num_points</code> değişkeni, 100 ile 1000 arasında olmak üzere rassal olarak üretilecek serilere ait verilerin uzunluğunu temsil etmektedir. Bu değeri üretebilmek için <code>numpy</code> kütüphanesinin <code>np.random.uniform</code> fonksiyonunu kullandık ve <code>int()</code> ile değerin tam sayı veri tipinde olmasını sağladık.</p>
-<p><code>rho</code> değişkeni, -1 ile 1 arasında rassal olarak olarak üretilmiş bir korelasyon katsayısını temsil etmektedir. Bu değeri üretebilmek için <code>np.random.uniform</code> fonksiyonunu kullandık. <code>rho</code> değerini noktadan sonra iki rakam gelecek şekilde ayarladık.</p>
-<p><code>cov_matrix</code> değişkeni, 2x2’lik bir kovaryans matrisini temsil etmektedir.</p>
-<p><code>mu</code> değişkeni, veri kümesinin her bir boyutu için belirlenen ortalama değeri temsil etmektedir. Bu değer 0 olacağı için X ve Y <code>[0, 0]</code>’dır.</p>
-<p><code>correlated_data</code> değişkeni, <code>np.random.multivariate_normal</code> fonksiyonu yardımıyla üretilen verileri temsil etmektedir. Bu fonksiyon, çok değişkenli bir normal dağılımdan rassal örnekler üretir. Fonksiyonun içerisine parametre olarak ortalama, kovaryans matrisi ve örnek büyüklüğü girilir.</p>
-<p><code>generate_correlated_data</code> fonksiyonu bize <code>correlated_data</code> ve <code>rho</code> değerlerini dönüyor. <code>correlated_data</code> değişkenindeki ilk seriye <code>correlated_data[:,0]</code>; ikinci seriye <code>correlated_data[:,1]</code> ile ulaşılabilir.</p>
-<p>Fonksiyonun döndüğü değerleri kullanarak bir görselleştirme yapalım.</p>
-<div id="86b50ec2" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f'Randomly selected correlation: {rho}')</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_1.png" class="img-fluid"></p>
-<p>Bir diğer fonksiyonumuz olan ve RMSE değerini hesaplayan <code>calculate_rmse</code> fonksiyonuna bakalım.</p>
-<p><span class="math inline">\(\mathrm{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
-<div id="06e1964f" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>calculate_rmse</code> fonksiyonu, <code>predictions</code> ve <code>actuals</code> olmak üzere 2 adet parametre alıyor. Önce <code>mse</code> değişkenine tahminler ile gerçek değerler arasındaki farkların karelerinin ortalamasını gönderiyoruz. Ardından da bu ortalamanın karekökünü <code>rmse</code> değişkenine atıyoruz ve bu değeri noktadan sonra 4 rakam olacak şekilde döndürüyoruz.</p>
-<p>Kodların ana yapısını oluşturduk.</p>
 </section>
-<section id="streamlit-web-uygulamasının-yapımı" class="level1">
-<h1>Streamlit Web Uygulamasının Yapımı</h1>
-<p>Web uygulaması tarafında kullanılan kodlar aşağıdadır.</p>
-<div id="822a8b47" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Oturum durumu değişkenlerinin tanımlanması ve varsayılan değerlerin ayarlanması</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rhos'</span>, []) <span class="co"># Korelasyon katsayıları</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'guesses'</span>, []) <span class="co"># Kullanıcının tahminleri</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'rmse_values'</span>, []) <span class="co"># RMSE değeri</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>st.session_state.setdefault(<span class="st">'plots'</span>, []) <span class="co"># Görseller</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Korelasyonlu veri oluşturan fonksiyon</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_correlated_data():</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    num_points <span class="op">=</span> <span class="bu">int</span>(np.random.uniform(low<span class="op">=</span><span class="dv">100</span>, high<span class="op">=</span><span class="dv">1000</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> <span class="bu">round</span>(np.random.uniform(low<span class="op">=-</span><span class="dv">1</span>, high<span class="op">=</span><span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.array([[<span class="dv">1</span>, rho], [rho, <span class="dv">1</span>]])</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    correlated_data <span class="op">=</span> np.random.multivariate_normal(mean<span class="op">=</span>mu, cov<span class="op">=</span>cov_matrix, size<span class="op">=</span>num_points)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> correlated_data, rho</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE hesaplayan fonksiyon</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_rmse(predictions, actuals):</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> np.mean((predictions <span class="op">-</span> actuals) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> <span class="bu">round</span>(np.sqrt(mse), <span class="dv">4</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rmse</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 'rhos' listesi boş ise yeni bir korelasyonlu veri oluşturulması ve korelasyon katsayısının kaydedilmesi</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(st.session_state[<span class="st">'rhos'</span>]) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rhos'</span>].append(rho)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 'plots' listesi boşsa ilk görselin oluşturulması ve kaydedilmesi</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(st.session_state[<span class="st">'plots'</span>]) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'plots'</span>].append(plt)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    st.pyplot(st.session_state[<span class="st">'plots'</span>][<span class="dv">0</span>])</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Kullanıcının tahmini</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>user_guess <span class="op">=</span> st.sidebar.text_input(</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'Your Guess:'</span>,</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="st">'0.0'</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Kullanıcı tahmininin ondalık sayıya dönüştürülmesi</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>user_guess <span class="op">=</span> <span class="bu">float</span>(user_guess)</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Tahmin butonunun oluşturulması</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>guess_button <span class="op">=</span> st.sidebar.button(label<span class="op">=</span><span class="st">'Guess'</span>)</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Tahmin butonuna basıldığında yapılacaklar</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> guess_button:</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    correlated_data, rho <span class="op">=</span> generate_correlated_data()</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rhos'</span>].append(rho)</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'guesses'</span>].append(user_guess)</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> calculate_rmse(np.array(st.session_state[<span class="st">'rhos'</span>][:<span class="op">-</span><span class="dv">1</span>]), np.array(st.session_state[<span class="st">'guesses'</span>]))</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'rmse_values'</span>].append(rmse)</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    st.subheader(<span class="ss">f'Guess: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"guesses"</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">, Actual: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"rhos"</span>][<span class="op">-</span><span class="dv">2</span>]<span class="sc">}</span><span class="ss">, RMSE: </span><span class="sc">{</span>st<span class="sc">.</span>session_state[<span class="st">"rmse_values"</span>][<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    plt.scatter(correlated_data[:,<span class="dv">0</span>], correlated_data[:,<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Scatter Plot of Correlated Data'</span>)</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Y'</span>)</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    st.session_state[<span class="st">'plots'</span>].append(plt)</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    st.pyplot(st.session_state[<span class="st">'plots'</span>][<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="temel-bileşenler-analizi" class="level1">
+<h1>Temel Bileşenler Analizi</h1>
+<section id="tanım" class="level2">
+<h2 class="anchored" data-anchor-id="tanım">Tanım</h2>
+<p>Temel Bileşenler Analizi (Principal Component Analysis, PCA), istatistiksel bir tekniktir ve çok değişkenli veri setlerini daha az değişkenli temel bileşenlere dönüştürmek için kullanılır. Bu analiz yöntemi, veri setindeki değişkenler arasındaki ilişkileri anlamamızı sağlar ve veri setini daha anlaşılır hale getirir.</p>
+<p>Temel Bileşenler Analizi’nin başlıca avantajları şunlardır:</p>
+<ul>
+<li>Boyut Azaltma: Çok sayıda değişken içeren bir veri setini daha az sayıda temel bileşene indirger.</li>
+<li>Desenleri Ortaya Koyma: Veri setindeki gizli desenleri ve ilişkileri açığa çıkarır.</li>
+<li>Görselleştirme: Yüksek boyutlu verileri daha düşük boyutlu uzaylarda görsel olarak temsil etme imkanı sağlar.</li>
+<li>Veri Sıkıştırma: Veri setinin karmaşıklığını azaltarak işleme ve yorumlama kolaylığı sağlar.</li>
+</ul>
+</section>
+<section id="uygulama" class="level2">
+<h2 class="anchored" data-anchor-id="uygulama">Uygulama</h2>
+<div id="5b98c6aa" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>scaled_data <span class="op">=</span> scaler.fit_transform(df)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>principal_components <span class="op">=</span> pca.fit_transform(scaled_data)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pca_df <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>principal_components, columns<span class="op">=</span>[<span class="st">'PC1'</span>, <span class="st">'PC2'</span>])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pca_df[<span class="st">'Team'</span>] <span class="op">=</span> df.index</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>sorted_teams <span class="op">=</span> pca_df.sort_values(by<span class="op">=</span>[<span class="st">'PC1'</span>, <span class="st">'PC2'</span>], ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>sorted_teams[<span class="st">'Team'</span>] <span class="op">=</span> sorted_teams[<span class="st">'Team'</span>].<span class="bu">str</span>.split(<span class="st">'_'</span>).<span class="bu">str</span>[<span class="dv">0</span>].<span class="bu">str</span>.rstrip()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Windows/Visual Studio Code için bir not: Streamlit uygulamasının yapımında kullanılacak olan kodları <code>.py</code> uzantılı <code>app.py</code> isminde bir script’e kaydedip terminalden <code>streamlit run app.py</code> komutu ile çalıştırabilirsiniz.</p>
+</section>
+<section id="yüklemeler-ve-takım-konumlarının-belirlenmesi" class="level2">
+<h2 class="anchored" data-anchor-id="yüklemeler-ve-takım-konumlarının-belirlenmesi">Yüklemeler ve Takım Konumlarının Belirlenmesi</h2>
+<p>Yüklemeler (loadings), her bir orijinal değişkenin temel bileşene katkısını temsil eder. Temel Bileşenler Analizi yüklemeleri, değişkenler arasındaki örüntüleri ve ilişkileri anlamak için kullanılır.</p>
+<div id="2dbb6e82" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>loadings <span class="op">=</span> pd.DataFrame(pca.components_.T, index<span class="op">=</span>df.columns, columns<span class="op">=</span>[<span class="st">'PC1'</span>, <span class="st">'PC2'</span>]) <span class="op">*</span> np.sqrt(pca.explained_variance_)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
+<p>Yukarıdaki tablo ya da yüklemeler temelde iki şekilde yorumlanır.</p>
+<ul>
+<li>Pozitif ve negatif</li>
+</ul>
+<p>Bir değişkenin bir ana bileşenle pozitif yükleme değeri varsa, bu değişkenin bu ana bileşenle pozitif bir ilişkisi olduğunu gösterir. Yani, ana bileşen arttığında bu değişkenin değeri de artar. Bir değişkenin bir ana bileşenle negatif yükleme değeri varsa, bu değişkenin bu ana bileşenle negatif bir ilişkisi olduğunu gösterir. Yani, ana bileşen arttığında bu değişkenin değeri azalır.</p>
+<ul>
+<li>Daha yüksek mutlak değerler</li>
+</ul>
+<p>Bir değişkenin yükleme değerinin mutlak değeri ne kadar yüksekse, o değişkenin ilgili ana bileşene katkısı o kadar güçlüdür. Bir değişkenin yükleme değerinin mutlak değeri düşükse, bu değişkenin o ana bileşene katkısı daha zayıftır.</p>
+<div id="cad5d259" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'PC1'</span>, y<span class="op">=</span><span class="st">'PC2'</span>, data<span class="op">=</span>sorted_teams, s<span class="op">=</span><span class="dv">100</span>, alpha<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>highlight_teams <span class="op">=</span> [<span class="st">'Türkiye'</span>, <span class="st">'Portugal'</span>, <span class="st">'Czechia'</span>, <span class="st">'Georgia'</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>highlight_color <span class="op">=</span> <span class="st">'red'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(sorted_teams.shape[<span class="dv">0</span>]):</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    team_name <span class="op">=</span> sorted_teams[<span class="st">'Team'</span>][i]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> team_name <span class="kw">in</span> highlight_teams:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        plt.text(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>sorted_teams.PC1[i]<span class="op">+</span><span class="fl">0.1</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>sorted_teams.PC2[i],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>team_name,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            fontdict<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">'black'</span>, size<span class="op">=</span><span class="dv">12</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            bbox<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span>highlight_color, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        plt.text(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>sorted_teams.PC1[i]<span class="op">+</span><span class="fl">0.1</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>sorted_teams.PC2[i],</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>team_name,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            fontdict<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">'black'</span>, size<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(loadings.shape[<span class="dv">0</span>]):</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    plt.arrow(<span class="dv">0</span>, <span class="dv">0</span>, loadings.PC1[i]<span class="op">*</span><span class="dv">3</span>, loadings.PC2[i]<span class="op">*</span><span class="dv">3</span>, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    plt.text(loadings.PC1[i]<span class="op">*</span><span class="fl">3.7</span>, loadings.PC2[i]<span class="op">*</span><span class="fl">3.7</span>, loadings.index[i], color<span class="op">=</span><span class="st">'blue'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Euro 2024 Team Standings After Matchday 1'</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_2.png" class="img-fluid"></p>
+<p>Türkiye ile beraber grubumuzdaki diğer takımları da değerlendirelim.</p>
+<p>Türkiye:</p>
+<ul>
+<li>PC1 (2.390800): Topa sahip olma, pas doğruluğu, pas sayısı gibi metriklerde yüksek değerlere sahip.</li>
+<li>PC2 (-1.030163): Mesafe kat etme ve belirli savunma istatistiklerinde etkili olabilir.</li>
+<li>Türkiye, hücum ve topa sahip olma konularında güçlü görünüyor. Ancak, savunma zafiyetleri veya düşük mesafe kat etme gibi konularda eksiklikleri olabilir.</li>
+</ul>
+<p>Portekiz:</p>
+<ul>
+<li>PC1 (4.386746): Topa sahip olma, pas doğruluğu, pas sayısı, hücum girişimleri gibi metriklerde yüksek performansa sahip.</li>
+<li>PC2 (-0.983510): Mesafe kat etme ve savunma istatistiklerinde zayıflık olabilir.</li>
+<li>Portekiz, hücum ve topa sahip olma konularında mükemmel bir performans sergiliyor. Ancak savunma veya mesafe kat etme gibi konularda bazı eksiklikler olabilir.</li>
+</ul>
+<p>Portekiz oldukça güçlü bir rakip, özellikle hücumda çok etkili oldukları görülüyor. Ancak, savunma zafiyetleri onların zayıf noktası olabilir. Türkiye’nin bu zayıflıkları kullanması gerekiyor.</p>
+<p>Çekya:</p>
+<ul>
+<li>PC1 (-4.636725): Topa sahip olma, pas doğruluğu, pas sayısı ve hücum girişimlerinde düşük performansa sahip.</li>
+<li>PC2 (-0.033145): Savunma veya mesafe kat etme konularında ortalama performans gösteriyor.</li>
+<li>Çekya, genel olarak hücum ve topa sahip olma metriklerinde düşük performans göstermektedir. Savunma veya mesafe kat etme konularında ise ortalama bir performansa sahiptir.</li>
+</ul>
+<p>Çekya bizim için endişe kaynağı olmayacak bir rakip gibi görünüyor. Hücumda ve topa sahip olma konusunda oldukça zayıflar.</p>
+<p>Gürcistan:</p>
+<ul>
+<li>PC1 (-0.290562): Orta düzeyde topa sahip olma, pas doğruluğu, pas sayısı ve hücum girişimlerine sahip.</li>
+<li>PC2 (-0.403487): Mesafe kat etme ve belirli savunma istatistiklerinde düşük performans gösteriyor.</li>
+<li>Gürcistan, hem hücum hem de savunma metriklerinde ortalama altı bir performans sergilemektedir.</li>
+</ul>
+<p>Gürcistan da ortalama altı bir performans sergiliyor. Özellikle savunma ve mesafe kat etme konusunda zayıflar.</p>
+<p>Veri seti, maçların sonucunda oluşan temel istatistikler ile oluşturulmuştur. Türkiye’nin rakibinin zayıf olması onu yenebileceğimiz anlamı taşımamalıdır. Yani, çok güçlü bir takım karşısında zayıf performans göstermiş olabilir. Sonuç olarak, bizim de en az o çok güçlü takım kadar performans göstermemiz gerekiyor.</p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -18,18 +18,6 @@ Bank of Canada (Kanada Merkez Bankası), [Readability and the Bank of Canada](ht
 
 Okunabilirliğini inceleyeceğimiz metinler [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_13){.external target="_blank"}, `cbrt_press_releases.xlsx` isimli excel dosyasında bulunmaktadır. Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir.
 
-# Gunning'in Fog İndeksi
-
-İndeks, 1952 yılında Gunning Fog tarafından geliştirilmiştir ve aşağıdaki gibi hesaplanmaktadır.
-
-$GFI = 0.4[(\frac{Total\ words}{Total\ Sentences}) + 100(\frac{Complex\ words}{Total\ words})]$
-
-Complex words ile kastedilen üç ve daha fazla heceli kelimelerdir.
-
-İndeksin seviyeleri aşağıdadır.
-
-![https://clickhelp.com/software-documentation-tool/user-manual/gunning-fog-index.html](imgs/img_1.PNG)
-
 # Kullanılacak Kütüphaneler
 
 ```{python}
@@ -42,6 +30,18 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
 ```
+
+# Gunning'in Fog İndeksi
+
+İndeks, 1952 yılında Gunning Fog tarafından geliştirilmiştir ve aşağıdaki gibi hesaplanmaktadır.
+
+$GFI = 0.4[(\frac{Total\ words}{Total\ Sentences}) + 100(\frac{Complex\ words}{Total\ words})]$
+
+Complex words ile kastedilen üç ve daha fazla heceli kelimelerdir.
+
+İndeksin seviyeleri aşağıdadır.
+
+![https://clickhelp.com/software-documentation-tool/user-manual/gunning-fog-index.html](imgs/img_1.PNG)
 
 # Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması
 

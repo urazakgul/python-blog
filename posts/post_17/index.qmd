@@ -1,0 +1,166 @@
+---
+title: "Temel Bileşenler Analizi ile 2024 Avrupa Futbol Şampiyonası İlk Grup Maçları Sonrası Takım Konumlarının Belirlenmesi"
+author: "Uraz Akgül"
+date: "2024-06-19"
+date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Futbol, İstatistik]
+image: "imgs/img_2.png"
+execute:
+  eval: false
+---
+
+# Giriş
+
+Futbol istatistikleri genellikle çok boyutlu verilerden oluşur ve her bir takımın başarısını anlamak için bu verileri etkili bir şekilde işlemek zor olabilir. İşte bu noktada, Temel Bileşenler Analizi devreye girebilir. Bu metodoloji, futbol maçları sırasında elde edilen çeşitli istatistikleri (pas yüzdesi, topa sahip olma süresi, şut sayısı gibi) bir araya getirerek her bir takımın genel performansını özetleyen temel bileşenleri belirler.
+
+Temel Bileşenler Analizi'nin en büyük avantajlarından biri, büyük miktarda veriyi daha küçük bir sete indirgeyerek veri setinin karmaşıklığını azaltmasıdır. Bu sayede, her bir takımın grup aşamasındaki performansını karşılaştırmak ve görsel olarak analiz etmek daha kolay hale gelir. Grafiksel olarak sunulan bu veriler, takımların güçlü ve zayıf yönlerini daha net bir şekilde ortaya koymamıza olanak tanır.
+
+# Kullanılacak Kütüphaneler
+
+```{python}
+
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+```
+
+# Veri Setinin İçe Aktarılması
+
+```{python}
+
+df = pd.read_excel('euro_2024_key_stats.xlsx')
+df = df.set_index('Team').drop(columns=['Category', 'Match'])
+
+```
+
+# Temel Bileşenler Analizi
+
+## Tanım
+
+Temel Bileşenler Analizi (Principal Component Analysis, PCA), istatistiksel bir tekniktir ve çok değişkenli veri setlerini daha az değişkenli temel bileşenlere dönüştürmek için kullanılır. Bu analiz yöntemi, veri setindeki değişkenler arasındaki ilişkileri anlamamızı sağlar ve veri setini daha anlaşılır hale getirir.
+
+Temel Bileşenler Analizi'nin başlıca avantajları şunlardır:
+
+* Boyut Azaltma: Çok sayıda değişken içeren bir veri setini daha az sayıda temel bileşene indirger.
+* Desenleri Ortaya Koyma: Veri setindeki gizli desenleri ve ilişkileri açığa çıkarır.
+* Görselleştirme: Yüksek boyutlu verileri daha düşük boyutlu uzaylarda görsel olarak temsil etme imkanı sağlar.
+* Veri Sıkıştırma: Veri setinin karmaşıklığını azaltarak işleme ve yorumlama kolaylığı sağlar.
+
+## Uygulama
+
+```{python}
+
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(df)
+
+pca = PCA(n_components=2)
+principal_components = pca.fit_transform(scaled_data)
+
+pca_df = pd.DataFrame(data=principal_components, columns=['PC1', 'PC2'])
+pca_df['Team'] = df.index
+
+sorted_teams = pca_df.sort_values(by=['PC1', 'PC2'], ascending=False)
+sorted_teams['Team'] = sorted_teams['Team'].str.split('_').str[0].str.rstrip()
+
+```
+
+## Yüklemeler ve Takım Konumlarının Belirlenmesi
+
+Yüklemeler (loadings), her bir orijinal değişkenin temel bileşene katkısını temsil eder. Temel Bileşenler Analizi yüklemeleri, değişkenler arasındaki örüntüleri ve ilişkileri anlamak için kullanılır.
+
+```{python}
+
+loadings = pd.DataFrame(pca.components_.T, index=df.columns, columns=['PC1', 'PC2']) * np.sqrt(pca.explained_variance_)
+
+```
+
+![](imgs/img_1.PNG)
+
+Yukarıdaki tablo ya da yüklemeler temelde iki şekilde yorumlanır.
+
+* Pozitif ve negatif
+
+Bir değişkenin bir ana bileşenle pozitif yükleme değeri varsa, bu değişkenin bu ana bileşenle pozitif bir ilişkisi olduğunu gösterir. Yani, ana bileşen arttığında bu değişkenin değeri de artar. Bir değişkenin bir ana bileşenle negatif yükleme değeri varsa, bu değişkenin bu ana bileşenle negatif bir ilişkisi olduğunu gösterir. Yani, ana bileşen arttığında bu değişkenin değeri azalır.
+
+* Daha yüksek mutlak değerler
+
+Bir değişkenin yükleme değerinin mutlak değeri ne kadar yüksekse, o değişkenin ilgili ana bileşene katkısı o kadar güçlüdür. Bir değişkenin yükleme değerinin mutlak değeri düşükse, bu değişkenin o ana bileşene katkısı daha zayıftır.
+
+```{python}
+
+plt.figure(figsize=(14, 10))
+sns.scatterplot(x='PC1', y='PC2', data=sorted_teams, s=100, alpha=0)
+highlight_teams = ['Türkiye', 'Portugal', 'Czechia', 'Georgia']
+highlight_color = 'red'
+
+for i in range(sorted_teams.shape[0]):
+    team_name = sorted_teams['Team'][i]
+    if team_name in highlight_teams:
+        plt.text(
+            x=sorted_teams.PC1[i]+0.1,
+            y=sorted_teams.PC2[i],
+            s=team_name,
+            fontdict=dict(color='black', size=12),
+            bbox=dict(facecolor=highlight_color, alpha=0.5)
+        )
+    else:
+        plt.text(
+            x=sorted_teams.PC1[i]+0.1,
+            y=sorted_teams.PC2[i],
+            s=team_name,
+            fontdict=dict(color='black', size=12)
+        )
+
+for i in range(loadings.shape[0]):
+    plt.arrow(0, 0, loadings.PC1[i]*3, loadings.PC2[i]*3, color='blue', alpha=0.5)
+    plt.text(loadings.PC1[i]*3.7, loadings.PC2[i]*3.7, loadings.index[i], color='blue', ha='center', va='center')
+
+plt.title('Euro 2024 Team Standings After Matchday 1')
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.grid(True)
+plt.show()
+
+```
+
+![](imgs/img_2.png)
+
+Türkiye ile beraber grubumuzdaki diğer takımları da değerlendirelim.
+
+Türkiye:
+
+* PC1 (2.390800): Topa sahip olma, pas doğruluğu, pas sayısı gibi metriklerde yüksek değerlere sahip.
+* PC2 (-1.030163): Mesafe kat etme ve belirli savunma istatistiklerinde etkili olabilir.
+* Türkiye, hücum ve topa sahip olma konularında güçlü görünüyor. Ancak, savunma zafiyetleri veya düşük mesafe kat etme gibi konularda eksiklikleri olabilir.
+
+Portekiz:
+
+* PC1 (4.386746): Topa sahip olma, pas doğruluğu, pas sayısı, hücum girişimleri gibi metriklerde yüksek performansa sahip.
+* PC2 (-0.983510): Mesafe kat etme ve savunma istatistiklerinde zayıflık olabilir.
+* Portekiz, hücum ve topa sahip olma konularında mükemmel bir performans sergiliyor. Ancak savunma veya mesafe kat etme gibi konularda bazı eksiklikler olabilir.
+
+Portekiz oldukça güçlü bir rakip, özellikle hücumda çok etkili oldukları görülüyor. Ancak, savunma zafiyetleri onların zayıf noktası olabilir. Türkiye'nin bu zayıflıkları kullanması gerekiyor.
+
+Çekya:
+
+* PC1 (-4.636725): Topa sahip olma, pas doğruluğu, pas sayısı ve hücum girişimlerinde düşük performansa sahip.
+* PC2 (-0.033145): Savunma veya mesafe kat etme konularında ortalama performans gösteriyor.
+* Çekya, genel olarak hücum ve topa sahip olma metriklerinde düşük performans göstermektedir. Savunma veya mesafe kat etme konularında ise ortalama bir performansa sahiptir.
+
+Çekya bizim için endişe kaynağı olmayacak bir rakip gibi görünüyor. Hücumda ve topa sahip olma konusunda oldukça zayıflar.
+
+Gürcistan:
+
+* PC1 (-0.290562): Orta düzeyde topa sahip olma, pas doğruluğu, pas sayısı ve hücum girişimlerine sahip.
+* PC2 (-0.403487): Mesafe kat etme ve belirli savunma istatistiklerinde düşük performans gösteriyor.
+* Gürcistan, hem hücum hem de savunma metriklerinde ortalama altı bir performans sergilemektedir.
+
+Gürcistan da ortalama altı bir performans sergiliyor. Özellikle savunma ve mesafe kat etme konusunda zayıflar.
+
+Veri seti, maçların sonucunda oluşan temel istatistikler ile oluşturulmuştur. Türkiye'nin rakibinin zayıf olması onu yenebileceğimiz anlamı taşımamalıdır. Yani, çok güçlü bir takım karşısında zayıf performans göstermiş olabilir. Sonuç olarak, bizim de en az o çok güçlü takım kadar performans göstermemiz gerekiyor.
+
+*Gelecek içeriklerde görüşmek dileğiyle.*
