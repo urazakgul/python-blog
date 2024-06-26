@@ -30,6 +30,8 @@ import matplotlib.pyplot as plt
 
 # Veri Setinin İçe Aktarılması
 
+Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_17){.external target="_blank"} ulaşabilirsiniz.
+
 ```{python}
 
 df = pd.read_excel('euro_2024_key_stats.xlsx')

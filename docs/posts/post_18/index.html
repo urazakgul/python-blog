@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Uraz Akgül">
+
+<title>Python Blog - TOPSIS ile 2024 Avrupa Futbol Şampiyonası Son Grup Maçı Öncesi Türkiye’nin İdeal Kadrosunun Belirlenmesi</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sonuç yok",
+    "search-matching-documents-text": "eşleşen belgeler",
+    "search-copy-link-title": "Aramak için bağlantıyı kopyalayın",
+    "search-hide-matches-text": "Ek eşleşmeleri gizle",
+    "search-more-match-text": "bu belgede daha fazla eşleşme",
+    "search-more-matches-text": "bu belgede daha fazla eşleşmeler",
+    "search-clear-button-title": "Temizle",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "İptal et",
+    "search-submit-button-title": "Göndermek",
+    "search-label": "Aramak"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Python Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Aramak"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Gezinmeyi değiştir" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Ana Sayfa</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">Yazılar</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-paketler" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Paketler</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-paketler">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/isyatirimhisse" target="_blank">
+ <span class="dropdown-text">isyatirimhisse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/urazakgul/EIAOpenData" target="_blank">
+ <span class="dropdown-text">EIAOpenData</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Karanlık modu değiştir"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">TOPSIS ile 2024 Avrupa Futbol Şampiyonası Son Grup Maçı Öncesi Türkiye’nin İdeal Kadrosunun Belirlenmesi</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Futbol</div>
+                <div class="quarto-category">İstatistik</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">Yazar</div>
+      <div class="quarto-title-meta-contents">
+               <p>Uraz Akgül </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Haziran 26, 2024</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Değiştirilmiş</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">Haziran 26, 2024</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Bu sayfada</h2>
+   
+  <ul>
+  <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
+  <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
+  <li><a href="#topsis" id="toc-topsis" class="nav-link" data-scroll-target="#topsis">TOPSIS</a>
+  <ul class="collapse">
+  <li><a href="#tanım" id="toc-tanım" class="nav-link" data-scroll-target="#tanım">Tanım</a></li>
+  <li><a href="#hesaplama-adımları" id="toc-hesaplama-adımları" class="nav-link" data-scroll-target="#hesaplama-adımları">Hesaplama Adımları</a></li>
+  </ul></li>
+  <li><a href="#kullanılacak-istatistikler" id="toc-kullanılacak-istatistikler" class="nav-link" data-scroll-target="#kullanılacak-istatistikler">Kullanılacak İstatistikler</a>
+  <ul class="collapse">
+  <li><a href="#turnuva-aşamalarına-göre-kullanılacak-istatistikler" id="toc-turnuva-aşamalarına-göre-kullanılacak-istatistikler" class="nav-link" data-scroll-target="#turnuva-aşamalarına-göre-kullanılacak-istatistikler">Turnuva Aşamalarına Göre Kullanılacak İstatistikler</a></li>
+  <li><a href="#maç-istatistikleri-açıklamaları" id="toc-maç-istatistikleri-açıklamaları" class="nav-link" data-scroll-target="#maç-istatistikleri-açıklamaları">Maç İstatistikleri Açıklamaları</a></li>
+  <li><a href="#futbolcu-pozisyonları-açıklamaları" id="toc-futbolcu-pozisyonları-açıklamaları" class="nav-link" data-scroll-target="#futbolcu-pozisyonları-açıklamaları">Futbolcu Pozisyonları Açıklamaları</a></li>
+  <li><a href="#pozisyonlara-göre-kullanılacak-istatistikler-ağırlıklar-ve-işaretler" id="toc-pozisyonlara-göre-kullanılacak-istatistikler-ağırlıklar-ve-işaretler" class="nav-link" data-scroll-target="#pozisyonlara-göre-kullanılacak-istatistikler-ağırlıklar-ve-işaretler">Pozisyonlara Göre Kullanılacak İstatistikler, Ağırlıklar ve İşaretler</a></li>
+  </ul></li>
+  <li><a href="#ideal-kadronun-belirlenmesi" id="toc-ideal-kadronun-belirlenmesi" class="nav-link" data-scroll-target="#ideal-kadronun-belirlenmesi">İdeal Kadronun Belirlenmesi</a>
+  <ul class="collapse">
+  <li><a href="#skorları-hesaplayacak-fonksiyonun-yazılması" id="toc-skorları-hesaplayacak-fonksiyonun-yazılması" class="nav-link" data-scroll-target="#skorları-hesaplayacak-fonksiyonun-yazılması">Skorları Hesaplayacak Fonksiyonun Yazılması</a></li>
+  <li><a href="#veri-setinin-içe-aktarılması" id="toc-veri-setinin-içe-aktarılması" class="nav-link" data-scroll-target="#veri-setinin-içe-aktarılması">Veri Setinin İçe Aktarılması</a></li>
+  <li><a href="#ideal-kadroyu-belirleyecek-fonksiyonun-yazılması" id="toc-ideal-kadroyu-belirleyecek-fonksiyonun-yazılması" class="nav-link" data-scroll-target="#ideal-kadroyu-belirleyecek-fonksiyonun-yazılması">İdeal Kadroyu Belirleyecek Fonksiyonun Yazılması</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="giriş" class="level1">
+<h1>Giriş</h1>
+<p>2024 Avrupa Futbol Şampiyonası’ndaki son grup maçı öncesinde, Türkiye’nin en iyi performansı sergilemesi için en uygun kadroyu belirlemek hayati önem taşıyor. Bu süreçte, TOPSIS gibi çok kriterli karar verme yöntemleri teknik ekibe en ideal kadroyu oluşturma konusunda önemli bir rehberlik sağlayabilir.</p>
+</section>
+<section id="kullanılacak-kütüphaneler" class="level1">
+<h1>Kullanılacak Kütüphaneler</h1>
+<div id="09b59e2b" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="topsis" class="level1">
+<h1>TOPSIS</h1>
+<section id="tanım" class="level2">
+<h2 class="anchored" data-anchor-id="tanım">Tanım</h2>
+<p>TOPSIS (Technique for Order Preference by Similarity to Ideal Solution), çok kriterli karar verme (MCDM) problemlerinde kullanılan etkili bir yöntemdir. 1981 yılında Hwang ve Yoon tarafından geliştirilen bu yöntem, alternatiflerin değerlendirilmesinde ideal ve negatif-ideal çözümlerle olan benzerlikleri dikkate alarak sıralama yapar. TOPSIS’in temel amacı, en iyi alternatifi seçmek veya mevcut alternatifleri belirli kriterler doğrultusunda sıralamaktır.</p>
+</section>
+<section id="hesaplama-adımları" class="level2">
+<h2 class="anchored" data-anchor-id="hesaplama-adımları">Hesaplama Adımları</h2>
+<p>TOPSIS’in hesaplaması 7 adımda açıklanabilir.</p>
+<ol type="i">
+<li><p>Karar Matrisi Oluşturma: İlk adımda, alternatifler ve kriterler belirlenir ve bu alternatiflerin her bir kriter için performans değerleri karar matrisi şeklinde düzenlenir.</p></li>
+<li><p>Normalize Edilmiş Karar Matrisi: Karar matrisi, kriterlerin farklı ölçeklerde olmasından dolayı normalize edilir. Bu adım, tüm kriterlerin ortak bir ölçek üzerinde değerlendirilmesini sağlar.</p></li>
+<li><p>Ağırlıklı Normalize Edilmiş Matris: Kriterlerin önem derecelerine göre ağırlıklandırılması yapılır ve normalize edilmiş karar matrisi ile bu ağırlıklar çarpılır.</p></li>
+<li><p>İdeal ve Negatif-İdeal Çözümler: Her bir kriter için en iyi (ideal) ve en kötü (negatif-ideal) değerler belirlenir. İdeal çözüm, kriterlerin maksimum fayda veya minimum maliyet değerlerini içerirken, negatif-ideal çözüm tam tersidir.</p></li>
+<li><p>İdeal ve Negatif-İdeal Çözümlere Uzaklıkların Hesaplanması: Her bir alternatifin ideal ve negatif-ideal çözümlere olan uzaklıkları hesaplanır. Bu uzaklıklar, Öklidyen mesafe kullanılarak belirlenir.</p></li>
+<li><p>Göreceli Yakınlık Değerlerinin Hesaplanması: Alternatiflerin ideal çözüme yakınlık dereceleri hesaplanır. Bu değer, negatif-ideal çözüme olan uzaklıkların toplam uzaklığa oranı olarak bulunur.</p></li>
+<li><p>Alternatiflerin Sıralanması: Son adımda, göreceli yakınlık değerlerine göre alternatifler sıralanır. En yüksek yakınlık değeri, en ideal alternatifi gösterir.</p></li>
+</ol>
+</section>
+</section>
+<section id="kullanılacak-istatistikler" class="level1">
+<h1>Kullanılacak İstatistikler</h1>
+<section id="turnuva-aşamalarına-göre-kullanılacak-istatistikler" class="level2">
+<h2 class="anchored" data-anchor-id="turnuva-aşamalarına-göre-kullanılacak-istatistikler">Turnuva Aşamalarına Göre Kullanılacak İstatistikler</h2>
+<p>UEFA Avrupa Şampiyonası eleme aşamaları iki ana bölüme ayrılır: Qualifying (eleme) ve Main tournament (ana turnuva).</p>
+<ul>
+<li>Qualifying (Eleme): Bu aşama, Avrupa’daki milli takımların ana turnuvaya katılmak için yarıştığı süreçtir. Eleme grupları oluşturularak maçlar yapılır ve bu maçlar sonunda en iyi takımlar ana turnuvaya katılma hakkı kazanır.</li>
+<li>Main Tournament (Ana Turnuva): Bu, eleme aşamasını geçen takımların katıldığı nihai turnuvadır.</li>
+</ul>
+<p>Her iki aşama da skorlar hesaplanırken ağırlıklandırılacaktır.</p>
+</section>
+<section id="maç-istatistikleri-açıklamaları" class="level2">
+<h2 class="anchored" data-anchor-id="maç-istatistikleri-açıklamaları">Maç İstatistikleri Açıklamaları</h2>
+<p>Veri setlerinde aşağıdaki istatistikler bulunmaktadır.</p>
+<ul>
+<li>Kategori: Goals (Goller)</li>
+</ul>
+<p><strong>Goals - Goller:</strong> Futbolcunun maç sırasında attığı gol sayısı.</p>
+<ul>
+<li>Kategori: Attempts (Denemeler)</li>
+</ul>
+<p><strong>Attempts on target - Kaleyi bulan şutlar:</strong> Futbolcunun kaleyi bulan şut sayısı.</p>
+<p><strong>Attempts off target - Kaleyi bulmayan şutlar:</strong> Futbolcunun kaleyi bulmayan şut sayısı.</p>
+<p><strong>Blocked - Bloke edilen şutlar:</strong> Rakip oyuncular tarafından engellenen şut sayısı.</p>
+<ul>
+<li>Kategori: Distribution (Dağıtım)</li>
+</ul>
+<p><strong>Passes attempted - Denenen paslar:</strong> Futbolcunun pas atma girişimlerinin toplam sayısı.</p>
+<p><strong>Passes completed - Tamamlanan paslar:</strong> Futbolcunun başarılı bir şekilde takım arkadaşına ulaştırdığı pas sayısı.</p>
+<p><strong>Crosses attempted - Denenen ortalar:</strong> Futbolcunun ceza sahasına veya ceza sahası yakınına yaptığı orta denemeleri.</p>
+<p><strong>Crosses completed - Tamamlanan ortalar:</strong> Futbolcunun başarılı bir şekilde takım arkadaşına ulaştırdığı orta sayısı.</p>
+<ul>
+<li>Kategori: Attacking (Hücum)</li>
+</ul>
+<p><strong>Assists - Asistler:</strong> Futbolcunun takım arkadaşına gol atması için yaptığı son pas sayısı.</p>
+<p><strong>Offsides - Ofsaytlar:</strong> Futbolcunun ofsayt pozisyonunda yakalandığı durumlar.</p>
+<p><strong>Dribbles - Top sürme:</strong> Futbolcunun rakip oyuncuları geçmek için topu kontrol ederek yaptığı hareketlerin sayısı.</p>
+<ul>
+<li>Kategori: Defending (Savunma)</li>
+</ul>
+<p><strong>Balls recovered - Kazanılan toplar:</strong> Futbolcunun rakipten kaptığı veya yeniden kazandığı top sayısı.</p>
+<p><strong>Tackles - Müdahaleler:</strong> Futbolcunun rakip oyuncudan topu almak için yaptığı müdahale sayısı.</p>
+<p><strong>Clearances attempted - Denenen uzaklaştırmalar:</strong> Futbolcunun rakip ceza sahasından topu uzaklaştırma girişimleri.</p>
+<ul>
+<li>Kategori: Goalkeeping (Kalecilik)</li>
+</ul>
+<p><strong>Saves - Kurtarışlar:</strong> Kalecinin rakip oyuncunun şutunu engellediği kurtarış sayısı.</p>
+<p><strong>Goals conceded - Yenilen goller:</strong> Kalecinin kalesinde gördüğü gol sayısı.</p>
+<p><strong>Saves from penalties - Penaltı kurtarışları:</strong> Kalecinin penaltı vuruşunu kurtardığı durumlar.</p>
+<ul>
+<li>Kategori: Disciplinary (Disiplin)</li>
+</ul>
+<p><strong>Fouls committed - Yapılan fauller:</strong> Futbolcunun rakip oyuncuya karşı yaptığı faul sayısı.</p>
+<p><strong>Fouls suffered - Uğranılan fauller:</strong> Futbolcunun rakip oyuncu tarafından kendisine yapılan faul sayısı.</p>
+<p><strong>Yellow cards - Sarı kartlar:</strong> Futbolcunun hakem tarafından gördüğü sarı kart sayısı.</p>
+<p><strong>Red cards - Kırmızı kartlar:</strong> Futbolcunun hakem tarafından gördüğü kırmızı kart sayısı.</p>
+</section>
+<section id="futbolcu-pozisyonları-açıklamaları" class="level2">
+<h2 class="anchored" data-anchor-id="futbolcu-pozisyonları-açıklamaları">Futbolcu Pozisyonları Açıklamaları</h2>
+<p><strong>Goalkeeper (Kaleci):</strong> Kaleci, takımın kalesini koruyan oyuncudur. Rakip takımın şutlarını engellemek, topları yakalamak veya uzaklaştırmak, savunmayı organize etmek gibi görevleri vardır.</p>
+<p><strong>Defender (Savunma Oyuncusu):</strong> Savunma oyuncuları, rakip takımın gol atmasını engellemeye çalışır. Savunma hattında pozisyon alarak topu kapmak, müdahale etmek, topu uzaklaştırmak gibi görevleri vardır.</p>
+<p><strong>Midfielder (Orta Saha Oyuncusu):</strong> Orta saha oyuncuları, takımın hem savunma hem de hücum görevlerini üstlenir. Topa sahip olma, pas dağıtma, oyunu yönlendirme, gol fırsatları yaratma ve savunmaya yardımcı olma gibi çeşitli görevleri vardır.</p>
+<p><strong>Forward (Forvet Oyuncusu):</strong> Forvet oyuncuları, takımın gol atma görevini üstlenen oyunculardır. Rakip kale önünde pozisyon alarak gol fırsatları yaratma ve gol atma gibi görevleri vardır.</p>
+</section>
+<section id="pozisyonlara-göre-kullanılacak-istatistikler-ağırlıklar-ve-işaretler" class="level2">
+<h2 class="anchored" data-anchor-id="pozisyonlara-göre-kullanılacak-istatistikler-ağırlıklar-ve-işaretler">Pozisyonlara Göre Kullanılacak İstatistikler, Ağırlıklar ve İşaretler</h2>
+<p>Hem pozisyonlara göre kullanılacak istatistikler hem de ağırlıklar ile işaretlerin tablosu aşağıdadır.</p>
+<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
+</section>
+</section>
+<section id="ideal-kadronun-belirlenmesi" class="level1">
+<h1>İdeal Kadronun Belirlenmesi</h1>
+<section id="skorları-hesaplayacak-fonksiyonun-yazılması" class="level2">
+<h2 class="anchored" data-anchor-id="skorları-hesaplayacak-fonksiyonun-yazılması">Skorları Hesaplayacak Fonksiyonun Yazılması</h2>
+<div id="63f151cd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_topsis_score(position, main_df, weights_df, score_col_name):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    norm_main_df <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> main_df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">'Player'</span>, <span class="st">'Position'</span>, <span class="st">'Matches played'</span>, <span class="st">'Minutes Played'</span>]]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    main_minutes_played <span class="op">=</span> main_df[<span class="st">'Minutes Played'</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    main_df[norm_main_df] <span class="op">=</span> main_df[norm_main_df].div(main_minutes_played, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    position_weights <span class="op">=</span> weights_df[[<span class="st">'Stats'</span>, <span class="ss">f'</span><span class="sc">{</span>position<span class="sc">}</span><span class="ss"> Weight'</span>, <span class="ss">f'</span><span class="sc">{</span>position<span class="sc">}</span><span class="ss"> Sign'</span>]].dropna()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    position_stats <span class="op">=</span> position_weights[<span class="st">'Stats'</span>].tolist()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    position_stats <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> position_stats <span class="cf">if</span> col <span class="kw">in</span> main_df.columns]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    position_weights_values <span class="op">=</span> position_weights[<span class="ss">f'</span><span class="sc">{</span>position<span class="sc">}</span><span class="ss"> Weight'</span>].tolist()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    position_signs <span class="op">=</span> position_weights[<span class="ss">f'</span><span class="sc">{</span>position<span class="sc">}</span><span class="ss"> Sign'</span>].tolist()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    position_weights_values <span class="op">=</span> [weight <span class="cf">for</span> stat, weight <span class="kw">in</span> <span class="bu">zip</span>(position_weights[<span class="st">'Stats'</span>], position_weights_values) <span class="cf">if</span> stat <span class="kw">in</span> position_stats]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    position_signs <span class="op">=</span> [sign <span class="cf">for</span> stat, sign <span class="kw">in</span> <span class="bu">zip</span>(position_weights[<span class="st">'Stats'</span>], position_signs) <span class="cf">if</span> stat <span class="kw">in</span> position_stats]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 3</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    position_required_columns <span class="op">=</span> [<span class="st">'Player'</span>, <span class="st">'Position'</span>] <span class="op">+</span> position_stats</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    position_main_df <span class="op">=</span> main_df[position_required_columns]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    position_main_df <span class="op">=</span> position_main_df[position_main_df[<span class="st">'Position'</span>] <span class="op">==</span> position]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 4</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    position_matrix <span class="op">=</span> position_main_df[position_stats].values</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    position_matrix_normalized <span class="op">=</span> np.zeros_like(position_matrix)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(position_matrix.shape[<span class="dv">1</span>]):</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        col_min <span class="op">=</span> position_matrix[:, i].<span class="bu">min</span>()</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        col_max <span class="op">=</span> position_matrix[:, i].<span class="bu">max</span>()</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col_min <span class="op">==</span> col_max:</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            position_matrix_normalized[:, i] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>            position_matrix_normalized[:, i] <span class="op">=</span> (position_matrix[:, i] <span class="op">-</span> col_min) <span class="op">/</span> (col_max <span class="op">-</span> col_min)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 5</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    weighted_matrix <span class="op">=</span> position_matrix_normalized <span class="op">*</span> position_weights_values</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 6</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    ideal_solution <span class="op">=</span> np.<span class="bu">max</span>(weighted_matrix <span class="op">*</span> (np.array(position_signs) <span class="op">==</span> <span class="st">'+'</span>), axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> np.<span class="bu">min</span>(weighted_matrix <span class="op">*</span> (np.array(position_signs) <span class="op">==</span> <span class="st">'-'</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    negative_ideal_solution <span class="op">=</span> np.<span class="bu">min</span>(weighted_matrix <span class="op">*</span> (np.array(position_signs) <span class="op">==</span> <span class="st">'+'</span>), axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> np.<span class="bu">max</span>(weighted_matrix <span class="op">*</span> (np.array(position_signs) <span class="op">==</span> <span class="st">'-'</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 7</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    separation_ideal <span class="op">=</span> np.sqrt(((weighted_matrix <span class="op">-</span> ideal_solution) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    separation_negative_ideal <span class="op">=</span> np.sqrt(((weighted_matrix <span class="op">-</span> negative_ideal_solution) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 8</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    topsis_score <span class="op">=</span> separation_negative_ideal <span class="op">/</span> (separation_ideal <span class="op">+</span> separation_negative_ideal)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 9</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    position_main_df[score_col_name] <span class="op">=</span> topsis_score</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    position_main_df <span class="op">=</span> position_main_df[[<span class="st">'Player'</span>, score_col_name]]</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    position_main_df <span class="op">=</span> position_main_df.sort_values(by<span class="op">=</span>score_col_name, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> position_main_df</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yukarıdaki fonksiyon aşağıdaki adımları içermektedir.</p>
+<p><em>Adım 1:</em> <code>main_df</code> içindeki oyuncuların istatistiksel verileri normalize edilir. <code>Minutes Played</code> sütunundaki değerlere göre diğer istatistiksel sütunlar bölünerek normalleştirilir. Böylece, her oyuncunun performansı, oynadığı dakikaya göre oransal olarak değerlendirilmiş olur.</p>
+<p><em>Adım 2:</em> Belirli bir pozisyon için <code>weights_df</code> veri çerçevesinden istatistiksel veri sütunlarına ve bu sütunların ağırlıklarına ulaşılır. Aynı zamanda her bir istatistiksel sütunun olumlu (+) veya olumsuz (-) bir etkiye sahip olup olmadığını gösteren işaretler de alınır.</p>
+<p><em>Adım 3:</em> Belirtilen pozisyondaki oyuncuların <code>main_df</code> içinden ilgili istatistiksel sütunlarını ve pozisyon bilgilerini içeren veri çerçevesi <code>position_main_df</code> oluşturulur.</p>
+<p><em>Adım 4:</em> Belirtilen istatistiksel veri matrisi min-max normalizasyonu kullanılarak normalize edilir. Bu işlem, her bir istatistiksel ölçütün değerini [0, 1] aralığında ölçeklemeye yarar.</p>
+<p><em>Adım 5:</em> Normalleştirilmiş veri matrisine önceden belirlenmiş ağırlıklar uygulanır. Bu işlem, her bir istatistiksel ölçütün önem derecesine göre performans değerlerini ağırlıklarla çarparak ağırlıklı hale getirir.</p>
+<p><em>Adım 6:</em> Ağırlıklı matris üzerinde ideal ve negatif ideal çözümler belirlenir. İdeal çözüm, her ölçüt için en yüksek ve en düşük değerlerden oluşurken, negatif ideal çözüm ise en düşük ve en yüksek değerlerden oluşur.</p>
+<p><em>Adım 7:</em> Her bir oyuncunun ideal ve negatif ideal çözümlere olan uzaklığını ölçen ayırma ölçütleri hesaplanır.</p>
+<p><em>Adım 8:</em> Ayırma ölçütlerini kullanarak her bir oyuncunun TOPSIS skoru hesaplanır. Bu skor, bir oyuncunun ideal çözüme ne kadar yakın olduğunu gösterir.</p>
+<p><em>Adım 9:</em> Hesaplanan TOPSIS skorları <code>position_main_df</code> veri çerçevesine eklenir, sadece oyuncu adı ve TOPSIS skoru sütunları alınır, skorlara göre sıralanır ve sonuç olarak döndürülür.</p>
+</section>
+<section id="veri-setinin-içe-aktarılması" class="level2">
+<h2 class="anchored" data-anchor-id="veri-setinin-içe-aktarılması">Veri Setinin İçe Aktarılması</h2>
+<p>Veri setlerine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_18" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
+<div id="205df6dc" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veri seti</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>qualifying_df <span class="op">=</span> pd.read_excel(<span class="st">'turkey_players.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Qualifying'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>main_tournament_df <span class="op">=</span> pd.read_excel(<span class="st">'turkey_players.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Main tournament'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>weights_df <span class="op">=</span> pd.read_excel(<span class="st">'turkey_players.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Weights'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonksiyonu uygulama</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>goalkeeper_qualifying_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Goalkeeper'</span>, qualifying_df, weights_df, <span class="st">'TOPSIS Score Qualifying'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>defender_qualifying_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Defender'</span>, qualifying_df, weights_df, <span class="st">'TOPSIS Score Qualifying'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>midfielder_qualifying_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Midfielder'</span>, qualifying_df, weights_df, <span class="st">'TOPSIS Score Qualifying'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>forward_qualifying_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Forward'</span>, qualifying_df, weights_df, <span class="st">'TOPSIS Score Qualifying'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>goalkeeper_main_tournament_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Goalkeeper'</span>, main_tournament_df, weights_df, <span class="st">'TOPSIS Score Main Tournament'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>defender_main_tournament_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Defender'</span>, main_tournament_df, weights_df, <span class="st">'TOPSIS Score Main Tournament'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>midfielder_main_tournament_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Midfielder'</span>, main_tournament_df, weights_df, <span class="st">'TOPSIS Score Main Tournament'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>forward_main_tournament_df <span class="op">=</span> calculate_topsis_score(<span class="st">'Forward'</span>, main_tournament_df, weights_df, <span class="st">'TOPSIS Score Main Tournament'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Birleştirme</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>goalkeeper_combined_df <span class="op">=</span> pd.merge(goalkeeper_qualifying_df, goalkeeper_main_tournament_df[[<span class="st">'Player'</span>, <span class="st">'TOPSIS Score Main Tournament'</span>]], on<span class="op">=</span><span class="st">'Player'</span>, how<span class="op">=</span><span class="st">'outer'</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>defender_combined_df <span class="op">=</span> pd.merge(defender_qualifying_df, defender_main_tournament_df[[<span class="st">'Player'</span>, <span class="st">'TOPSIS Score Main Tournament'</span>]], on<span class="op">=</span><span class="st">'Player'</span>, how<span class="op">=</span><span class="st">'outer'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>midfielder_combined_df <span class="op">=</span> pd.merge(midfielder_qualifying_df, midfielder_main_tournament_df[[<span class="st">'Player'</span>, <span class="st">'TOPSIS Score Main Tournament'</span>]], on<span class="op">=</span><span class="st">'Player'</span>, how<span class="op">=</span><span class="st">'outer'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>forward_combined_df <span class="op">=</span> pd.merge(forward_qualifying_df, forward_main_tournament_df[[<span class="st">'Player'</span>, <span class="st">'TOPSIS Score Main Tournament'</span>]], on<span class="op">=</span><span class="st">'Player'</span>, how<span class="op">=</span><span class="st">'outer'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Veri seti:</em> <code>turkey_players.xlsx</code> dosyasından <code>Qualifying</code>, <code>Main tournament</code> ve <code>Weights</code> adlı Excel sayfalarını okur ve bunları sırasıyla <code>qualifying_df</code>, <code>main_tournament_df</code> ve <code>weights_df</code> değişkenlerine atar.</p>
+<p><em>Fonksiyonu uygulama:</em> <code>calculate_topsis_score</code> fonksiyonu, her bir pozisyon için hem elemelerde (<code>qualifying_df</code>) hem de ana turnuvalarda (<code>main_tournament_df</code>) performans gösteren oyuncuların TOPSIS skorlarını hesaplar. Her pozisyon için ayrı ayrı çağrılar yapılır ve sonuçlar <code>*_qualifying_df</code> ve <code>*_main_df</code> değişkenlerine atanır.</p>
+<p><em>Birleştirme:</em> Her pozisyon için elemelerde ve ana turnuvalarda hesaplanan TOPSIS skorları <code>merge</code> fonksiyonu ile birleştirilir. Her bir pozisyon için birleştirilmiş sonuçlar <code>*_combined_df</code> değişkenlerine atanır.</p>
+</section>
+<section id="ideal-kadroyu-belirleyecek-fonksiyonun-yazılması" class="level2">
+<h2 class="anchored" data-anchor-id="ideal-kadroyu-belirleyecek-fonksiyonun-yazılması">İdeal Kadroyu Belirleyecek Fonksiyonun Yazılması</h2>
+<div id="0688ebcd" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_weights_and_select_players(goalkeeper_combined_df, defender_combined_df, midfielder_combined_df, forward_combined_df, formation, weight_qualifying, weight_main_tournament, unavailable_players<span class="op">=</span><span class="va">None</span>, plot<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Birleştirme</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    combined_dfs <span class="op">=</span> [</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Goalkeeper'</span>, goalkeeper_combined_df),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Defender'</span>, defender_combined_df),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Midfielder'</span>, midfielder_combined_df),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Forward'</span>, forward_combined_df)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Boş liste</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    selected_players <span class="op">=</span> []</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Döngü</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> position, df <span class="kw">in</span> combined_dfs:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'TOPSIS Score Qualifying'</span>] <span class="op">=</span> df[<span class="st">'TOPSIS Score Qualifying'</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'TOPSIS Score Main Tournament'</span>] <span class="op">=</span> df[<span class="st">'TOPSIS Score Main Tournament'</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'Weighted Average TOPSIS Score'</span>] <span class="op">=</span> weight_qualifying <span class="op">*</span> df[<span class="st">'TOPSIS Score Qualifying'</span>] <span class="op">+</span> weight_main_tournament <span class="op">*</span> df[<span class="st">'TOPSIS Score Main Tournament'</span>]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'Weighted Average TOPSIS Score'</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df[[<span class="st">'Player'</span>, <span class="st">'Weighted Average TOPSIS Score'</span>]]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Görsel</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> plot:</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            plt.barh(df[<span class="st">'Player'</span>], df[<span class="st">'Weighted Average TOPSIS Score'</span>], color<span class="op">=</span><span class="st">'#ff9999'</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            plt.xlabel(<span class="st">'Weighted Average TOPSIS Score'</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            plt.title(<span class="ss">f'</span><span class="sc">{</span>position<span class="sc">}</span><span class="ss"> Players Weighted Average TOPSIS Scores'</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            plt.gca().invert_yaxis()</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            plt.show()</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Kadro dışı kontrolü</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> unavailable_players <span class="kw">and</span> position <span class="kw">in</span> unavailable_players:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> df[<span class="op">~</span>df[<span class="st">'Player'</span>].isin(unavailable_players[position])]</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Formasyon</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> position <span class="op">==</span> <span class="st">'Goalkeeper'</span>:</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>            num_players <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>            positions <span class="op">=</span> formation.split(<span class="st">'-'</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            num_players <span class="op">=</span> {</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Defender'</span>: <span class="bu">int</span>(positions[<span class="dv">0</span>]),</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Midfielder'</span>: <span class="bu">int</span>(positions[<span class="dv">1</span>]),</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Forward'</span>: <span class="bu">int</span>(positions[<span class="dv">2</span>])</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            }[position]</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        selected_players.append(df.head(num_players))</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Birleştirme</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    selected_players_df <span class="op">=</span> pd.concat(selected_players, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> selected_players_df</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Fonksiyon:</em> Her bir pozisyon için <code>goalkeeper_combined_df</code>, <code>defender_combined_df</code>, <code>midfielder_combined_df</code> ve <code>forward_combined_df</code> veri çerçevelerini alır. Ayrıca, oyuncu seçimi için kullanılacak olan formasyonu (<code>formation</code>) ve elemeler ile ana turnuvaların ağırlıklarını (<code>weight_qualifying</code> ve <code>weight_main_tournament</code>) varsayılan değerlerle alır.</p>
+<p><em>Birleştirme:</em> Her bir pozisyon için belirlenen veri çerçeveleri bir listeye (<code>combined_dfs</code>) eklenir. Her öğe, pozisyon adı ve o pozisyona ait birleştirilmiş veri çerçevesini içerir.</p>
+<p><em>Boş liste:</em> Her bir pozisyon için seçilen oyuncuların veri çerçevelerini içerecektir.</p>
+<p><em>Döngü:</em> Her bir pozisyon için şu işlemler yapılır: <code>TOPSIS Score Qualifying</code> ve <code>TOPSIS Score Main Tournament</code> sütunlarında olası eksik değerler (<code>NaN</code>) sıfırlarla doldurulur. Ağırlıklı TOPSIS skorları hesaplanır ve <code>Weighted Average TOPSIS Score</code> adlı yeni bir sütun oluşturulur. Skorlara göre veri çerçevesi büyükten küçüğe sıralanır ve sıralı veri çerçevesi <code>Player</code> ve <code>Weighted Average TOPSIS Score</code> sütunları kalacak şekilde bırakılır.</p>
+<p><em>Görsel</em>: <code>plot</code> parametresi <code>True</code> olarak ayarlanırsa tüm pozisyonlar için oyuncu sıralamaları görsele dökülür.</p>
+<p><em>Kadro dışı kontrolü:</em> Teoride ideal kadro belirlense de uygulamada sakatlıklar, kart cezaları gibi nedenlerle oyuncular kadro dışı kalabilir. Burada, oyuncular dışarıda bırakılır.</p>
+<p><em>Formasyon:</em> Belirtilen formasyona (<code>formation</code>) göre her bir pozisyon için kaç oyuncu seçileceği belirlenir. <code>num_players</code> sözlüğü kullanılarak her bir pozisyon için <code>head</code> fonksiyonu ile ilk <code>num_players</code> kadar oyuncu seçilir ve seçilen oyuncular <code>selected_players</code> listesine eklenir.</p>
+<p><em>Birleştirme ve Döndürme:</em> <code>selected_players</code> listesindeki tüm seçilen oyuncu veri çerçeveleri birleştirilir ve <code>selected_players_df</code> olarak döndürülür.</p>
+<p>Formasyonun 4-4-2 olduğunu varsayarak oyuncuları seçelim. Yani, 4 defans, 4 orta saha ve 2 forvet ile çıkacağımızı varsayıyoruz.</p>
+<div id="a210c990" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>formation <span class="op">=</span> <span class="st">'4-4-2'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>weight_qualifying <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>weight_main_tournament <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>selected_players <span class="op">=</span> apply_weights_and_select_players(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    goalkeeper_combined_df,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    defender_combined_df,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    midfielder_combined_df,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    forward_combined_df,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    formation,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    weight_qualifying,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    weight_main_tournament,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    plot<span class="op">=</span><span class="va">True</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected Players for </span><span class="sc">{</span>formation<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(selected_players)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
+<p>Oyuncuların pozisyonlarına göre sıralamalarına bakalım.</p>
+<p><img src="imgs/img_3.png" class="img-fluid"></p>
+<p><img src="imgs/img_4.png" class="img-fluid"></p>
+<p><img src="imgs/img_5.png" class="img-fluid"></p>
+<p><img src="imgs/img_6.png" class="img-fluid"></p>
+<p>Çekya maçı öncesi milli takım oyuncularımızın son durumlarına bakalım ve ideal kadroyu yeniden belirleyelim.</p>
+<p>Ayak bileğinde travma yaşayan Orkun Kökçü ve dizinde ağrı şikayeti bulunan Mert Günok’un bu karşılaşmada forma giymesi zor görünüyor. Ayrıca, ilk iki maçta gördüğü sarı kartlar nedeniyle cezalı duruma düşen Abdülkerim Bardakçı bu maçta oynayamayacak.</p>
+<div id="a0174643" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>formation <span class="op">=</span> <span class="st">'4-4-2'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>weight_qualifying <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>weight_main_tournament <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>unavailable_players <span class="op">=</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Goalkeeper'</span>: [<span class="st">'Mert Günok'</span>],</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Defender'</span>: [<span class="st">'Abdülkerim Bardakçı'</span>],</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Midfielder'</span>: [<span class="st">'Orkun Kökçü'</span>],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Forward'</span>: []</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>selected_players <span class="op">=</span> apply_weights_and_select_players(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    goalkeeper_combined_df,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    defender_combined_df,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    midfielder_combined_df,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    forward_combined_df,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    formation,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    weight_qualifying,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    weight_main_tournament,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    unavailable_players</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected Players for </span><span class="sc">{</span>formation<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(selected_players)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_7.PNG" class="img-fluid"></p>
+<p>Tabloya göre;</p>
+<ul>
+<li>İdeal kadronun en iyi kalecisi Mert Günok yerini Altay Bayındır’a bırakmış.</li>
+<li>Abdülkerim Bardakçı ve Orkun Kökçü zaten ilk ideal kadroda da yoktu.</li>
+<li>Arda Güler’in Portekiz maçında sonradan (70’) oyuna girmesi tepki görmüştü. Arda Güler’in hem kendi pozisyon sıralamasında lider olduğunu hem de ideal kadroda bulunduğunu görüyoruz.</li>
+</ul>
+<p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Kopyalandı");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopyalandı");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
