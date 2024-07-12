@@ -4,7 +4,7 @@ author: "Uraz Akgül"
 date: "2024-06-14"
 date-modified: last-modified
 date-format: "MMMM D, YYYY"
-categories: [Duygu Analizi]
+categories: [Duygu Analizi, Web Kazıma]
 image: "imgs/img_1.PNG"
 execute:
   eval: false

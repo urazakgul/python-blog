@@ -4,7 +4,7 @@ author: "Uraz Akgül"
 date: "2024-07-12"
 date-modified: last-modified
 date-format: "MMMM D, YYYY"
-categories: [Futbol, Yüz]
+categories: [Futbol, Yüz, Web Kazıma]
 image: "imgs/img_4.png"
 execute:
   eval: false
