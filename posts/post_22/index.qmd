@@ -1,0 +1,76 @@
+---
+title: "StatsBomb Verilerine Erişim: Euro 2024 Örneği"
+author: "Uraz Akgül"
+date: "2024-07-16"
+date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Futbol]
+image: "imgs/img_1.PNG"
+execute:
+  eval: false
+---
+
+# Giriş
+
+Futbol analitiği ve veri paylaşımında önemli bir yeri olan StatsBomb, Euro 2024 verilerini paylaştığını duyurdu. İlgili habere [buradan](https://statsbomb.com/news/statsbomb-release-free-euro-2024-data/){.external target="_blank"} ulaşabilirsiniz.
+
+![](imgs/img_1.PNG)
+
+Biz de StatsBomb'un `statsbombpy` kütüphanesini Euro 2024 verileri örneği ile tanımış olacağız.
+
+# `statsbombpy` Kütüphanesinin Kurulması
+
+`pip` ile aşağıdaki gibi kurulum yapılabilir.
+
+```{bash}
+
+pip install statsbombpy
+
+```
+
+# İçeriklerin İncelenmesi
+
+Başlamadan önce, StatsBomb'un bize verdiği bilgiyi burada verelim.
+
+*To pull the data into your working environment, you'll need to use competition_id (55) and season_id (282).*
+
+## Turnuvalar
+
+Turnuvalara ulaşmak için aşağıdaki fonksiyonu kullanacağız.
+
+```{python}
+
+competitions = sb.competitions()
+
+```
+
+![](imgs/img_2.PNG)
+
+## Maçlar
+
+Euro 2024 turnuvasının `competition_id`'sinin 55, `season_id`'sinin 282 olduğunu biliyoruz.
+
+```{python}
+
+matches = sb.matches(competition_id=55, season_id=282)
+matches.head(10)
+
+```
+
+![](imgs/img_3.PNG)
+
+## Kadrolar
+
+Euro 2024 final maçının `match_id`'si `3943043` olacak.
+
+İspanya'nın kadrosuna bakalım.
+
+```{python}
+
+lineups = sb.lineups(match_id=3943043)['Spain']
+
+```
+
+![](imgs/img_4.PNG)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

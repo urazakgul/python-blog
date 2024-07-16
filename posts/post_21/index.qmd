@@ -338,3 +338,5 @@ plt.show()
 ```
 
 ![](imgs/img_12.png)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Türkçe Finans Haberlerinde Duygu Sınıflandırması</title>
+<title>Python Blog - StatsBomb Verilerine Erişim: Euro 2024 Örneği</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,10 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Türkçe Finans Haberlerinde Duygu Sınıflandırması</h1>
+      <h1 class="title">StatsBomb Verilerine Erişim: Euro 2024 Örneği</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Duygu Analizi</div>
-                <div class="quarto-category">Web Kazıma</div>
+                <div class="quarto-category">Futbol</div>
               </div>
                   </div>
   </div>
@@ -181,14 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Haziran 14, 2024</p>
+        <p class="date">Temmuz 16, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Temmuz 13, 2024</p>
+        <p class="date-modified">Temmuz 16, 2024</p>
       </div>
     </div>
       
@@ -204,14 +203,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
-  <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#haber-başlıklarının-elde-edilmesi" id="toc-haber-başlıklarının-elde-edilmesi" class="nav-link" data-scroll-target="#haber-başlıklarının-elde-edilmesi">Haber Başlıklarının Elde Edilmesi</a></li>
-  <li><a href="#ingilizce-çevirilerin-yapılması" id="toc-ingilizce-çevirilerin-yapılması" class="nav-link" data-scroll-target="#ingilizce-çevirilerin-yapılması">İngilizce Çevirilerin Yapılması</a></li>
-  <li><a href="#duygu-sınıflandırması" id="toc-duygu-sınıflandırması" class="nav-link" data-scroll-target="#duygu-sınıflandırması">Duygu Sınıflandırması</a>
+  <li><a href="#statsbombpy-kütüphanesinin-kurulması" id="toc-statsbombpy-kütüphanesinin-kurulması" class="nav-link" data-scroll-target="#statsbombpy-kütüphanesinin-kurulması"><code>statsbombpy</code> Kütüphanesinin Kurulması</a></li>
+  <li><a href="#içeriklerin-incelenmesi" id="toc-içeriklerin-incelenmesi" class="nav-link" data-scroll-target="#içeriklerin-incelenmesi">İçeriklerin İncelenmesi</a>
   <ul class="collapse">
-  <li><a href="#pipelineın-oluşturulması" id="toc-pipelineın-oluşturulması" class="nav-link" data-scroll-target="#pipelineın-oluşturulması">Pipeline’ın Oluşturulması</a></li>
-  <li><a href="#duyguların-oluşturulması" id="toc-duyguların-oluşturulması" class="nav-link" data-scroll-target="#duyguların-oluşturulması">Duyguların Oluşturulması</a></li>
-  <li><a href="#sonuçların-veri-çerçevesinde-renklendirilerek-gösterilmesi" id="toc-sonuçların-veri-çerçevesinde-renklendirilerek-gösterilmesi" class="nav-link" data-scroll-target="#sonuçların-veri-çerçevesinde-renklendirilerek-gösterilmesi">Sonuçların Veri Çerçevesinde Renklendirilerek Gösterilmesi</a></li>
+  <li><a href="#turnuvalar" id="toc-turnuvalar" class="nav-link" data-scroll-target="#turnuvalar">Turnuvalar</a></li>
+  <li><a href="#maçlar" id="toc-maçlar" class="nav-link" data-scroll-target="#maçlar">Maçlar</a></li>
+  <li><a href="#kadrolar" id="toc-kadrolar" class="nav-link" data-scroll-target="#kadrolar">Kadrolar</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -225,92 +222,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>Finans dünyası, her gün çok sayıda yatırımcı ve profesyonel için hayati öneme sahip bilgilerle doludur. Hisse senetleri, piyasa hareketleri ve ekonomik göstergeler gibi konular, yatırımcıların kararlarını doğrudan etkiler. Ancak bu bilgilerin nasıl yorumlandığı ve hissedilen duygular da yatırım stratejilerinde kritik bir rol üstlenir. Buradan hareketle, Türkçe finans haberlerinde duygu sınıflandırması konusunu ele alacağız.</p>
-<p>Başlangıç noktamız, Türkçe finans haberlerinden elde edilen başlıkları çekip İngilizceye çeviren bir veri işleme sürecidir. Ardından, bu başlıkları duygu analizi yapabilen bir yapay zeka modeli üzerinden değerlendireceğiz.</p>
-<p>İlk adım olarak, bu hafta içerisinde yayın hayatına başlayan cnbc-e’den finans haberlerini çekiyoruz ve başlıkları analiz için hazırlıyoruz. Ardından, Google Çeviri aracılığıyla Türkçe başlıkları İngilizceye çeviriyoruz. Bu adım, finans haberlerine erişim sağlayarak dil bariyerlerini aşmamıza yardımcı olur. Daha sonra, derin öğrenme tabanlı bir duygu analizi modeli kullanarak çevrilen başlıkların duygu tonlamalarını değerlendiriyoruz. Bu model, her başlığın olumlu, olumsuz veya nötr olarak sınıflandırılmasına olanak tanır. Bu sayede, finans haberlerinin yatırımcılar üzerindeki duygusal etkilerini anlama ve analiz etme yeteneğimizi artırabiliriz.</p>
-<p>Sonuçlarımızı görsel olarak sunmak için etiketlenmiş başlıkları renklendiriyoruz. Bu, her bir başlığın duygusal tonunu hızlıca görselleştirmemize ve verileri daha anlamlı hale getirmemize yardımcı olur.</p>
-</section>
-<section id="kullanılacak-kütüphaneler" class="level1">
-<h1>Kullanılacak Kütüphaneler</h1>
-<div id="9b61b634" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> deep_translator <span class="im">import</span> GoogleTranslator</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="haber-başlıklarının-elde-edilmesi" class="level1">
-<h1>Haber Başlıklarının Elde Edilmesi</h1>
-<div id="a6a0ea40" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://www.cnbce.com/piyasalar"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.content, <span class="st">'html.parser'</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>post_cards <span class="op">=</span> soup.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'post-card-title'</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> []</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> post_card <span class="kw">in</span> post_cards:</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    a_tag <span class="op">=</span> post_card.find(<span class="st">'a'</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> a_tag:</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> a_tag.get_text().strip()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        titles.append(text)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="ingilizce-çevirilerin-yapılması" class="level1">
-<h1>İngilizce Çevirilerin Yapılması</h1>
-<div id="b3623e46" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>translated_titles <span class="op">=</span> []</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> title <span class="kw">in</span> titles:</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    translated_title <span class="op">=</span> GoogleTranslator(source<span class="op">=</span><span class="st">'auto'</span>, target<span class="op">=</span><span class="st">'en'</span>).translate(title)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    translated_titles.append(translated_title)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'Turkish'</span>: titles, <span class="st">'English'</span>: translated_titles})</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="duygu-sınıflandırması" class="level1">
-<h1>Duygu Sınıflandırması</h1>
-<section id="pipelineın-oluşturulması" class="level2">
-<h2 class="anchored" data-anchor-id="pipelineın-oluşturulması">Pipeline’ın Oluşturulması</h2>
-<div id="fec22147" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sentiment_analysis <span class="op">=</span> pipeline(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sentiment-analysis'</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">'soleimanian/financial-roberta-large-sentiment'</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Financial-RoBERTa adlı önceden eğitilmiş doğal dil işleme modeli, finansal metinlerin duygusunu analiz etmek için özel olarak tasarlanmıştır. Bu metinler arasında finansal beyanlar (financial statements), kazanç duyuruları (earnings announcements), kazanç çağrısı metinleri (earnings call transcripts), kurumsal sosyal sorumluluk (CSR) raporları (corporate social responsibility (CSR) reports), çevresel, sosyal ve yönetişim (ESG) haberleri (environmental, social, and governance (ESG) news), finansal haberler (financial news) gibi çeşitli belgeler bulunmaktadır.</p>
-<p>Financial-RoBERTa, RoBERTa büyük dil modelini temel alarak daha fazla eğitim ve ayarlama ile oluşturulmuştur. Bu süreçte, 10K ve 10Q raporları, 8K bildirimleri, kazanç çağrısı transkriptleri, CSR raporları, ESG haberleri ve finansal haberler gibi geniş bir metin korpusu kullanılmıştır.</p>
-<p>Model, metin girdilerini alır ve bu metinlerin duygu durumunu belirlemek için softmax çıktılarını üretir. Çıktılar üç temel etiket üzerinden tanımlanır: Pozitif, Negatif veya Nötr.</p>
-<p>Financial-RoBERTa’nın temel amacı, bu çeşitli finansal belgeleri otomatik olarak analiz ederek, yatırımcıların ve finans profesyonellerinin büyük veri setleri içindeki önemli bilgileri daha hızlı ve etkili bir şekilde keşfetmelerine yardımcı olmaktır.</p>
-</section>
-<section id="duyguların-oluşturulması" class="level2">
-<h2 class="anchored" data-anchor-id="duyguların-oluşturulması">Duyguların Oluşturulması</h2>
-<div id="870b24f3" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> english_title <span class="kw">in</span> df[<span class="st">'English'</span>]:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> sentiment_analysis(english_title)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    results.append(result[<span class="dv">0</span>])</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Label'</span>] <span class="op">=</span> [res[<span class="st">'label'</span>].title() <span class="cf">for</span> res <span class="kw">in</span> results]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Score'</span>] <span class="op">=</span> [res[<span class="st">'score'</span>] <span class="cf">for</span> res <span class="kw">in</span> results]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="sonuçların-veri-çerçevesinde-renklendirilerek-gösterilmesi" class="level2">
-<h2 class="anchored" data-anchor-id="sonuçların-veri-çerçevesinde-renklendirilerek-gösterilmesi">Sonuçların Veri Çerçevesinde Renklendirilerek Gösterilmesi</h2>
-<div id="603a14ea" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> color_label(val):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">''</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> val <span class="op">==</span> <span class="st">'Positive'</span>:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        color <span class="op">=</span> <span class="st">'background-color: skyblue; color: black'</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> val <span class="op">==</span> <span class="st">'Negative'</span>:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        color <span class="op">=</span> <span class="st">'background-color: lightcoral; color: black'</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> val <span class="op">==</span> <span class="st">'Neutral'</span>:</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        color <span class="op">=</span> <span class="st">'background-color: lightgrey; color: black'</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> color</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>styled_df <span class="op">=</span> df.style.applymap(color_label, subset<span class="op">=</span>[<span class="st">'Label'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Futbol analitiği ve veri paylaşımında önemli bir yeri olan StatsBomb, Euro 2024 verilerini paylaştığını duyurdu. İlgili habere <a href="https://statsbomb.com/news/statsbomb-release-free-euro-2024-data/" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
 <p><img src="imgs/img_1.PNG" class="img-fluid"></p>
+<p>Biz de StatsBomb’un <code>statsbombpy</code> kütüphanesini Euro 2024 verileri örneği ile tanımış olacağız.</p>
+</section>
+<section id="statsbombpy-kütüphanesinin-kurulması" class="level1">
+<h1><code>statsbombpy</code> Kütüphanesinin Kurulması</h1>
+<p><code>pip</code> ile aşağıdaki gibi kurulum yapılabilir.</p>
+<pre class="{bash}"><code>
+pip install statsbombpy
+</code></pre>
+</section>
+<section id="içeriklerin-incelenmesi" class="level1">
+<h1>İçeriklerin İncelenmesi</h1>
+<p>Başlamadan önce, StatsBomb’un bize verdiği bilgiyi burada verelim.</p>
+<p><em>To pull the data into your working environment, you’ll need to use competition_id (55) and season_id (282).</em></p>
+<section id="turnuvalar" class="level2">
+<h2 class="anchored" data-anchor-id="turnuvalar">Turnuvalar</h2>
+<p>Turnuvalara ulaşmak için aşağıdaki fonksiyonu kullanacağız.</p>
+<div id="91a33d50" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>competitions <span class="op">=</span> sb.competitions()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
+</section>
+<section id="maçlar" class="level2">
+<h2 class="anchored" data-anchor-id="maçlar">Maçlar</h2>
+<p>Euro 2024 turnuvasının <code>competition_id</code>’sinin 55, <code>season_id</code>’sinin 282 olduğunu biliyoruz.</p>
+<div id="26c1d086" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> sb.matches(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>matches.head(<span class="dv">10</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
+</section>
+<section id="kadrolar" class="level2">
+<h2 class="anchored" data-anchor-id="kadrolar">Kadrolar</h2>
+<p>Euro 2024 final maçının <code>match_id</code>’si <code>3943043</code> olacak.</p>
+<p>İspanya’nın kadrosuna bakalım.</p>
+<div id="55369e22" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lineups <span class="op">=</span> sb.lineups(match_id<span class="op">=</span><span class="dv">3943043</span>)[<span class="st">'Spain'</span>]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
