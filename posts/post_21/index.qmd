@@ -43,6 +43,8 @@ Model kurarken tüm değişkenlerin Z-skor ile normalize edilmiş hallerini kull
 * Fouls Committed: (Yapılan Fauller / Maç Sayısı) * Log(Maç Sayısı)
 * Fouls Suffered: (Uğranılan Fauller / Maç Sayısı) * Log(Maç Sayısı)
 
+Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_21){.external target="_blank"} ulaşabilirsiniz.
+
 ```{python}
 
 scaler = MinMaxScaler()
