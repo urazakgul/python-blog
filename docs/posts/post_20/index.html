@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="68b50ee9" class="cell" data-execution_count="1">
+<div id="85b128ee" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -253,7 +253,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <section id="veri-setinin-hazırlanması" class="level1">
 <h1>Veri Setinin Hazırlanması</h1>
 <p>Transfermarkt’tan alacağımız ligdeki 19 takımın URL’lerini sözlüğe atarak başlıyoruz. Yüz hesaplamalarında hata verdiği için Türkçe karakter kullanmadan oluşturalım. Sonrasında tekrar Türkçe karakterler ile değiştireceğiz.</p>
-<div id="fc1e5f26" class="cell" data-execution_count="2">
+<div id="f1f2ad0f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>team_urls <span class="op">=</span> {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Galatasaray"</span>: <span class="st">"https://www.transfermarkt.com.tr/galatasaray-istanbul/startseite/verein/141/saison_id/2024"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Fenerbahce"</span>: <span class="st">"https://www.transfermarkt.com.tr/fenerbahce-istanbul/startseite/verein/36/saison_id/2024"</span>,</span>
@@ -277,7 +277,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Web kazıma ile verileri çekmeden önce üç adet dosya oluşturmamız iyi olur. <code>photos</code> adlı klasör takım fotoğraflarını, <code>average_faces</code> adlı klasör ortalama yüzleri ve <code>logos</code> adlı klasör ise takımların logolarını saklayacak.</p>
-<div id="2d32a21c" class="cell" data-execution_count="3">
+<div id="8f32b008" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="op">=</span> <span class="st">'photos'</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>file2 <span class="op">=</span> <span class="st">'average_faces'</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>file3 <span class="op">=</span> <span class="st">'logos'</span></span>
@@ -287,7 +287,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        os.makedirs(directory)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fotoğrafları indirecek kodu yazalım.</p>
-<div id="b17567ae" class="cell" data-execution_count="4">
+<div id="7e7c3757" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -321,20 +321,20 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to retrieve URL for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yukarıdaki kodun kilit yerlerine bakalım.</p>
-<div id="100480a5" class="cell" data-execution_count="5">
+<div id="e65becf8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Bir HTTP isteği gönderirken kullanılacak başlıkları (<code>headers</code>) tanımlar ve bunları bir Python sözlüğü olarak belirtir. Bu başlıklar, sunucuya hangi tarayıcıyı ve işletim sistemini kullandığımızı bildirmek için kullanılır. Özellikle <code>User-Agent</code> başlığı, web tarayıcılarının kendilerini tanıttıkları bir başlıktır ve sunucular tarafından kullanıcıyı ve kullanılan yazılımı tanımak için kullanılır.</p>
-<div id="88441be9" class="cell" data-execution_count="6">
+<div id="30c3f8dc" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> soup.select(<span class="st">'.inline-table img'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>BeautifulSoup</code> kütüphanesini kullanarak gelen HTML yanıtını parse’lıyoruz ve sayfadaki <code>.inline-table</code> sınıfına sahip tablo içindeki <code>img</code> etiketlerini seçiyoruz.</p>
-<div id="42b81beb" class="cell" data-execution_count="7">
+<div id="9af4b314" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>team_folder <span class="op">=</span> os.path.join(file1, team)</span>
@@ -342,7 +342,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    os.makedirs(team_folder)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Takım adıyla bir klasör yolu oluşturuyoruz (<code>file1</code> ana dizin, <code>team</code> takım adı). Eğer bu klasör yoksa, <code>os.makedirs</code> kullanarak bu klasörü oluşturuyoruz.</p>
-<div id="6312b21b" class="cell" data-execution_count="8">
+<div id="b9caea91" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>img_url <span class="op">=</span> img.get(<span class="st">'data-src'</span>)</span>
@@ -361,13 +361,13 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 </section>
 <section id="ortalama-yüzlerin-hesaplanması" class="level1">
 <h1>Ortalama Yüzlerin Hesaplanması</h1>
-<div id="c18508d5" class="cell" data-execution_count="9">
+<div id="40a0616a" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> <span class="bu">list</span>(team_urls.keys())</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>folders <span class="op">=</span> [<span class="ss">f'./</span><span class="sc">{</span>file1<span class="sc">}</span><span class="ss">/'</span> <span class="op">+</span> team <span class="cf">for</span> team <span class="kw">in</span> teams]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>team_urls</code> sözlüğündeki anahtar değerleri alarak takımları <code>teams</code> değişkenine, her bir takımın fotoğraflarının bulunduğu dosya adlarını <code>folders</code> değişkenine atıyoruz.</p>
 <p>Hesaplama bölümüne geçebiliriz. Bu bölüm, <a href="https://github.com/johnwmillr/Facer" class="external" target="_blank">buradaki</a> repoda verilen örnek kod ile rahatlıkla anlaşılabilir.</p>
-<div id="8f119a96" class="cell" data-execution_count="10">
+<div id="8c9e4f65" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, folder <span class="kw">in</span> <span class="bu">enumerate</span>(folders):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        images <span class="op">=</span> load_images(folder)</span>
@@ -386,7 +386,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 </section>
 <section id="takım-logolarının-indirilmesi" class="level1">
 <h1>Takım Logolarının İndirilmesi</h1>
-<div id="ddb7776b" class="cell" data-execution_count="11">
+<div id="90c970f6" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team, url <span class="kw">in</span> team_urls.items():</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
@@ -417,7 +417,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 </section>
 <section id="türkçe-karakterlerin-oluşturulması" class="level1">
 <h1>Türkçe Karakterlerin Oluşturulması</h1>
-<div id="df1b379c" class="cell" data-execution_count="12">
+<div id="86b26c98" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>teams_turkish <span class="op">=</span> {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Besiktas JK"</span>: <span class="st">"Beşiktaş JK"</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Caykur Rizespor"</span>: <span class="st">"Çaykur Rizespor"</span>,</span>
@@ -456,7 +456,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <section id="görselin-oluşturulması" class="level1">
 <h1>Görselin Oluşturulması</h1>
 <p>5 satır ve 4 sütundan oluşan bir alt grafik ızgarası oluşturalım.</p>
-<div id="994ab6f4" class="cell" data-execution_count="13">
+<div id="1d92ae58" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">32</span>, <span class="dv">32</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, team <span class="kw">in</span> <span class="bu">enumerate</span>(teams):</span>

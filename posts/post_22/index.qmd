@@ -18,13 +18,19 @@ Futbol analitiği ve veri paylaşımında önemli bir yeri olan StatsBomb, Euro 
 
 Biz de StatsBomb'un `statsbombpy` kütüphanesini Euro 2024 verileri örneği ile tanımış olacağız.
 
-# `statsbombpy` Kütüphanesinin Kurulması
+# `statsbombpy` Kütüphanesinin Kurulması ve İçe Aktarılması
 
 `pip` ile aşağıdaki gibi kurulum yapılabilir.
 
 ```{bash}
 
 pip install statsbombpy
+
+```
+
+```{python}
+
+from statsbombpy import sb
 
 ```
 
