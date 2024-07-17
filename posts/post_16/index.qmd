@@ -97,7 +97,7 @@ plt.show()
 
 ![](imgs/img_1.png)
 
-# Veri Setlerinin İçe Aktarılması ve Düzenlenmesi
+# Veri Setinin İçe Aktarılması ve Düzenlenmesi
 
 Kullanacağımız veri setini Kaggle'dan indirebilirsiniz.
 

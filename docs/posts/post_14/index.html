@@ -277,7 +277,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="c11e2702" class="cell" data-execution_count="1">
+<div id="8a3cf3e8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
@@ -288,7 +288,7 @@ window.Quarto = {
 </section>
 <section id="veri-setinin-oluşturulması" class="level1">
 <h1>Veri Setinin Oluşturulması</h1>
-<div id="d8a080d4" class="cell" data-execution_count="2">
+<div id="e8e7374f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> yf.download(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    tickers<span class="op">=</span><span class="st">'BTC-USD'</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    start<span class="op">=</span><span class="st">'2018-01-01'</span>,</span>
@@ -308,7 +308,7 @@ window.Quarto = {
 <p>Çalışmada kullanacağımız kümülatif getiri, tüm değerleme dönemi boyunca bileşik günlük getiriyi verir ve aşağıdaki gibi formülize edilebilir.</p>
 <p><span class="math inline">\(R_c = \prod_{i=1}^{n} (1 + R_i) - 1 = (1 + R_1)(1 + R_2)...(1 + R_n) - 1\)</span></p>
 <p>Bir örnek ile nasıl hesaplandığına bakalım.</p>
-<div id="df9846ef" class="cell" data-execution_count="3">
+<div id="011691a3" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veri</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
@@ -365,13 +365,13 @@ window.Quarto = {
 <section id="indikatörlerin-hesaplanması" class="level2">
 <h2 class="anchored" data-anchor-id="indikatörlerin-hesaplanması">İndikatörlerin Hesaplanması</h2>
 <p><code>ta_rating_df</code> adında bir pandas DataFrame oluşturalım. Bu DataFrame, tarih (<code>Date</code>), indikatör (<code>Indicator</code>) ve sinyal (<code>Signal</code>) bilgilerini içerecek. İndikatörlerden gelen bilgiler <code>ta_rating_df</code>’te saklanacak.</p>
-<div id="d8048b84" class="cell" data-execution_count="4">
+<div id="1293e83e" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.DataFrame(columns<span class="op">=</span>[<span class="st">'Date'</span>, <span class="st">'Indicator'</span>, <span class="st">'Signal'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="sinyallerin-güncellenmesi" class="level3">
 <h3 class="anchored" data-anchor-id="sinyallerin-güncellenmesi">Sinyallerin Güncellenmesi</h3>
 <p>İndikatörlerin alım-satım stratejilerinde kullanılacak değerlerini optimize ederken alım-satım sinyallerini güncelleyeceğiz. Bu güncelleme ile beraber indikatörün art arda aynı sinyali üretmesi yerine sırayla sinyal üretmesini sağlayacağız.</p>
-<div id="6d022360" class="cell" data-execution_count="5">
+<div id="5d0555c7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_signals(signals):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    updated_signals <span class="op">=</span> []</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    previous_signal <span class="op">=</span> <span class="va">None</span></span>
@@ -405,7 +405,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="relative-strength-index">Relative Strength Index</h4>
 <p>Relative Strength Index, bir varlığın geçmiş fiyat değişimlerine dayalı olarak aşırı alım veya aşırı satım durumlarını belirlemeye yardımcı olan bir momentum indikatörüdür.</p>
 <p>Relative Strength Index için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi elde etmeyi amaçlar. Belirli bir pencere boyutu, aşırı alım ve aşırı satım seviyeleri aralığını kullanarak fiyatların aşırı alım veya aşırı satım durumunda olup olmadığını belirler. Ardından, bu sinyalleri alım ve satım pozisyonlarına dönüştürür ve stratejinin getirisini hesaplar. En iyi parametrelerle belirlenen bu sinyaller daha sonra alım-satım stratejisi için kullanılır.</p>
-<div id="d7e86982" class="cell" data-execution_count="6">
+<div id="1035d70f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_rsi(df, window_range, overbought_range, oversold_range):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -460,7 +460,7 @@ window.Quarto = {
 <span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, rsi_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="6114e74f" class="cell" data-execution_count="7">
+<div id="56f57221" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rsi <span class="op">=</span> momentum.RSIIndicator(strategy_df[<span class="st">'Close'</span>], window<span class="op">=</span>window).rsi()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> np.where(rsi <span class="op">&lt;</span> oversold, <span class="dv">1</span>, np.where(rsi <span class="op">&gt;</span> overbought, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -478,7 +478,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="weighted-moving-average">Weighted Moving Average</h4>
 <p>Weighted Moving Average, belirli bir zaman diliminde fiyatların ağırlıklı ortalamasını hesaplayarak trendi belirlemeye yardımcı olan bir indikatördür.</p>
 <p>Weighted Moving Average için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi elde etmeyi amaçlar. Kısa ve uzun vadeli hareketli ortalamalar arasındaki ilişkiyi değerlendirir. Kısa vadeli WMA’in uzun vadeli WMA’yi aştığı durumlarda alım, kısa vadeli WMA’in uzun vadeli WMA’den düşük olduğu durumlarda satış sinyali üretir. Bu sinyalleri kullanarak stratejinin getirisini hesaplar ve en iyi parametrelerle belirlenen sinyallerle işlem yapar.</p>
-<div id="6f1aca48" class="cell" data-execution_count="8">
+<div id="fe5df15e" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_wma(df, short_range, long_range):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -537,7 +537,7 @@ window.Quarto = {
 <span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, wma_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="896c727b" class="cell" data-execution_count="9">
+<div id="2af487a4" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>wma_short <span class="op">=</span> trend.wma_indicator(strategy_df[<span class="st">'Close'</span>], window<span class="op">=</span>short)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>wma_long <span class="op">=</span> trend.wma_indicator(strategy_df[<span class="st">'Close'</span>], window<span class="op">=</span><span class="bu">long</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> np.where(wma_short <span class="op">&gt;</span> wma_long, <span class="dv">1</span>, np.where(wma_short <span class="op">&lt;</span> wma_long, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -556,7 +556,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="moving-average-convergence-divergence">Moving Average Convergence Divergence</h4>
 <p>Moving Average Convergence Divergence, iki farklı üssel hareketli ortalamanın (EMA) farkını hesaplayarak trendin yönünü ve gücünü belirlemeye yardımcı olur</p>
 <p>Moving Average Convergence Divergence için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi elde etmeyi hedefler. Kısa vadeli ve uzun vadeli hareketli ortalamalar arasındaki farkı ve hareketli ortalamaların ortalama yakınsama ve diverjansını hesaplar. Ardından, sinyal hattıyla karşılaştırarak alım ve satım sinyallerini üretir. Bu sinyallerle stratejinin getirisini hesaplar ve en iyi parametrelerle belirlenen sinyallerle işlem yapar.</p>
-<div id="0254ad7f" class="cell" data-execution_count="10">
+<div id="d568b97a" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_macd(df, window_short_range, window_long_range, window_signal_range):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -614,7 +614,7 @@ window.Quarto = {
 <span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, macd_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="548010e3" class="cell" data-execution_count="11">
+<div id="96b1e2a4" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>macd_obj <span class="op">=</span> trend.MACD(close<span class="op">=</span>strategy_df[<span class="st">'Close'</span>], window_fast<span class="op">=</span>window_short, window_slow<span class="op">=</span>window_long, window_sign<span class="op">=</span>window_signal)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>macd <span class="op">=</span> macd_obj.macd()</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>signal_line <span class="op">=</span> macd_obj.macd_signal()</span>
@@ -634,7 +634,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="average-directional-index">Average Directional Index</h4>
 <p>Average Directional Index, bir varlığın trendinin gücünü ölçen bir indikatördür.</p>
 <p>Average Directional Index için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi hedefler. ADX, trendin gücünü ölçerken, +DI ve -DI göstergeleri trendin yönünü belirler. Belirli bir pencere boyutu ve eşik değeri ile bu göstergeleri değerlendirir ve belirli bir eşik değerinin üzerindeyse ve +DI, -DI’dan büyükse alım, tersi durumda satım sinyali üretir. Bu sinyallerle stratejinin getirisini hesaplar ve en iyi parametrelerle belirlenen sinyallerle işlem yapar.</p>
-<div id="0d69f0f6" class="cell" data-execution_count="12">
+<div id="8e57f6fe" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_adx(df, window_range, threshold_range):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -706,7 +706,7 @@ window.Quarto = {
 <span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, adx_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="2ad455cf" class="cell" data-execution_count="13">
+<div id="cba1b16d" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>adx_obj <span class="op">=</span> trend.ADXIndicator(high<span class="op">=</span>strategy_df[<span class="st">'High'</span>], low<span class="op">=</span>strategy_df[<span class="st">'Low'</span>], close<span class="op">=</span>strategy_df[<span class="st">'Close'</span>], window<span class="op">=</span>window)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>adx <span class="op">=</span> adx_obj.adx()</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plus_di <span class="op">=</span> adx_obj.adx_pos()</span>
@@ -740,7 +740,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="bollinger-bands">Bollinger Bands</h4>
 <p>Bollinger Bands, fiyatların ortalamadan sapmasını ölçerek volatiliteyi gösteren bir indikatördür.</p>
 <p>Bollinger Bands için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi hedefler. Bollinger Bands, fiyatın ortalamadan ne kadar uzakta olduğunu ölçer ve standart sapma kullanarak üst ve alt bantları hesaplar. Belirli bir pencere boyutu ve standart sapma aralığı ile bu bantları hesaplar ve fiyatın bu bantların içinde veya dışında olduğu durumları değerlendirir. Fiyatın alt bant altında olduğu durumlarda alım, üst bant üstünde olduğu durumlarda satım sinyali üretir. Bu sinyallerle stratejinin getirisini hesaplar ve en iyi parametrelerle belirlenen sinyallerle işlem yapar.</p>
-<div id="76a5f446" class="cell" data-execution_count="14">
+<div id="a4c13682" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_bollinger_bands(df, window_range, std_dev_range):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -808,7 +808,7 @@ window.Quarto = {
 <span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, bb_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="7aa25dc2" class="cell" data-execution_count="15">
+<div id="72059aa5" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>bb <span class="op">=</span> volatility.BollingerBands(close<span class="op">=</span>strategy_df[<span class="st">'Close'</span>], window<span class="op">=</span>window, window_dev<span class="op">=</span>std_dev)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bb_lband <span class="op">=</span> bb.bollinger_lband()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>bb_hband <span class="op">=</span> bb.bollinger_hband()</span>
@@ -838,7 +838,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="rate-of-change">Rate of Change</h4>
 <p>Rate of Change, belirli bir zaman diliminde fiyatların yüzde değişimini ölçerek fiyatların momentumunu gösteren bir indikatördür.</p>
 <p>Rate of Change için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi hedefler. Belirli bir pencere boyutu ve aşırı alım/aşırı satım seviyeleri aralığı ile fiyatın geçmiş performansını ölçer. ROC değeri, belirli bir dönemde fiyatın yüzde değişimini gösterir. Ardından, aşırı alım veya aşırı satım seviyelerini geçtiğinde alım veya satım sinyali üretir. Bu sinyallerle stratejinin getirisini hesaplar ve en iyi parametrelerle belirlenen sinyallerle işlem yapar.</p>
-<div id="b64a28fa" class="cell" data-execution_count="16">
+<div id="c62dc8bb" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_roc(df, window_range, overbought_range, oversold_range):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -893,7 +893,7 @@ window.Quarto = {
 <span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, roc_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="67e0585f" class="cell" data-execution_count="17">
+<div id="767654a3" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>roc <span class="op">=</span> momentum.ROCIndicator(strategy_df[<span class="st">'Close'</span>], window<span class="op">=</span>window).roc()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> np.where(roc <span class="op">&gt;</span> overbought, <span class="op">-</span><span class="dv">1</span>, np.where(roc <span class="op">&lt;</span> oversold, <span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -911,7 +911,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="ichimoku">Ichimoku</h4>
 <p>Ichimoku Kinko Hyo, genellikle kısaca Ichimoku olarak bilinen, çok yönlü bir teknik analiz indikatörüdür. Ichimoku, bir varlığın destek ve direnç seviyelerini, trend yönünü, momentumunu ve olası sinyalleri belirlemeye yardımcı olur. Ichimoku, tek bir grafikte beş ana bileşeni birleştirir ve bu da onu oldukça kapsamlı bir analiz aracı yapar.</p>
 <p>Ichimoku için seçilen strateji, indikatörü kullanarak alım-satım sinyalleri üretir ve bu sinyalleri optimize ederek en iyi kümülatif getiriyi hedefler. Ichimoku Bulutu, beş çizgiden oluşur: Tenkan-sen, Kijun-sen, Senkou Span A, Senkou Span B ve Chikou Span. Bu stratejide, Tenkan-sen ve Kijun-sen çizgilerinin kesişimlerine dayalı alım-satım sinyalleri üretilir. Ayrıca, fiyatın Senkou Span A ve Senkou Span B arasında veya dışında olması durumuna göre de alım-satım sinyalleri üretilir. Bu sinyallerle stratejinin getirisini hesaplar ve en iyi parametrelerle belirlenen sinyallerle işlem yapar.</p>
-<div id="a88352cf" class="cell" data-execution_count="18">
+<div id="f490b5ac" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_and_calculate_ichimoku(df, tenkan_range, kijun_range, senkou_span_b_range):</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    best_params <span class="op">=</span> <span class="va">None</span></span>
@@ -992,7 +992,7 @@ window.Quarto = {
 <span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a>ta_rating_df <span class="op">=</span> pd.concat([ta_rating_df, ichimoku_signals_df], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fonksiyondan alınan aşağıdaki kod bloğunu inceleyelim.</p>
-<div id="13e50c01" class="cell" data-execution_count="19">
+<div id="7cc14beb" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ichimoku <span class="op">=</span> trend.IchimokuIndicator(strategy_df[<span class="st">'High'</span>], strategy_df[<span class="st">'Low'</span>], window1<span class="op">=</span>tenkan, window2<span class="op">=</span>kijun, window3<span class="op">=</span>senkou_span_b)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>strategy_df[<span class="st">'Tenkan'</span>] <span class="op">=</span> ichimoku.ichimoku_conversion_line()</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>strategy_df[<span class="st">'Kijun'</span>] <span class="op">=</span> ichimoku.ichimoku_base_line()</span>
@@ -1040,7 +1040,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="pandas-dataframein-güncellenmesi">Pandas DataFrame’in Güncellenmesi</h3>
 <p><code>ta_rating_df</code>’i <code>pivot_table</code> yardımıyla aşağıdaki formata çevirelim ve yeni tabloyu <code>pivot_ta_rating_df</code>’e atayalım.</p>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
-<div id="7d877404" class="cell" data-execution_count="20">
+<div id="292cbe99" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pivot_ta_rating_df <span class="op">=</span> ta_rating_df.pivot_table(index<span class="op">=</span><span class="st">'Date'</span>, columns<span class="op">=</span><span class="st">'Indicator'</span>, values<span class="op">=</span><span class="st">'Signal'</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>pivot_ta_rating_df.columns.name <span class="op">=</span> <span class="va">None</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1049,7 +1049,7 @@ window.Quarto = {
 <section id="indikatör-listesinin-oluşturulması" class="level3">
 <h3 class="anchored" data-anchor-id="indikatör-listesinin-oluşturulması">İndikatör Listesinin Oluşturulması</h3>
 <p>Daha önce seçtiğimiz indikatörleri bir liste içerisine alalım.</p>
-<div id="0fabb0c9" class="cell" data-execution_count="21">
+<div id="602efb6b" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>indicators <span class="op">=</span> [</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Relative Strength Index'</span>,</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Weighted Moving Average'</span>,</span>
@@ -1069,7 +1069,7 @@ window.Quarto = {
 <li>-0.5 <span class="math inline">\(&lt;\)</span> reyting <span class="math inline">\(&lt;\)</span> 0.5 ise Nötr</li>
 <li>0.5 <span class="math inline">\(\leq\)</span> reyting <span class="math inline">\(\leq\)</span> 1.0 ise Al</li>
 </ul>
-<div id="8fe7b161" class="cell" data-execution_count="22">
+<div id="eda9795f" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> signal_to_category(signal):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">-</span><span class="fl">1.0</span> <span class="op">&lt;=</span> signal <span class="op">&lt;=</span> <span class="op">-</span><span class="fl">0.5</span>:</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span></span>
@@ -1092,7 +1092,7 @@ window.Quarto = {
 <li><code>initial_value</code>: 100 birimin ne olduğuna bakılır. Parametrenin varsayılan değeri <code>100</code>’dür.</li>
 <li><code>plot</code>: Süreç tamamlandığında ekrana üç adet görsel basılır. İlk görsel, stratejinin nerelerde alım-satım sinyali ürettiğini gösterir. İkinci görsel, strateji ile al-tut stratejisini karşılaştırır. Üçüncü görsel ise indikatörlerin ağırlıklarını verir. Parametrenin varsayılan değeri <code>False</code>’tur.</li>
 </ul>
-<div id="ec5cf867" class="cell" data-execution_count="23">
+<div id="2b1fb022" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_weights_and_evaluate(df, pivot_df, indicators, initial_value<span class="op">=</span><span class="dv">100</span>, plot<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    best_cum_return <span class="op">=</span> <span class="op">-</span>np.inf</span>

@@ -32,6 +32,18 @@ plt.style.use('fivethirtyeight')
 
 ```
 
+# Veri Setinin İçe Aktarılması
+
+Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_19){.external target="_blank"} ulaşabilirsiniz.
+
+```{python}
+
+team_stats_df = pd.read_excel('euro_2024_teams.xlsx', sheet_name='Sheet1').set_index('Team').drop(['Matches Played'], axis=1)
+team_values_df = pd.read_excel('euro_2024_teams.xlsx', sheet_name='Sheet2')
+player_values_df = pd.read_excel('euro_2024_teams.xlsx', sheet_name='Sheet4', header=None)
+
+```
+
 # Kullanılacak İstatistikler
 
 **Won:** (Kazanılan Maç Sayısı / Maç Sayısı) * LN(Maç Sayısı):
@@ -129,18 +141,6 @@ Uğranılan Fauller / Maç Sayısı: Takımın maç başına maruz kaldığı fa
 LN(Maç Sayısı): Şut sayısının doğal logaritması alınmış halidir. Bu, şut sayısının büyüklüğünün etkisini dengelemeye yardımcı olur.
 
 Beklenti: Bir takım için ne kadar çok ise o kadar iyi olacaktır. Bir takımın maç başına uğradığı faul sayısının yüksek olması, takımın hücumda ne kadar aktif ve etkili olduğunu ve rakiplerin takımın hücumlarını durdurmak için faul yapmak zorunda kaldığını gösterir. Bu, takımın hücum gücünü ve rakipler üzerinde yarattığı baskıyı vurgular.
-
-# Veri Setlerinin İçe Aktarılması
-
-Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_19){.external target="_blank"} ulaşabilirsiniz.
-
-```{python}
-
-team_stats_df = pd.read_excel('euro_2024_teams.xlsx', sheet_name='Sheet1').set_index('Team').drop(['Matches Played'], axis=1)
-team_values_df = pd.read_excel('euro_2024_teams.xlsx', sheet_name='Sheet2')
-player_values_df = pd.read_excel('euro_2024_teams.xlsx', sheet_name='Sheet4', header=None)
-
-```
 
 # Temel Bileşenler Analizi ile Takım Konumlarının Belirlenmesi
 
