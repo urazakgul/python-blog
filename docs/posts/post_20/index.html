@@ -189,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Temmuz 13, 2024</p>
+        <p class="date-modified">Temmuz 17, 2024</p>
       </div>
     </div>
       
@@ -206,8 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#reponun-klonlanması" id="toc-reponun-klonlanması" class="nav-link" data-scroll-target="#reponun-klonlanması">Reponun Klonlanması</a></li>
   <li><a href="#veri-setinin-hazırlanması" id="toc-veri-setinin-hazırlanması" class="nav-link" data-scroll-target="#veri-setinin-hazırlanması">Veri Setinin Hazırlanması</a></li>
+  <li><a href="#reponun-klonlanması" id="toc-reponun-klonlanması" class="nav-link" data-scroll-target="#reponun-klonlanması">Reponun Klonlanması</a></li>
   <li><a href="#ortalama-yüzlerin-hesaplanması" id="toc-ortalama-yüzlerin-hesaplanması" class="nav-link" data-scroll-target="#ortalama-yüzlerin-hesaplanması">Ortalama Yüzlerin Hesaplanması</a></li>
   <li><a href="#takım-logolarının-indirilmesi" id="toc-takım-logolarının-indirilmesi" class="nav-link" data-scroll-target="#takım-logolarının-indirilmesi">Takım Logolarının İndirilmesi</a></li>
   <li><a href="#türkçe-karakterlerin-oluşturulması" id="toc-türkçe-karakterlerin-oluşturulması" class="nav-link" data-scroll-target="#türkçe-karakterlerin-oluşturulması">Türkçe Karakterlerin Oluşturulması</a></li>
@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="54bb26e3" class="cell" data-execution_count="1">
+<div id="280f0c82" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -237,6 +237,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> facer.facer <span class="im">import</span> load_images, detect_face_landmarks, create_average_face</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="veri-setinin-hazırlanması" class="level1">
+<h1>Veri Setinin Hazırlanması</h1>
+<p>Transfermarkt’tan alacağımız ligdeki 19 takımın URL’lerini sözlüğe atarak başlıyoruz. Yüz hesaplamalarında hata verdiği için Türkçe karakter kullanmadan oluşturalım. Sonrasında tekrar Türkçe karakterler ile değiştireceğiz.</p>
+<div id="6cc0596a" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team_urls <span class="op">=</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Galatasaray"</span>: <span class="st">"https://www.transfermarkt.com.tr/galatasaray-istanbul/startseite/verein/141/saison_id/2024"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Fenerbahce"</span>: <span class="st">"https://www.transfermarkt.com.tr/fenerbahce-istanbul/startseite/verein/36/saison_id/2024"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Besiktas JK"</span>: <span class="st">"https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2024"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trabzonspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/trabzonspor/startseite/verein/449/saison_id/2024"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Istanbul Basaksehir FK"</span>: <span class="st">"https://www.transfermarkt.com.tr/istanbul-basaksehir-fk/startseite/verein/6890/saison_id/2024"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Samsunspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/samsunspor/startseite/verein/152/saison_id/2024"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Caykur Rizespor"</span>: <span class="st">"https://www.transfermarkt.com.tr/caykur-rizespor/startseite/verein/126/saison_id/2024"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eyupspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/eyupspor/startseite/verein/7160/saison_id/2024"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Alanyaspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/alanyaspor/startseite/verein/11282/saison_id/2024"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kayserispor"</span>: <span class="st">"https://www.transfermarkt.com.tr/kayserispor/startseite/verein/3205/saison_id/2024"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adana Demirspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/adana-demirspor/startseite/verein/3840/saison_id/2024"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kasimpasa"</span>: <span class="st">"https://www.transfermarkt.com.tr/kasimpasa/startseite/verein/10484/saison_id/2024"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sivasspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/sivasspor/startseite/verein/2381/saison_id/2024"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Antalyaspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/antalyaspor/startseite/verein/589/saison_id/2024"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Konyaspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/konyaspor/startseite/verein/2293/saison_id/2024"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hatayspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/hatayspor/startseite/verein/7775/saison_id/2024"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Goztepe"</span>: <span class="st">"https://www.transfermarkt.com.tr/goztepe/startseite/verein/1467/saison_id/2024"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bodrum FK"</span>: <span class="st">"https://www.transfermarkt.com.tr/bodrumspor/startseite/verein/44006/saison_id/2024"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gaziantep FK"</span>: <span class="st">"https://www.transfermarkt.com.tr/gaziantep-fk/startseite/verein/2832/saison_id/2024"</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Web kazıma ile verileri çekmeden önce üç adet dosya oluşturmamız iyi olur. <code>photos</code> adlı klasör takım fotoğraflarını, <code>average_faces</code> adlı klasör ortalama yüzleri ve <code>logos</code> adlı klasör ise takımların logolarını saklayacak.</p>
+<div id="f63c7fc6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="op">=</span> <span class="st">'photos'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>file2 <span class="op">=</span> <span class="st">'average_faces'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>file3 <span class="op">=</span> <span class="st">'logos'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> directory <span class="kw">in</span> [file1,file2,file3]:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(directory):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        os.makedirs(directory)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Fotoğrafları indirecek kodu yazalım.</p>
+<div id="f90c5b13" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team, url <span class="kw">in</span> team_urls.items():</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        images <span class="op">=</span> soup.select(<span class="st">'.inline-table img'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        team_folder <span class="op">=</span> os.path.join(file1, team)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> os.path.exists(team_folder):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            os.makedirs(team_folder)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> index, img <span class="kw">in</span> <span class="bu">enumerate</span>(images):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            img_url <span class="op">=</span> img.get(<span class="st">'data-src'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> img_url:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                img_response <span class="op">=</span> requests.get(img_url)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> img_response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                    parsed_url <span class="op">=</span> urlparse(img_url)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                    img_extension <span class="op">=</span> os.path.splitext(parsed_url.path)[<span class="dv">1</span>]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                    file_name <span class="op">=</span> os.path.join(team_folder, <span class="ss">f'</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">_image_</span><span class="sc">{</span>index<span class="sc">}{</span>img_extension<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">'wb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">file</span>.write(img_response.content)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="ss">f"Failed to download image </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"No image URL found for image </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to retrieve URL for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yukarıdaki kodun kilit yerlerine bakalım.</p>
+<div id="030a09a2" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bir HTTP isteği gönderirken kullanılacak başlıkları (<code>headers</code>) tanımlar ve bunları bir Python sözlüğü olarak belirtir. Bu başlıklar, sunucuya hangi tarayıcıyı ve işletim sistemini kullandığımızı bildirmek için kullanılır. Özellikle <code>User-Agent</code> başlığı, web tarayıcılarının kendilerini tanıttıkları bir başlıktır ve sunucular tarafından kullanıcıyı ve kullanılan yazılımı tanımak için kullanılır.</p>
+<div id="c1e97a2f" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> soup.select(<span class="st">'.inline-table img'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>BeautifulSoup</code> kütüphanesini kullanarak gelen HTML yanıtını parse’lıyoruz ve sayfadaki <code>.inline-table</code> sınıfına sahip tablo içindeki <code>img</code> etiketlerini seçiyoruz.</p>
+<div id="1987c11a" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>team_folder <span class="op">=</span> os.path.join(file1, team)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(team_folder):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    os.makedirs(team_folder)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Takım adıyla bir klasör yolu oluşturuyoruz (<code>file1</code> ana dizin, <code>team</code> takım adı). Eğer bu klasör yoksa, <code>os.makedirs</code> kullanarak bu klasörü oluşturuyoruz.</p>
+<div id="58b50740" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>img_url <span class="op">=</span> img.get(<span class="st">'data-src'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> img_url:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    img_response <span class="op">=</span> requests.get(img_url)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> img_response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        parsed_url <span class="op">=</span> urlparse(img_url)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        img_extension <span class="op">=</span> os.path.splitext(parsed_url.path)[<span class="dv">1</span>]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        file_name <span class="op">=</span> os.path.join(team_folder, <span class="ss">f'</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">_image_</span><span class="sc">{</span>index<span class="sc">}{</span>img_extension<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">'wb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">file</span>.write(img_response.content)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>img.get('data-src')</code> ifadesiyle, resim URL’ini alıyoruz. Eğer <code>img_url</code> varsa, bu URL’e bir HTTP GET isteği gönderiyoruz. İstek başarılı olursa, URL’in yolunu ayrıştırıyoruz ve resim dosya uzantısını (.jpg veya .png olabilir) alıyoruz. Resim dosyasını takım klasörüne uygun ad ile (örneğin <code>team_image_0.jpg</code>) kaydediyoruz.</p>
+<p><code>photos</code> dosyasının aşağıdaki gibi olmasını bekleriz.</p>
+<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
 </section>
 <section id="reponun-klonlanması" class="level1">
 <h1>Reponun Klonlanması</h1>
@@ -250,124 +359,15 @@ bunzip2 shape_predictor_68_face_landmarks.dat.bz2</code></pre>
 mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <p>Ortalama bir yüze ulaşmak için uygulanan adımlar <a href="https://learnopencv.com/average-face-opencv-c-python-tutorial/" class="external" target="_blank">burada</a> detaylı bir şekilde veriliyor.</p>
 </section>
-<section id="veri-setinin-hazırlanması" class="level1">
-<h1>Veri Setinin Hazırlanması</h1>
-<p>Transfermarkt’tan alacağımız ligdeki 19 takımın URL’lerini sözlüğe atarak başlıyoruz. Yüz hesaplamalarında hata verdiği için Türkçe karakter kullanmadan oluşturalım. Sonrasında tekrar Türkçe karakterler ile değiştireceğiz.</p>
-<div id="c3f9b31d" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>team_urls <span class="op">=</span> {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Galatasaray"</span>: <span class="st">"https://www.transfermarkt.com.tr/galatasaray-istanbul/startseite/verein/141/saison_id/2024"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Fenerbahce"</span>: <span class="st">"https://www.transfermarkt.com.tr/fenerbahce-istanbul/startseite/verein/36/saison_id/2024"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Besiktas JK"</span>: <span class="st">"https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2024"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trabzonspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/trabzonspor/startseite/verein/449/saison_id/2024"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Istanbul Basaksehir FK"</span>: <span class="st">"https://www.transfermarkt.com.tr/istanbul-basaksehir-fk/startseite/verein/6890/saison_id/2024"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Samsunspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/samsunspor/startseite/verein/152/saison_id/2024"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Caykur Rizespor"</span>: <span class="st">"https://www.transfermarkt.com.tr/caykur-rizespor/startseite/verein/126/saison_id/2024"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Eyupspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/eyupspor/startseite/verein/7160/saison_id/2024"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Alanyaspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/alanyaspor/startseite/verein/11282/saison_id/2024"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kayserispor"</span>: <span class="st">"https://www.transfermarkt.com.tr/kayserispor/startseite/verein/3205/saison_id/2024"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adana Demirspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/adana-demirspor/startseite/verein/3840/saison_id/2024"</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kasimpasa"</span>: <span class="st">"https://www.transfermarkt.com.tr/kasimpasa/startseite/verein/10484/saison_id/2024"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sivasspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/sivasspor/startseite/verein/2381/saison_id/2024"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Antalyaspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/antalyaspor/startseite/verein/589/saison_id/2024"</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Konyaspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/konyaspor/startseite/verein/2293/saison_id/2024"</span>,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hatayspor"</span>: <span class="st">"https://www.transfermarkt.com.tr/hatayspor/startseite/verein/7775/saison_id/2024"</span>,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Goztepe"</span>: <span class="st">"https://www.transfermarkt.com.tr/goztepe/startseite/verein/1467/saison_id/2024"</span>,</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bodrum FK"</span>: <span class="st">"https://www.transfermarkt.com.tr/bodrumspor/startseite/verein/44006/saison_id/2024"</span>,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gaziantep FK"</span>: <span class="st">"https://www.transfermarkt.com.tr/gaziantep-fk/startseite/verein/2832/saison_id/2024"</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Web kazıma ile verileri çekmeden önce üç adet dosya oluşturmamız iyi olur. <code>photos</code> adlı klasör takım fotoğraflarını, <code>average_faces</code> adlı klasör ortalama yüzleri ve <code>logos</code> adlı klasör ise takımların logolarını saklayacak.</p>
-<div id="7ae2cc15" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="op">=</span> <span class="st">'photos'</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>file2 <span class="op">=</span> <span class="st">'average_faces'</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>file3 <span class="op">=</span> <span class="st">'logos'</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> directory <span class="kw">in</span> [file1,file2,file3]:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(directory):</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        os.makedirs(directory)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Fotoğrafları indirecek kodu yazalım.</p>
-<div id="15b09759" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team, url <span class="kw">in</span> team_urls.items():</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        images <span class="op">=</span> soup.select(<span class="st">'.inline-table img'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        team_folder <span class="op">=</span> os.path.join(file1, team)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> os.path.exists(team_folder):</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            os.makedirs(team_folder)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> index, img <span class="kw">in</span> <span class="bu">enumerate</span>(images):</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            img_url <span class="op">=</span> img.get(<span class="st">'data-src'</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> img_url:</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                img_response <span class="op">=</span> requests.get(img_url)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> img_response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                    parsed_url <span class="op">=</span> urlparse(img_url)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                    img_extension <span class="op">=</span> os.path.splitext(parsed_url.path)[<span class="dv">1</span>]</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                    file_name <span class="op">=</span> os.path.join(team_folder, <span class="ss">f'</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">_image_</span><span class="sc">{</span>index<span class="sc">}{</span>img_extension<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">'wb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">file</span>.write(img_response.content)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="ss">f"Failed to download image </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"No image URL found for image </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to retrieve URL for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Yukarıdaki kodun kilit yerlerine bakalım.</p>
-<div id="07648ebe" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>headers <span class="op">=</span> {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Bir HTTP isteği gönderirken kullanılacak başlıkları (<code>headers</code>) tanımlar ve bunları bir Python sözlüğü olarak belirtir. Bu başlıklar, sunucuya hangi tarayıcıyı ve işletim sistemini kullandığımızı bildirmek için kullanılır. Özellikle <code>User-Agent</code> başlığı, web tarayıcılarının kendilerini tanıttıkları bir başlıktır ve sunucular tarafından kullanıcıyı ve kullanılan yazılımı tanımak için kullanılır.</p>
-<div id="d2b70cc3" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> soup.select(<span class="st">'.inline-table img'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>BeautifulSoup</code> kütüphanesini kullanarak gelen HTML yanıtını parse’lıyoruz ve sayfadaki <code>.inline-table</code> sınıfına sahip tablo içindeki <code>img</code> etiketlerini seçiyoruz.</p>
-<div id="9aa954bf" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>team_folder <span class="op">=</span> os.path.join(file1, team)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(team_folder):</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    os.makedirs(team_folder)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Takım adıyla bir klasör yolu oluşturuyoruz (<code>file1</code> ana dizin, <code>team</code> takım adı). Eğer bu klasör yoksa, <code>os.makedirs</code> kullanarak bu klasörü oluşturuyoruz.</p>
-<div id="8742b9d5" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Burayı çalıştırmayın</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>img_url <span class="op">=</span> img.get(<span class="st">'data-src'</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> img_url:</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    img_response <span class="op">=</span> requests.get(img_url)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> img_response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        parsed_url <span class="op">=</span> urlparse(img_url)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        img_extension <span class="op">=</span> os.path.splitext(parsed_url.path)[<span class="dv">1</span>]</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        file_name <span class="op">=</span> os.path.join(team_folder, <span class="ss">f'</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">_image_</span><span class="sc">{</span>index<span class="sc">}{</span>img_extension<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">'wb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">file</span>.write(img_response.content)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>img.get('data-src')</code> ifadesiyle, resim URL’ini alıyoruz. Eğer <code>img_url</code> varsa, bu URL’e bir HTTP GET isteği gönderiyoruz. İstek başarılı olursa, URL’in yolunu ayrıştırıyoruz ve resim dosya uzantısını (.jpg veya .png olabilir) alıyoruz. Resim dosyasını takım klasörüne uygun ad ile (örneğin <code>team_image_0.jpg</code>) kaydediyoruz.</p>
-<p><code>photos</code> dosyasının aşağıdaki gibi olmasını bekleriz.</p>
-<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
-</section>
 <section id="ortalama-yüzlerin-hesaplanması" class="level1">
 <h1>Ortalama Yüzlerin Hesaplanması</h1>
-<div id="70a9ac37" class="cell" data-execution_count="9">
+<div id="add02067" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> <span class="bu">list</span>(team_urls.keys())</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>folders <span class="op">=</span> [<span class="ss">f'./</span><span class="sc">{</span>file1<span class="sc">}</span><span class="ss">/'</span> <span class="op">+</span> team <span class="cf">for</span> team <span class="kw">in</span> teams]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>team_urls</code> sözlüğündeki anahtar değerleri alarak takımları <code>teams</code> değişkenine, her bir takımın fotoğraflarının bulunduğu dosya adlarını <code>folders</code> değişkenine atıyoruz.</p>
 <p>Hesaplama bölümüne geçebiliriz. Bu bölüm, <a href="https://github.com/johnwmillr/Facer" class="external" target="_blank">buradaki</a> repoda verilen örnek kod ile rahatlıkla anlaşılabilir.</p>
-<div id="f6eb8a77" class="cell" data-execution_count="10">
+<div id="da090e93" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, folder <span class="kw">in</span> <span class="bu">enumerate</span>(folders):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        images <span class="op">=</span> load_images(folder)</span>
@@ -386,7 +386,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 </section>
 <section id="takım-logolarının-indirilmesi" class="level1">
 <h1>Takım Logolarının İndirilmesi</h1>
-<div id="20aa83f2" class="cell" data-execution_count="11">
+<div id="c86657cb" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team, url <span class="kw">in</span> team_urls.items():</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
@@ -417,7 +417,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 </section>
 <section id="türkçe-karakterlerin-oluşturulması" class="level1">
 <h1>Türkçe Karakterlerin Oluşturulması</h1>
-<div id="87b1ad4f" class="cell" data-execution_count="12">
+<div id="5be798ab" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>teams_turkish <span class="op">=</span> {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Besiktas JK"</span>: <span class="st">"Beşiktaş JK"</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Caykur Rizespor"</span>: <span class="st">"Çaykur Rizespor"</span>,</span>
@@ -456,7 +456,7 @@ mv shape_predictor_68_face_landmarks.dat model</code></pre>
 <section id="görselin-oluşturulması" class="level1">
 <h1>Görselin Oluşturulması</h1>
 <p>5 satır ve 4 sütundan oluşan bir alt grafik ızgarası oluşturalım.</p>
-<div id="f7c664ea" class="cell" data-execution_count="13">
+<div id="5b88440f" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">32</span>, <span class="dv">32</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, team <span class="kw">in</span> <span class="bu">enumerate</span>(teams):</span>

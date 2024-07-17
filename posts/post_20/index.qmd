@@ -28,30 +28,6 @@ import matplotlib.pyplot as plt
 
 ```
 
-# Reponun Klonlanması
-
-Ortalama yüz hesaplamasında faydalanacağımız repoyu proje klasörümüze klonlayalım.
-
-```{bash}
-git clone https://github.com/johnwmillr/facer.git Facer
-```
-
-Klonlama işleminden sonra bulunduğumuz dizinde sadece `Facer` klasöründeki `facer` klasörünü bırakabiliriz. `facer` klasörünün içinde ise `facer.py` ve `utils.py` dosyaları kalabilir.
-
-Yukarıdaki işlemden sonra aşağıdaki gibi zip'li dosyayı indirip unzip'liyor ve dosyayı bulunduğumuz dizinde açtığımız `model` adlı klasöre taşıyoruz.
-
-```{bash}
-curl -O http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
-bunzip2 shape_predictor_68_face_landmarks.dat.bz2
-```
-
-```{bash}
-mkdir model
-mv shape_predictor_68_face_landmarks.dat model
-```
-
-Ortalama bir yüze ulaşmak için uygulanan adımlar [burada](https://learnopencv.com/average-face-opencv-c-python-tutorial/){.external target="_blank"} detaylı bir şekilde veriliyor.
-
 # Veri Setinin Hazırlanması
 
 Transfermarkt'tan alacağımız ligdeki 19 takımın URL'lerini sözlüğe atarak başlıyoruz. Yüz hesaplamalarında hata verdiği için Türkçe karakter kullanmadan oluşturalım. Sonrasında tekrar Türkçe karakterler ile değiştireceğiz.
@@ -188,6 +164,30 @@ if img_url:
 `photos` dosyasının aşağıdaki gibi olmasını bekleriz.
 
 ![](imgs/img_1.PNG)
+
+# Reponun Klonlanması
+
+Ortalama yüz hesaplamasında faydalanacağımız repoyu proje klasörümüze klonlayalım.
+
+```{bash}
+git clone https://github.com/johnwmillr/facer.git Facer
+```
+
+Klonlama işleminden sonra bulunduğumuz dizinde sadece `Facer` klasöründeki `facer` klasörünü bırakabiliriz. `facer` klasörünün içinde ise `facer.py` ve `utils.py` dosyaları kalabilir.
+
+Yukarıdaki işlemden sonra aşağıdaki gibi zip'li dosyayı indirip unzip'liyor ve dosyayı bulunduğumuz dizinde açtığımız `model` adlı klasöre taşıyoruz.
+
+```{bash}
+curl -O http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+bunzip2 shape_predictor_68_face_landmarks.dat.bz2
+```
+
+```{bash}
+mkdir model
+mv shape_predictor_68_face_landmarks.dat model
+```
+
+Ortalama bir yüze ulaşmak için uygulanan adımlar [burada](https://learnopencv.com/average-face-opencv-c-python-tutorial/){.external target="_blank"} detaylı bir şekilde veriliyor.
 
 # Ortalama Yüzlerin Hesaplanması
 
