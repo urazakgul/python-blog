@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre class="{bash}"><code>
 pip install statsbombpy
 </code></pre>
-<div id="f097d349" class="cell" data-execution_count="1">
+<div id="28c64c97" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsbombpy <span class="im">import</span> sb</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -243,7 +243,7 @@ pip install statsbombpy
 <section id="turnuvalar" class="level2">
 <h2 class="anchored" data-anchor-id="turnuvalar">Turnuvalar</h2>
 <p>Turnuvalara ulaşmak için aşağıdaki fonksiyonu kullanacağız.</p>
-<div id="8193e71d" class="cell" data-execution_count="2">
+<div id="fe3ba5ed" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>competitions <span class="op">=</span> sb.competitions()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_2.PNG" class="img-fluid"></p>
@@ -251,7 +251,7 @@ pip install statsbombpy
 <section id="maçlar" class="level2">
 <h2 class="anchored" data-anchor-id="maçlar">Maçlar</h2>
 <p>Euro 2024 turnuvasının <code>competition_id</code>’sinin 55, <code>season_id</code>’sinin 282 olduğunu biliyoruz.</p>
-<div id="81fc44a0" class="cell" data-execution_count="3">
+<div id="b04619ee" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> sb.matches(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>matches.head(<span class="dv">10</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -261,7 +261,7 @@ pip install statsbombpy
 <h2 class="anchored" data-anchor-id="kadrolar">Kadrolar</h2>
 <p>Euro 2024 final maçının <code>match_id</code>’si <code>3943043</code> olacak.</p>
 <p>İspanya’nın kadrosuna bakalım.</p>
-<div id="a4d948f8" class="cell" data-execution_count="4">
+<div id="eb64f317" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lineups <span class="op">=</span> sb.lineups(match_id<span class="op">=</span><span class="dv">3943043</span>)[<span class="st">'Spain'</span>]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_4.PNG" class="img-fluid"></p>

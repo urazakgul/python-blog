@@ -259,7 +259,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="5b8253d4" class="cell" data-execution_count="1">
+<div id="b46b0add" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -272,7 +272,7 @@ window.Quarto = {
 <section id="veri-setinin-içe-aktarılması" class="level1">
 <h1>Veri Setinin İçe Aktarılması</h1>
 <p>Yapacağımız uygulamada İstanbul ilini ve Anadolu Ajansı verilerini baz alacağız. Verileri 31 Mart 2024 akşamı izlediğim NOW kanalından aldım. Veri seti, açılan sandık oranı ve adayların oy oranları ile aralarındaki farkları içermektedir. Veri setine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_3" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<div id="50ecfbe0" class="cell" data-execution_count="2">
+<div id="84d59f8e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'aa_20240331_istanbul.json'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -284,7 +284,7 @@ window.Quarto = {
 </section>
 <section id="açılan-sandık-oranlarına-göre-adayların-oy-oranları-ve-aralarındaki-farklar" class="level1">
 <h1>Açılan Sandık Oranlarına Göre Adayların Oy Oranları ve Aralarındaki Farklar</h1>
-<div id="ca1505d9" class="cell" data-execution_count="3">
+<div id="9fe4c45e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Açılan Sandık Oranı'</span>],</span>
@@ -319,7 +319,7 @@ window.Quarto = {
 </div>
 <p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p>Anadolu Ajansı geçmiş seçimlerde, gözlemlediğimiz üzere, veri akışını AKP ve ittifak ortaklarının adayları lehine başlatmıştır. 31 Mart 2024 yerel seçimlerinde ise CHP’nin adayı Ekrem İmamoğlu lehine başlamıştır. Anadolu Ajansı’nın geçmiş veri akışlarını göz önüne aldığımızda, bu başlangıç hem Ekrem İmamoğlu’nun seçimi kazanacağını hem de rakibi Murat Kurum’a fark atacağını göstermekteydi. Nitekim 11.55 puanlık fark ile öyle de oldu.</p>
-<div id="e6f80bbc" class="cell" data-execution_count="4">
+<div id="9e32a23c" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Açılan Sandık Oranı'</span>],</span>
@@ -349,7 +349,7 @@ window.Quarto = {
 <h1>Modelin Geliştirilmesi</h1>
 <p>Veri setimizde bulunan gözlem sayısı 50’dir ancak biz tamamını kullanmayacağız. Öngörülerimizi olabildiğince erken yapmalıyız. Bunun için açılan sandık oranının aşağı yukarı %50 olmasını bekleyebiliriz. Bu da 20 adet gözlem sayısına denk gelecektir. Oldukça küçük fakat kullanılamaz değil.</p>
 <p>Öngörü için regresyon modellerini kullanacağız.</p>
-<div id="ef08b06f" class="cell" data-execution_count="5">
+<div id="e0069380" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dependent_variable<span class="op">=</span><span class="st">'Ekrem İmamoğlu'</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>independent_variable<span class="op">=</span><span class="st">'Açılan Sandık Oranı'</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ballot_box_rate<span class="op">=</span><span class="dv">50</span></span>
@@ -358,7 +358,7 @@ window.Quarto = {
 </div>
 <p>Regresyon modelinde <code>dependent_variable</code> <code>Ekrem İmamoğlu</code>, <code>independent_variable</code> <code>Açılan Sandık Oranı</code> olacak. Burada Ekrem İmamoğlu oylarının açılan sandık oranlarına bağımlı olduğunu varsayıyoruz.</p>
 <p>Başlamadan önce Ekrem İmamoğlu’nun oy grafiğini görelim.</p>
-<div id="5f82e825" class="cell" data-execution_count="6">
+<div id="1ab417fc" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    df[independent_variable],</span>
@@ -386,7 +386,7 @@ window.Quarto = {
 <p><img src="imgs/img_4.png" class="img-fluid"></p>
 <p>Grafikte X ekseninde dikey bir çizgi bulunmaktadır. Bu çizginin sol tarafını kullanacak ve sağ tarafını hiç görmediğimizi varsayacağız.</p>
 <p>Her iki değişkenin de doğrusal olduğu regresyon modelini kurarak başlayalım.</p>
-<div id="98ea4d50" class="cell" data-execution_count="7">
+<div id="da9a039f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> main_df[dependent_variable]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> main_df[independent_variable]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)</span>
@@ -396,7 +396,7 @@ window.Quarto = {
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_linlin.summary())</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tahminleri güven aralığı değerleri ile alalım.</p>
-<div id="0d0d0c41" class="cell" data-execution_count="8">
+<div id="62a2a91c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>alpha<span class="op">=</span><span class="fl">0.05</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model_linlin.get_prediction(X).summary_frame(alpha)</span>
@@ -405,13 +405,13 @@ window.Quarto = {
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>predictions_upper <span class="op">=</span> predictions[<span class="st">'mean_ci_upper'</span>]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Hata terimlerini alalım.</p>
-<div id="2e267943" class="cell" data-execution_count="9">
+<div id="fafc009b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> model_linlin.resid</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_5.png" class="img-fluid"></p>
 <p>Sıfıra oldukça yakın p değerlerine sahip <code>const</code> kesme terimi ve <code>Açılan Sandık Oranı</code> değişkeni katsayılarının istatistiksel olarak anlamlı olduğunu söyleyebiliriz. Ayrıca, yaklaşık olarak %82’lik bir <span class="math inline">\(R^2\)</span> yakaladık ki 0-1 ya da 0-100 aralığında değer aldığını düşünürsek bu iyi bir orandır. Regresyon modelindeki <code>Açılan Sandık Oranı</code> değişkeni sıfır olduğunda Ekrem İmamoğlu’nun oy oranı %49.3 olmaktadır. Buna ek olarak, <code>Açılan Sandık Oranı</code> değişkenindeki 1 puanlık artış Ekrem İmamoğlu oyunu ortalamada 0.0164 puan artırmaktadır.</p>
 <p>%95 güven aralığında gerçek ve tahmin edilen değerleri görelim.</p>
-<div id="c26ff92f" class="cell" data-execution_count="10">
+<div id="c92a9204" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot(X.iloc[:, <span class="dv">1</span>], y, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Gerçek'</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.plot(X.iloc[:, <span class="dv">1</span>], predictions_mean, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Tahmin Edilen'</span>)</span>
@@ -426,7 +426,7 @@ window.Quarto = {
 <p><img src="imgs/img_6.png" class="img-fluid"></p>
 <p>Modelimiz fena durmasa da varsayımları sağlayıp sağlamadığına bakalım.</p>
 <p>Hata terimleri normal dağılmaktadır.</p>
-<div id="26a448a6" class="cell" data-execution_count="11">
+<div id="83b5cd5a" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sw_statistic, sw_p_value <span class="op">=</span> shapiro(residuals)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> sw_p_value <span class="op">&gt;=</span> alpha:</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Hata terimleri normal dağılıyor.'</span>)</span>
@@ -434,7 +434,7 @@ window.Quarto = {
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Hata terimleri normal dağılmıyor.'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Hata terimlerinde otokorelasyon bulunmamaktadır.</p>
-<div id="72df931c" class="cell" data-execution_count="12">
+<div id="4f20911d" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>bg_test_statistic, bg_p_value, _, _ <span class="op">=</span> dg.acorr_breusch_godfrey(model_linlin, nlags<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> bg_p_value <span class="op">&gt;=</span> alpha:</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Hata terimleri arasında otokorelasyon yoktur.'</span>)</span>
@@ -442,7 +442,7 @@ window.Quarto = {
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Hata terimleri arasında otokorelasyon vardır.'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Modelde, <code>alpha</code> değerini 0.01 aldığımızda değişen varyans bulunmamaktadır.</p>
-<div id="ed8451e2" class="cell" data-execution_count="13">
+<div id="ae2c88e8" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bp_test_statistic, bp_p_value, _, _ <span class="op">=</span> dg.het_breuschpagan(residuals, model_linlin.model.exog)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> bp_p_value <span class="op">&lt;=</span> <span class="fl">0.01</span>: <span class="co"># alpha</span></span>
@@ -451,7 +451,7 @@ window.Quarto = {
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Modelde değişen varyans yoktur.'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ekrem imamoğlu için oy öngörüsünde bulunalım.</p>
-<div id="3f0614e1" class="cell" data-execution_count="14">
+<div id="c32b6d52" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X_value <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">100</span>]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>forecasts <span class="op">=</span> model_linlin.get_prediction(X_value).summary_frame(alpha)</span>
@@ -462,7 +462,7 @@ window.Quarto = {
 </div>
 <p>%50.57 - %51.32 öngörü aralığında %50.95’lik bir oy öngörüsünde bulunabiliriz. Gerçek oy oranı %51.14’tür. Öngörü, gerçek oyun yaklaşık 0.19 puan kadar altında kalmıştır ancak fena olmadığını söyleyebiliriz. Bu öngörüyü açılan sandık oranı %49 iken yaptık.</p>
 <p>Sonraki seçimlerde pratik bir şekilde kullanmak için buraya kadar yaptığımız modelleme işlemlerini bir fonksiyona dönüştürelim.</p>
-<div id="14727621" class="cell" data-execution_count="15">
+<div id="af83527c" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> modeling_and_forecasting(df, dependent_variable, independent_variable, ballot_box_rate<span class="op">=</span><span class="dv">50</span>, alphas<span class="op">=</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>)):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    main_df <span class="op">=</span> df[df[independent_variable] <span class="op">&lt;=</span> ballot_box_rate][[independent_variable, dependent_variable]]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -528,7 +528,7 @@ window.Quarto = {
 <p>Açılan sandık oranı %60 olduğunda modeli kontrol etmeye başlayabiliriz. Bundan sonrasında %90’a kadar her yeni veri akışında modeli takip edeceğiz. Peki, nasıl?</p>
 <p>Modelimizin bağımsız değişken tarafına kukla değişken ekleyeceğiz. Böylece modelde herhangi bir kırılım olup olmadığını inceleyeceğiz. Eğer kırılım varsa modeli kukla değişkenli kuracağız. Bunun yanında, RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) değerlerini de hesaplayacağız.</p>
 <p><span class="math inline">\(\mathrm{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
-<div id="8c54b9e5" class="cell" data-execution_count="16">
+<div id="89dd03c2" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aşağıda pas geçilen varsayımlar bir önceki fonksiyonda olduğu gibi eklenebilir.</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_modeling_and_forecasting(df, ballot_box_rate, alpha<span class="op">=</span><span class="fl">0.1</span>):</span>

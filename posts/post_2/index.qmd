@@ -12,13 +12,7 @@ execute:
 
 # Giriş
 
-Korelasyon tahmin oyunu yapımında nelere ihtiyacımız olabilir?
-
-Birincisi, iki adet rassal seri üretmeliyiz ve bu serileri üretirken korelasyon katsayısını dikkate almalıyız. Buradaki korelasyon katsayısı Pearson'ı ifade etmektedir. Rassal serileri üretmek için `numpy` kütüphanesinin `np.random.multivariate_normal` fonksiyonundan faydalanabiliriz.
-
-İkincisi, kullanıcı için bir skorlama yapmalıyız. Bunun için RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) metriğini kullanabiliriz. RMSE skoru düştükçe başarı artacaktır.
-
-Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.
+Günlük hayatımızda karşılaştığımız verilerin çoğu, birbirleriyle bir şekilde ilişkili olabilir. Bu ilişkileri anlamak ve tahmin etmek, hem akademik araştırmalarda hem de iş dünyasında büyük önem taşır. Yapacağımız korelasyon tahmin oyunu uygulaması ile korelasyonu eğlenceli hale getireceğiz.
 
 # Kullanılacak Kütüphaneler
 
@@ -29,6 +23,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ```
+
+# Uygulamanın Tasarımının Oluşturulması
+
+Korelasyon tahmin oyunu yapımında nelere ihtiyacımız olabilir?
+
+Birincisi, iki adet rassal seri üretmeliyiz ve bu serileri üretirken korelasyon katsayısını dikkate almalıyız. Buradaki korelasyon katsayısı Pearson'ı ifade etmektedir. Rassal serileri üretmek için `numpy` kütüphanesinin `np.random.multivariate_normal` fonksiyonundan faydalanabiliriz.
+
+İkincisi, kullanıcı için bir skorlama yapmalıyız. Bunun için RMSE (Root Mean Squared Error, Kök Ortalama Kare Hatası) metriğini kullanabiliriz. RMSE skoru düştükçe başarı artacaktır.
+
+Üçüncüsü, kullanıcı ile etkileşimde olmalıyız. Etkileşim için Streamlit ile bir web uygulaması yapabiliriz. Uygulamayı lokalde çalıştıracağız.
 
 # Korelasyonlu Rassal Serilerin Üretilmesi
 
