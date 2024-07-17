@@ -20,8 +20,6 @@ Yukarıdaki iki yönteme ek olarak, seçim akşamı gelen veri akışı da hangi
 * Model güncellenebilir ancak güncellenen modelin güven de vermesi gerekir. Oynaklık seviyesi yüksek bir güncelleme modele olan güveni düşürecektir.
 * Gerçeğe yakın bir öngörü veri akışının başında da yapılabilir sonunda da. Veri akışının başında yapılan gerçeğe yakın öngörü daha anlamlı olacaktır.
 
-Yapacağımız uygulamada İstanbul ilini ve Anadolu Ajansı verilerini baz alacağız. Verileri 31 Mart 2024 akşamı izlediğim NOW kanalından aldım. Veri seti, açılan sandık oranı ve adayların oy oranları ile aralarındaki farkları içermektedir. Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_3){.external target="_blank"} ulaşabilirsiniz.
-
 # Kullanılacak Kütüphaneler
 
 ```{python}
@@ -36,7 +34,9 @@ import matplotlib.pyplot as plt
 
 ```
 
-# Açılan Sandık Oranlarına Göre Adayların Oy Oranları ve Aralarındaki Farklar
+# Veri Setinin İçe Aktarılması
+
+Yapacağımız uygulamada İstanbul ilini ve Anadolu Ajansı verilerini baz alacağız. Verileri 31 Mart 2024 akşamı izlediğim NOW kanalından aldım. Veri seti, açılan sandık oranı ve adayların oy oranları ile aralarındaki farkları içermektedir. Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_3){.external target="_blank"} ulaşabilirsiniz.
 
 ```{python}
 
@@ -50,6 +50,8 @@ print(df.head())
 ```
 
 ![](imgs/img_1.png)
+
+# Açılan Sandık Oranlarına Göre Adayların Oy Oranları ve Aralarındaki Farklar
 
 ```{python}
 

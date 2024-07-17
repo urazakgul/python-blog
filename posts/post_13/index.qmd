@@ -16,8 +16,6 @@ Okunabilirlik, bir metni okumanın ve anlamanın ne kadar kolay olduğunu ifade 
 
 Bank of Canada (Kanada Merkez Bankası), [Readability and the Bank of Canada](https://www.bankofcanada.ca/2018/06/staff-analytical-note-2018-20/){.external target="_blank"} başlıklı bir çalışmalarında, banka yayınlarının 2015-2017 yılları için okunabilirliğini incelemiş ve genel olarak banka yayınlarının normalde bankanın kitlelerinin tükettiği haber makaleleri ve diğer içerikler kadar kolay okunmadığını bulmuş. Ancak aynı zamanda bankanın uluslararasında iyi bir konumda yer aldığı sonucuna da ulaşmış.
 
-Okunabilirliğini inceleyeceğimiz metinler [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_13){.external target="_blank"}, `cbrt_press_releases.xlsx` isimli excel dosyasında bulunmaktadır. Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir.
-
 # Kullanılacak Kütüphaneler
 
 ```{python}
@@ -44,6 +42,8 @@ Complex words ile kastedilen üç ve daha fazla heceli kelimelerdir.
 ![https://clickhelp.com/software-documentation-tool/user-manual/gunning-fog-index.html](imgs/img_1.PNG)
 
 # Veri Setinin İçe Aktarılması ve Bazı Ayarların Yapılması
+
+Okunabilirliğini inceleyeceğimiz metinler [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_13){.external target="_blank"}, `cbrt_press_releases.xlsx` isimli excel dosyasında bulunmaktadır. Veri seti, Erdem Başçı ve Yaşar Fatih Karahan arası dönemlerde yayınlanan 148 adet İngilizce duyuru metnini kapsamaktadır. Son veri 2024 yılının Nisan ayına aittir.
 
 ```{python}
 

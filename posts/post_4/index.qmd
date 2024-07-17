@@ -12,13 +12,7 @@ execute:
 
 # Giriş
 
-31 Mart 2024 yerel seçimlerini geride bıraktık ancak biz Türkiye'de yaşayanlar için iki seçim arası kısa bir reklam arası gibi. Önümüzdeki seçimlere hazırlıklı olmak için bu arayı değerlendirmeye devam ediyoruz.
-
-Bu uygulamada, CHP'nin iller bazında aldığı oyları harita üzerinde göstereceğiz. Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} ulaşabilirsiniz.
-
-Harita üzerinde görselleştirme yapmak için `geopandas` kütüphanesini kullanacağız. `geopandas`, isminden de anlaşılacağı üzere, popüler veri bilimi kütüphanesi `pandas`'ı jeo-uzamsal veriler ile destekleyip genişletiyor.
-
-Haritada görselleştirmek için öncelikle Türkiye'nin `.shp` uzantılı dosyasını bulmamız gerekiyor. `.shp`, coğrafi verileri depolamak için kullanılan bir vektör veri formatıdır. [Buradan](https://data.humdata.org/dataset/cod-ab-tur?){.external target="_blank"} `turkey_administrativelevels0_1_2.zip` isimli dosyayı indirebilirsiniz. Eğer bir problem ile karşılaşırsanız [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} bulunan dosyayı da indirebilirsiniz.
+31 Mart 2024 yerel seçimlerini geride bıraktık ancak biz Türkiye'de yaşayanlar için iki seçim arası kısa bir reklam arası gibi. Önümüzdeki seçimlere hazırlıklı olmak için bu arayı değerlendirmeye devam ediyoruz. Bu uygulamada, CHP'nin iller bazında aldığı oyları harita üzerinde göstereceğiz.
 
 # Kullanılacak Kütüphaneler
 
@@ -32,7 +26,11 @@ from matplotlib.colors import ListedColormap
 
 ```
 
-# Verilerin Hazırlanması
+# Veri Setinin İçe Aktarılması
+
+Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} ulaşabilirsiniz.
+
+Haritada görselleştirmek için öncelikle Türkiye'nin `.shp` uzantılı dosyasını bulmamız gerekiyor. `.shp`, coğrafi verileri depolamak için kullanılan bir vektör veri formatıdır. [Buradan](https://data.humdata.org/dataset/cod-ab-tur?){.external target="_blank"} `turkey_administrativelevels0_1_2.zip` isimli dosyayı indirebilirsiniz. Eğer bir problem ile karşılaşırsanız [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} bulunan dosyayı da indirebilirsiniz.
 
 `read_file()` fonksiyonu ile `.shp` uzantılı dosyayı içeri aktaralım.
 
@@ -80,6 +78,8 @@ merged_df = pd.merge(
 Birleştirdikten sonra harita aşamasına geçebiliriz.
 
 # Haritanın Oluşturulması
+
+Harita üzerinde görselleştirme yapmak için `geopandas` kütüphanesini kullanacağız. `geopandas`, isminden de anlaşılacağı üzere, popüler veri bilimi kütüphanesi `pandas`'ı jeo-uzamsal veriler ile destekleyip genişletiyor.
 
 Haritayı en temiz haliyle görelim.
 
