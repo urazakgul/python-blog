@@ -14,7 +14,7 @@ execute:
 
 Yapılan çalışmaların yanında içinde profil fotoğrafının da olduğu sosyal medya kullanımı da önemli olabiliyor.
 
-Bu uygulamada, İstanbul ilçe belediye başkanlarının X (Twitter) profillerindeki duygularını inceleyeceğiz. Duyguların tespitinde `Py-Feat` kütüphanesinden faydalanacağız.
+Bu uygulamada, İstanbul ilçe belediye başkanlarının X (Twitter) profillerindeki duygularını inceleyeceğiz.
 
 # Kullanılacak Kütüphaneler
 
@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 
 ```
 
-# Fotoğrafların İçe Aktarılması
+# Veri Setinin İçe Aktarılması
 
 [Buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_6){.external target="_blank"} ulaşabileceğiniz fotoğraflar ilçe belediye başkanlarının X (Twitter) hesaplarından indirilmiştir.
 
@@ -42,7 +42,7 @@ image_files = [f for f in os.listdir(image_folder) if f.endswith('.jpg')]
 
 # Duyguların Tespit Edilmesi ve Görselleştirilmesi
 
-`Py-Feat`, görüntülerden ve videolardan yüz ifadelerini kolayca tespit etmek, yüz ifadesi verilerini önceden işlemek ve analiz etmek ve yüz ifadesi verilerini görselleştirmek için kapsamlı bir araç ve model seti sağlar. `Py-Feat` önceden eğitilmiş çeşitli modelleri içeriyor.
+Duyguların tespitinde `Py-Feat` kütüphanesinden faydalanacağız. `Py-Feat`, görüntülerden ve videolardan yüz ifadelerini kolayca tespit etmek, yüz ifadesi verilerini önceden işlemek ve analiz etmek ve yüz ifadesi verilerini görselleştirmek için kapsamlı bir araç ve model seti sağlar. `Py-Feat` önceden eğitilmiş çeşitli modelleri içeriyor.
 
 ```{python}
 

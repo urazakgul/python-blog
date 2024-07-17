@@ -16,9 +16,25 @@ execute:
 
 Bugün benzer bir yaklaşım, belirli bir grup insanın -örneğin, milletvekilleri gibi- ortak yüz özelliklerini incelemek amacıyla modern tekniklerle gerçekleştirilebilir.
 
-Bu uygulamada, 28. dönem AKP, CHP, DEM ve MHP milletvekillerinin fotoğraflarını kullanarak parti ve cinsiyet kategorisinde ortalama bir yüz yaratacağız. Uygulamayı GitHub'ta bulunan [şu](https://github.com/johnwmillr/Facer){.external target="_blank"} repo yardımı ile yapacağız. Uygulamanın veri seti olan fotoğraflara ise [burada](https://github.com/urazakgul/python-blog/tree/main/posts/post_5){.external target="_blank"} bulunan `tbmm_28` isimli klasör ile ulaşabilirsiniz.
+Bu uygulamada, 28. dönem AKP, CHP, DEM ve MHP milletvekillerinin fotoğraflarını kullanarak parti ve cinsiyet kategorisinde ortalama bir yüz yaratacağız.
+
+# Kullanılacak Kütüphaneler
+
+```{python}
+
+from facer.facer import load_images, detect_face_landmarks, create_average_face
+import matplotlib.pyplot as plt
+import os
+
+```
+
+# Veri Seti
+
+Uygulamanın veri seti olan fotoğraflara [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_5){.external target="_blank"} ulaşabilirsiniz.
 
 # Reponun Klonlanması
+
+Uygulamayı GitHub'ta bulunan [şu](https://github.com/johnwmillr/Facer){.external target="_blank"} repo yardımı ile yapacağız.
 
 Öncelikle repoyu proje klasörümüze klonlayalım.
 
@@ -45,16 +61,6 @@ mv shape_predictor_68_face_landmarks.dat model
 TBMM'nin web sitesinden alınan görseller `.jpe` formatında olduğu için `facer` klasöründe bulunan `facer.py` dosyasındaki `glob_image_files()` fonksiyonuna `.jpe` uzantısını ekliyoruz.
 
 Ortalama bir yüze ulaşmak için uygulanan adımlar [burada](https://learnopencv.com/average-face-opencv-c-python-tutorial/){.external target="_blank"} detaylı bir şekilde veriliyor.
-
-# Kullanılacak Kütüphaneler
-
-```{python}
-
-from facer.facer import load_images, detect_face_landmarks, create_average_face
-import matplotlib.pyplot as plt
-import os
-
-```
 
 # Ortalama Yüzün Hesaplanması
 

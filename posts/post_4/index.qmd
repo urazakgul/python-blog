@@ -14,7 +14,7 @@ execute:
 
 31 Mart 2024 yerel seçimlerini geride bıraktık ancak biz Türkiye'de yaşayanlar için iki seçim arası kısa bir reklam arası gibi. Önümüzdeki seçimlere hazırlıklı olmak için bu arayı değerlendirmeye devam ediyoruz.
 
-Bu uygulamada, CHP'nin iller bazında aldığı oyları harita üzerinde göstereceğiz. `local_elections_province_20240331` isimli JSON dosyasında bulunan verilere [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} ulaşabilirsiniz.
+Bu uygulamada, CHP'nin iller bazında aldığı oyları harita üzerinde göstereceğiz. Veri setine [buradan](https://github.com/urazakgul/python-blog/tree/main/posts/post_4){.external target="_blank"} ulaşabilirsiniz.
 
 Harita üzerinde görselleştirme yapmak için `geopandas` kütüphanesini kullanacağız. `geopandas`, isminden de anlaşılacağı üzere, popüler veri bilimi kütüphanesi `pandas`'ı jeo-uzamsal veriler ile destekleyip genişletiyor.
 

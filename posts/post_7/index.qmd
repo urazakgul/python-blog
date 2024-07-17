@@ -12,17 +12,7 @@ execute:
 
 # Giriş
 
-Reddit platformundan verileri çekebilmek için öncelikle [buradan](https://www.reddit.com/prefs/apps){.external target="_blank"} bir uygulama oluşturarak OAuth2 anahtarlarını almamız gerekiyor ki API'a ulaşabilelim.
-
-Adım 1. `are you a developer? create an app...` butonuna tıklayalım.
-
-Adım 2. `name` alanına kullanıcı ismimizi yazalım, `script`'i seçelim ve `redirect uri` alanına `http://localhost:8080` bilgisini girelim.
-
-Adım 3. `create app` butonuna tıklayalım.
-
-Bize verilen `personal use script` ve `secret` bilgilerini kullanacağız.
-
-![](imgs/img_1.PNG)
+Reddit, kullanıcıların çeşitli konularda haberleri tartıştığı ve paylaştığı popüler bir platformdur. Bu blog yazısında, Reddit'in en çok takip edilen haber topluluklarından biri olan r/worldnews subreddit'inde paylaşılan başlıkların duygu analizini gerçekleştireceğiz. Amacımız, kullanıcıların dünya olaylarına dair duygusal tepkilerini anlamak ve bu tepkilerin zaman içerisindeki değişimini incelemektir.
 
 # Kullanılacak Kütüphaneler
 
@@ -35,6 +25,20 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 import matplotlib.pyplot as plt
 
 ```
+
+# Uygulamanın Oluşturulması
+
+Reddit platformundan verileri çekebilmek için öncelikle [buradan](https://www.reddit.com/prefs/apps){.external target="_blank"} bir uygulama oluşturarak OAuth2 anahtarlarını almamız gerekiyor ki API'a ulaşabilelim.
+
+Adım 1. `are you a developer? create an app...` butonuna tıklayalım.
+
+Adım 2. `name` alanına kullanıcı ismimizi yazalım, `script`'i seçelim ve `redirect uri` alanına `http://localhost:8080` bilgisini girelim.
+
+Adım 3. `create app` butonuna tıklayalım.
+
+Bize verilen `personal use script` ve `secret` bilgilerini kullanacağız.
+
+![](imgs/img_1.PNG)
 
 # Subreddit Başlıklarının Çekilmesi
 

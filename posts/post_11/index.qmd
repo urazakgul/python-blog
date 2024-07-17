@@ -5,7 +5,7 @@ date: "2024-04-25"
 date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Yüz, Duygu Analizi, Merkez Bankası]
-image: "imgs/img_3.png"
+image: "imgs/img_4.png"
 execute:
   eval: false
 ---
