@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Temmuz 18, 2024</p>
+        <p class="date-modified">Temmuz 19, 2024</p>
       </div>
     </div>
       
@@ -229,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="04863938" class="cell" data-execution_count="1">
+<div id="eea2abbb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> Pitch, Sbopen</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
-<div id="cfa5902a" class="cell" data-execution_count="2">
+<div id="d40e38e6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team <span class="op">=</span> <span class="st">'Turkey'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> [<span class="dv">3938639</span>, <span class="dv">3930174</span>, <span class="dv">3930184</span>, <span class="dv">3941022</span>, <span class="dv">3942382</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> []</span>
@@ -280,13 +280,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>combined_df <span class="op">=</span> pd.concat(dfs, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>shot_types <span class="op">=</span> <span class="bu">list</span>(combined_df[<span class="st">'outcome_name'</span>].unique())</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>shot_type_counts <span class="op">=</span> combined_df[<span class="st">'outcome_name'</span>].value_counts().sort_values()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>shot_types <span class="op">=</span> <span class="bu">list</span>(combined_df[<span class="st">'outcome_name'</span>].unique())</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="şut-sonuçlarının-dağılımı" class="level2">
 <h2 class="anchored" data-anchor-id="şut-sonuçlarının-dağılımı">Şut Sonuçlarının Dağılımı</h2>
-<div id="425850ab" class="cell" data-execution_count="3">
+<div id="57f1d05f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>shot_type_counts <span class="op">=</span> combined_df[<span class="st">'outcome_name'</span>].value_counts().sort_values()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>shot_type_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
@@ -299,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="şut-haritası" class="level2">
 <h2 class="anchored" data-anchor-id="şut-haritası">Şut Haritası</h2>
-<div id="e01f1412" class="cell" data-execution_count="4">
+<div id="a3a880de" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shot_types <span class="op">=</span> {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Off T'</span>: <span class="st">'o'</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Blocked'</span>: <span class="st">'&lt;'</span>,</span>
@@ -310,10 +309,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Saved to Post'</span>: <span class="st">'&gt;'</span>,</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>pitch <span class="op">=</span> Pitch(line_color<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> pitch.draw(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>pitchLengthX <span class="op">=</span> <span class="dv">120</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>pitchWidthY <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>pitch_length_x <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>pitch_width_y <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>pitch <span class="op">=</span> Pitch(pitch_type<span class="op">=</span><span class="st">'custom'</span>, pitch_length<span class="op">=</span>pitch_length_x, pitch_width<span class="op">=</span>pitch_width_y, line_color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> pitch.draw(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.tab10.colors[:<span class="bu">len</span>(shot_types)]</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
@@ -349,8 +348,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Kodun kilit yerlerine bakalım.</p>
 <p><code>Pitch</code> sınıfını kullanarak siyah çizgili bir futbol sahası (pitch) oluşturduk ve <code>fig, ax</code> değişkenleri aracılığıyla sahanın çizildiği figür ve eksenleri elde ettik. <code>figsize</code> parametresiyle figürün boyutlarını belirledik (10x7 inç).</p>
-<p><code>pitchLengthX</code> ve <code>pitchWidthY</code> değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.</p>
-<p>Her şut için <code>(x, y)</code> koordinatlarını aldık.</p>
+<p><code>pitch_length_x</code> ve <code>pitch_width_y</code> değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.</p>
+<p>Her şut için <code>x</code> ve <code>y</code> koordinatlarını aldık.</p>
 <p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 

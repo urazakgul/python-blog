@@ -69,7 +69,6 @@ for match in matches:
 combined_df = pd.concat(dfs, ignore_index=True)
 
 shot_types = list(combined_df['outcome_name'].unique())
-shot_type_counts = combined_df['outcome_name'].value_counts().sort_values()
 
 ```
 
@@ -103,10 +102,10 @@ shot_types = {
     'Saved to Post': '>',
 }
 
-pitch = Pitch(line_color='black')
+pitch_length_x = 120
+pitch_width_y = 80
+pitch = Pitch(pitch_type='custom', pitch_length=pitch_length_x, pitch_width=pitch_width_y, line_color='black')
 fig, ax = pitch.draw(figsize=(10, 7))
-pitchLengthX = 120
-pitchWidthY = 80
 
 colors = plt.cm.tab10.colors[:len(shot_types)]
 
@@ -146,9 +145,9 @@ Kodun kilit yerlerine bakalım.
 
 `Pitch` sınıfını kullanarak siyah çizgili bir futbol sahası (pitch) oluşturduk ve `fig, ax` değişkenleri aracılığıyla sahanın çizildiği figür ve eksenleri elde ettik. `figsize` parametresiyle figürün boyutlarını belirledik (10x7 inç).
 
-`pitchLengthX` ve `pitchWidthY` değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.
+`pitch_length_x` ve `pitch_width_y` değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.
 
-Her şut için `(x, y)` koordinatlarını aldık.
+Her şut için `x` ve `y` koordinatlarını aldık.
 
 ![](imgs/img_2.png)
 
