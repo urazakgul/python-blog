@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı</title>
+<title>Python Blog - Türkiye’nin Euro 2024 Şut Haritası</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,10 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">İstanbul İlçe Belediye Başkanlarının X (Twitter) Profillerindeki Duygu Dağılımı</h1>
+      <h1 class="title">Türkiye’nin Euro 2024 Şut Haritası</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Yüz</div>
-                <div class="quarto-category">Duygu Analizi</div>
+                <div class="quarto-category">Futbol</div>
               </div>
                   </div>
   </div>
@@ -181,14 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 13, 2024</p>
+        <p class="date">Temmuz 18, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Temmuz 17, 2024</p>
+        <p class="date-modified">Temmuz 18, 2024</p>
       </div>
     </div>
       
@@ -205,8 +204,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#veri-setinin-içe-aktarılması" id="toc-veri-setinin-içe-aktarılması" class="nav-link" data-scroll-target="#veri-setinin-içe-aktarılması">Veri Setinin İçe Aktarılması</a></li>
-  <li><a href="#duyguların-tespit-edilmesi-ve-görselleştirilmesi" id="toc-duyguların-tespit-edilmesi-ve-görselleştirilmesi" class="nav-link" data-scroll-target="#duyguların-tespit-edilmesi-ve-görselleştirilmesi">Duyguların Tespit Edilmesi ve Görselleştirilmesi</a></li>
+  <li><a href="#maçlar" id="toc-maçlar" class="nav-link" data-scroll-target="#maçlar">Maçlar</a></li>
+  <li><a href="#şut-tipleri" id="toc-şut-tipleri" class="nav-link" data-scroll-target="#şut-tipleri">Şut Tipleri</a></li>
+  <li><a href="#şut-haritasının-oluşturulması" id="toc-şut-haritasının-oluşturulması" class="nav-link" data-scroll-target="#şut-haritasının-oluşturulması">Şut Haritasının Oluşturulması</a>
+  <ul class="collapse">
+  <li><a href="#veri-çerçevesinin-içeriği" id="toc-veri-çerçevesinin-içeriği" class="nav-link" data-scroll-target="#veri-çerçevesinin-içeriği">Veri Çerçevesinin İçeriği</a></li>
+  <li><a href="#verilerin-çekilmesi" id="toc-verilerin-çekilmesi" class="nav-link" data-scroll-target="#verilerin-çekilmesi">Verilerin Çekilmesi</a></li>
+  <li><a href="#şut-sonuçlarının-dağılımı" id="toc-şut-sonuçlarının-dağılımı" class="nav-link" data-scroll-target="#şut-sonuçlarının-dağılımı">Şut Sonuçlarının Dağılımı</a></li>
+  <li><a href="#şut-haritası" id="toc-şut-haritası" class="nav-link" data-scroll-target="#şut-haritası">Şut Haritası</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -219,109 +225,137 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>Yapılan çalışmaların yanında içinde profil fotoğrafının da olduğu sosyal medya kullanımı da önemli olabiliyor.</p>
-<p>Bu uygulamada, İstanbul ilçe belediye başkanlarının X (Twitter) profillerindeki duygularını inceleyeceğiz.</p>
+<p>Şut haritası, bir futbol takımının veya oyuncunun maç sırasında gerçekleştirdiği şutların sahada nereden yapıldığını ve nasıl sonuçlandığını görsel olarak temsil eden bir görselleştirmedir. Şut haritası, futbol analizi için önemli bir araçtır çünkü bir takımın veya oyuncunun hücum performansını, şutların etkinliğini ve gol atma becerisini değerlendirmeye yardımcı olur.</p>
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="3a69b7b8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feat <span class="im">import</span> Detector</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feat.plotting <span class="im">import</span> imshow</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="90e68759" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> Pitch, Sbopen</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="veri-setinin-içe-aktarılması" class="level1">
-<h1>Veri Setinin İçe Aktarılması</h1>
-<p><a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_6" class="external" target="_blank">Buradan</a> ulaşabileceğiniz fotoğraflar ilçe belediye başkanlarının X (Twitter) hesaplarından indirilmiştir.</p>
-<div id="0daa5add" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>image_folder <span class="op">=</span> <span class="st">'ilce_bb_profil/'</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>image_files <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(image_folder) <span class="cf">if</span> f.endswith(<span class="st">'.jpg'</span>)]</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="duyguların-tespit-edilmesi-ve-görselleştirilmesi" class="level1">
-<h1>Duyguların Tespit Edilmesi ve Görselleştirilmesi</h1>
-<p>Duyguların tespitinde <code>Py-Feat</code> kütüphanesinden faydalanacağız. <code>Py-Feat</code>, görüntülerden ve videolardan yüz ifadelerini kolayca tespit etmek, yüz ifadesi verilerini önceden işlemek ve analiz etmek ve yüz ifadesi verilerini görselleştirmek için kapsamlı bir araç ve model seti sağlar. <code>Py-Feat</code> önceden eğitilmiş çeşitli modelleri içeriyor.</p>
-<div id="122cf055" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>detector <span class="op">=</span> Detector(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    face_model<span class="op">=</span><span class="st">'retinaface'</span>, <span class="co"># face detection</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    landmark_model<span class="op">=</span><span class="st">'mobilefacenet'</span>, <span class="co"># facial landmark detection</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    facepose_model<span class="op">=</span><span class="st">'img2pose'</span>, <span class="co"># facial pose estimation</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    au_model<span class="op">=</span><span class="st">'xgb'</span>, <span class="co"># action unit detection</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    emotion_model<span class="op">=</span><span class="st">'resmasknet'</span>, <span class="co"># emotion detection</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="maçlar" class="level1">
+<h1>Maçlar</h1>
+<p>StatsBomb’dan (<code>Sbopen</code>) çekilecek maçların ID’leri şöyledir:</p>
 <ul>
-<li><p>Yüz tespiti (Face detection, <code>face_model</code>): Bir görüntüdeki veya bir videodaki insan yüzlerini algılama sürecidir. Yüz tespiti, bir görüntü içindeki yüz bölgelerini belirlemek için kullanılır. Parametre seçenekleri şunlardır: <code>retinaface</code>, <code>mtcnn</code>, <code>faceboxes</code>, <code>img2pose</code> ve <code>img2pose-c</code>.</p></li>
-<li><p>Yüz belirleme (Facial landmark detection, <code>landmark_model</code>): Yüzün belirli noktalarını (örneğin, gözler, burun, ağız) tespit etme sürecidir. Bu noktalar genellikle gözbebekleri, burun ucundaki nokta, dudakların kenarları gibi önemli anatomik yerlerdir. Parametre seçenekleri şunlardır: <code>mobilefacenet</code>, <code>mobilenet</code> ve <code>pfld</code>.</p></li>
-<li><p>Yüz poz tahmini (Facial Pose estimation, <code>facepose_model</code>): Bir yüzün konumunu ve/veya dönüşünü belirleme sürecidir. Yüzün kaç derece eğik olduğunu, hangi yönde baktığını tahmin etmeyi içerir. Parametre seçenekleri şunlardır: <code>img2pose</code> ve <code>img2pose-c</code>.</p></li>
-<li><p>Hareket Birimi tespiti (Action Unit detection, <code>au_model</code>): Yüz ifadelerindeki belirli kas gruplarını temsil eden hareket birimlerini (action units) tanımlama sürecidir. Örneğin, kaşların kaldırılması, dudakların büzülmesi gibi. Parametre seçenekleri şunlardır: <code>xgb</code> ve <code>svm</code>.</p></li>
-<li><p>Duygu tespiti (Emotion detection, <code>emotion_model</code>): Bir kişinin yüz ifadesinden duygusal durumunu belirleme sürecidir. Örneğin, mutlu, üzgün, kızgın gibi duyguları tanımlama. Parametre seçenekleri şunlardır: <code>resmasknet</code> ve <code>svm</code>.</p></li>
+<li>Türkiye - Gürcistan: 3938639</li>
+<li>Türkiye - Portekiz: 3930174</li>
+<li>Çekya - Türkiye: 3930184</li>
+<li>Avusturya - Türkiye: 3941022</li>
+<li>Hollanda - Türkiye: 3942382</li>
 </ul>
-<p>Bir döngü ile tüm fotoğrafları dahil edeceğiz ama öncesinde örnek bir fotoğraf ile sürece bakalım.</p>
-<div id="32aaff08" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>example_img <span class="op">=</span> <span class="st">'uskudar_chp.jpg'</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>imshow(image_folder <span class="op">+</span> example_img)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Maçlara ait ID’leri öğrenmek için <a href="https://urazakgul.github.io/python-blog/posts/post_22/" class="external" target="_blank">StatsBomb Verilerine Erişim: Euro 2024 Örneği</a> başlıklı yazıyı inceleyebilirsiniz.</p>
+</section>
+<section id="şut-tipleri" class="level1">
+<h1>Şut Tipleri</h1>
+<ul>
+<li><strong>Off T (Off Target):</strong> Hedefin dışına atılan bir şuttur.</li>
+<li><strong>Blocked:</strong> Savunma oyuncuları tarafından engellenen bir şuttur.</li>
+<li><strong>Post:</strong> Direğe veya üst direğe çarpan bir şuttur.</li>
+<li><strong>Saved:</strong> Kaleci tarafından kurtarılan bir şuttur.</li>
+<li><strong>Goal:</strong> Gol olan bir şuttur.</li>
+<li><strong>Wayward:</strong> Belirgin bir şekilde hedefin dışına atılan bir şuttur.</li>
+<li><strong>Saved to Post:</strong> Kaleci tarafından kurtarıldıktan sonra direğe çarpan bir şuttur.</li>
+</ul>
+</section>
+<section id="şut-haritasının-oluşturulması" class="level1">
+<h1>Şut Haritasının Oluşturulması</h1>
+<section id="veri-çerçevesinin-içeriği" class="level2">
+<h2 class="anchored" data-anchor-id="veri-çerçevesinin-içeriği">Veri Çerçevesinin İçeriği</h2>
+<p><code>df</code> veri çerçevesindeki <code>type_name</code> kolonundan <code>Shot</code>’ı filtreleyeceğiz. Ardından <code>outcome_name</code> kolonundan ilerleyeceğiz ve <code>team_name</code> Türkiye olacak.</p>
+</section>
+<section id="verilerin-çekilmesi" class="level2">
+<h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
+<div id="d9f49258" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team <span class="op">=</span> <span class="st">'Turkey'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> [<span class="dv">3938639</span>, <span class="dv">3930174</span>, <span class="dv">3930184</span>, <span class="dv">3941022</span>, <span class="dv">3942382</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> []</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match <span class="kw">in</span> matches:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> Sbopen()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    df, related, freeze, tactics <span class="op">=</span> parser.event(match)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    shots <span class="op">=</span> df[(df[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Shot'</span>) <span class="op">&amp;</span> (df[<span class="st">'team_name'</span>] <span class="op">==</span> team)].set_index(<span class="st">'id'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    dfs.append(shots)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>combined_df <span class="op">=</span> pd.concat(dfs, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>shot_types <span class="op">=</span> <span class="bu">list</span>(combined_df[<span class="st">'outcome_name'</span>].unique())</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>shot_type_counts <span class="op">=</span> combined_df[<span class="st">'outcome_name'</span>].value_counts().sort_values()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="ilce_bb_profil/uskudar_chp.jpg" class="img-fluid"></p>
-<p><code>detect_image()</code> ile yüklenen modelleri kullanalım.</p>
-<div id="d8f64a11" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>single_face_prediction <span class="op">=</span> detector.detect_image(image_folder <span class="op">+</span> example_img)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="şut-sonuçlarının-dağılımı" class="level2">
+<h2 class="anchored" data-anchor-id="şut-sonuçlarının-dağılımı">Şut Sonuçlarının Dağılımı</h2>
+<div id="9edd8cc9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>shot_type_counts <span class="op">=</span> combined_df[<span class="st">'outcome_name'</span>].value_counts().sort_values()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>shot_type_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Number of Shots'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Shot Outcome'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Shot Outcomes by </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> in Euro 2024'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/single_face_prediction.PNG" class="img-fluid"></p>
-<p>Buradan duyguları çekelim.</p>
-<div id="74318013" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>emotions <span class="op">=</span> single_face_prediction.emotions</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="imgs/img_1.png" class="img-fluid"></p>
+</section>
+<section id="şut-haritası" class="level2">
+<h2 class="anchored" data-anchor-id="şut-haritası">Şut Haritası</h2>
+<div id="81e78ae7" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shot_types <span class="op">=</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Off T'</span>: <span class="st">'o'</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Blocked'</span>: <span class="st">'&lt;'</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Post'</span>: <span class="st">'^'</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Saved'</span>: <span class="st">'D'</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Goal'</span>: <span class="st">'*'</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Wayward'</span>: <span class="st">'v'</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Saved to Post'</span>: <span class="st">'&gt;'</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>pitch <span class="op">=</span> Pitch(line_color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> pitch.draw(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>pitchLengthX <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>pitchWidthY <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.tab10.colors[:<span class="bu">len</span>(shot_types)]</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shot_type, marker <span class="kw">in</span> shot_types.items():</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> combined_df[combined_df[<span class="st">'outcome_name'</span>] <span class="op">==</span> shot_type]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">'red'</span> <span class="cf">if</span> shot_type <span class="op">==</span> <span class="st">'Goal'</span> <span class="cf">else</span> colors[<span class="bu">list</span>(shot_types.keys()).index(shot_type)]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, shot <span class="kw">in</span> subset.iterrows():</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> shot[<span class="st">'x'</span>]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> shot[<span class="st">'y'</span>]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> shot_type <span class="op">==</span> <span class="st">'Goal'</span>:</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            ax.plot(x, y, marker, color<span class="op">=</span>color, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span>shot_type)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            plt.text(x <span class="op">+</span> <span class="dv">1</span>, y <span class="op">-</span> <span class="dv">2</span>, shot[<span class="st">'player_name'</span>].split()[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            ax.plot(x, y, marker, color<span class="op">=</span>color, markersize<span class="op">=</span><span class="dv">7</span>, alpha<span class="op">=</span><span class="fl">.3</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>legend_handles <span class="op">=</span> []</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> shot_type, marker <span class="kw">in</span> shot_types.items():</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">'red'</span> <span class="cf">if</span> shot_type <span class="op">==</span> <span class="st">'Goal'</span> <span class="cf">else</span> colors[<span class="bu">list</span>(shot_types.keys()).index(shot_type)]</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    legend_handles.append(plt.Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], linestyle<span class="op">=</span><span class="st">'none'</span>, marker<span class="op">=</span>marker, markersize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span>color, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span>shot_type))</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>ax.legend(</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    handles<span class="op">=</span>legend_handles,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">'upper center'</span>,</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="st">'medium'</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">''</span>,</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    ncol<span class="op">=</span><span class="bu">len</span>(shot_types),</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    bbox_to_anchor<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.03</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="ss">f"</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">'s Euro 2024 Shot Map"</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="imgs/emotions.PNG" class="img-fluid"></p>
-<p><code>Py-Feat</code> görselleştirme imkanı da sunuyor. Bunu iki farklı şekilde yapabiliriz.</p>
-<div id="9b90f65a" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>figs <span class="op">=</span> single_face_prediction.plot_detections(poses<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/emotions_plot_1.png" class="img-fluid"></p>
-<div id="dfd76833" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>figs <span class="op">=</span> single_face_prediction.plot_detections(faces<span class="op">=</span><span class="st">'aus'</span>, muscles<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/emotions_plot_2.png" class="img-fluid"></p>
-<p>Tüm fotoğraflar için duyguları tespit edelim. Görseli ısı haritası ile yapacağız.</p>
-<p>Öncesinde <code>image_files</code> değişkenine tüm fotoğrafları aktarmıştık. Bunu kullanabiliriz.</p>
-<div id="7dd49b0d" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>emotions_df <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> image_file <span class="kw">in</span> image_files:</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    face_prediction <span class="op">=</span> detector.detect_image(image_folder <span class="op">+</span> image_file)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    face_prediction_final <span class="op">=</span> face_prediction[face_prediction[<span class="st">'FaceScore'</span>] <span class="op">==</span> face_prediction[<span class="st">'FaceScore'</span>].<span class="bu">max</span>()]</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    emotions <span class="op">=</span> face_prediction_final.emotions</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ilce, parti <span class="op">=</span> image_file.split(<span class="st">'_'</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    parti <span class="op">=</span> parti.split(<span class="st">'.'</span>)[<span class="dv">0</span>]</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    emotions[<span class="st">'image_file'</span>] <span class="op">=</span> ilce.upper() <span class="op">+</span> <span class="st">'-'</span> <span class="op">+</span> parti.upper()</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    emotions_df <span class="op">=</span> pd.concat([emotions_df, emotions], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>emotions_df <span class="op">=</span> emotions_df.set_index(<span class="st">'image_file'</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>emotions_df.columns <span class="op">=</span> emotions_df.columns.<span class="bu">str</span>.upper()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Döngüde bulunan <code>face_prediction_final</code> değişkenini birden fazla yüz tespiti olduğu için oluşturdum. Büyükçekmece belediye başkanının profilinde kedi de bulunmaktadır.</p>
-<div id="a7ec42cc" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>example_img <span class="op">=</span> <span class="st">'buyukcekmece_chp.jpg'</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>imshow(image_folder <span class="op">+</span> example_img)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="ilce_bb_profil/buyukcekmece_chp.jpg" class="img-fluid"></p>
-<p>Isı haritası ile duyguları gösterebiliriz.</p>
-<div id="fd669ccb" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">12</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(emotions_df, cmap<span class="op">=</span><span class="st">'Reds'</span>, annot<span class="op">=</span><span class="va">False</span>, linewidths<span class="op">=</span><span class="fl">.5</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'İstanbul İlçe Belediye Başkanları X (Twitter) Profilleri Duygu Dağılımı'</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.tick_params(left<span class="op">=</span><span class="va">False</span>, bottom<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">''</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/emotions_heatmap.png" class="img-fluid"></p>
-<p>Profil fotoğraflarında doğal olarak en güçlü duygunun <code>happiness</code> olduğunu görüyoruz. <code>neutral</code> pozlar da kendini göstermektedir.</p>
+<p>Kodun kilit yerlerine bakalım.</p>
+<p><code>Pitch</code> sınıfını kullanarak siyah çizgili bir futbol sahası (pitch) oluşturduk ve <code>fig, ax</code> değişkenleri aracılığıyla sahanın çizildiği figür ve eksenleri elde ettik. <code>figsize</code> parametresiyle figürün boyutlarını belirledik (10x7 inç).</p>
+<p><code>pitchLengthX</code> ve <code>pitchWidthY</code> değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.</p>
+<p>Her şut için <code>(x, y)</code> koordinatlarını aldık.</p>
+<p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

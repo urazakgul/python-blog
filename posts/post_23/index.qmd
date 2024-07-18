@@ -1,0 +1,155 @@
+---
+title: "Türkiye'nin Euro 2024 Şut Haritası"
+author: "Uraz Akgül"
+date: "2024-07-18"
+date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Futbol]
+image: "imgs/img_2.png"
+execute:
+  eval: false
+---
+
+# Giriş
+
+Şut haritası, bir futbol takımının veya oyuncunun maç sırasında gerçekleştirdiği şutların sahada nereden yapıldığını ve nasıl sonuçlandığını görsel olarak temsil eden bir görselleştirmedir. Şut haritası, futbol analizi için önemli bir araçtır çünkü bir takımın veya oyuncunun hücum performansını, şutların etkinliğini ve gol atma becerisini değerlendirmeye yardımcı olur.
+
+# Kullanılacak Kütüphaneler
+
+```{python}
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from mplsoccer import Pitch, Sbopen
+
+```
+
+# Maçlar
+
+StatsBomb'dan (`Sbopen`) çekilecek maçların ID'leri şöyledir:
+
+* Türkiye - Gürcistan: 3938639
+* Türkiye - Portekiz: 3930174
+* Çekya - Türkiye: 3930184
+* Avusturya - Türkiye: 3941022
+* Hollanda - Türkiye: 3942382
+
+Maçlara ait ID'leri öğrenmek için [StatsBomb Verilerine Erişim: Euro 2024 Örneği](https://urazakgul.github.io/python-blog/posts/post_22/){.external target="_blank"} başlıklı yazıyı inceleyebilirsiniz.
+
+# Şut Tipleri
+
+* **Off T (Off Target):** Hedefin dışına atılan bir şuttur.
+* **Blocked:** Savunma oyuncuları tarafından engellenen bir şuttur.
+* **Post:** Direğe veya üst direğe çarpan bir şuttur.
+* **Saved:** Kaleci tarafından kurtarılan bir şuttur.
+* **Goal:** Gol olan bir şuttur.
+* **Wayward:** Belirgin bir şekilde hedefin dışına atılan bir şuttur.
+* **Saved to Post:** Kaleci tarafından kurtarıldıktan sonra direğe çarpan bir şuttur.
+
+# Şut Haritasının Oluşturulması
+
+## Veri Çerçevesinin İçeriği
+
+`df` veri çerçevesindeki `type_name` kolonundan `Shot`'ı filtreleyeceğiz. Ardından `outcome_name` kolonundan ilerleyeceğiz ve `team_name` Türkiye olacak.
+
+## Verilerin Çekilmesi
+
+```{python}
+
+team = 'Turkey'
+matches = [3938639, 3930174, 3930184, 3941022, 3942382]
+dfs = []
+
+for match in matches:
+    parser = Sbopen()
+    df, related, freeze, tactics = parser.event(match)
+    shots = df[(df['type_name'] == 'Shot') & (df['team_name'] == team)].set_index('id')
+    dfs.append(shots)
+
+combined_df = pd.concat(dfs, ignore_index=True)
+
+shot_types = list(combined_df['outcome_name'].unique())
+shot_type_counts = combined_df['outcome_name'].value_counts().sort_values()
+
+```
+
+## Şut Sonuçlarının Dağılımı
+
+```{python}
+
+plt.figure(figsize=(10, 6))
+shot_type_counts = combined_df['outcome_name'].value_counts().sort_values()
+shot_type_counts.plot(kind='barh', color='skyblue')
+plt.xlabel('Number of Shots')
+plt.ylabel('Shot Outcome')
+plt.title(f'Shot Outcomes by {team} in Euro 2024')
+plt.show()
+
+```
+
+![](imgs/img_1.png)
+
+## Şut Haritası
+
+```{python}
+
+shot_types = {
+    'Off T': 'o',
+    'Blocked': '<',
+    'Post': '^',
+    'Saved': 'D',
+    'Goal': '*',
+    'Wayward': 'v',
+    'Saved to Post': '>',
+}
+
+pitch = Pitch(line_color='black')
+fig, ax = pitch.draw(figsize=(10, 7))
+pitchLengthX = 120
+pitchWidthY = 80
+
+colors = plt.cm.tab10.colors[:len(shot_types)]
+
+for shot_type, marker in shot_types.items():
+    subset = combined_df[combined_df['outcome_name'] == shot_type]
+    color = 'red' if shot_type == 'Goal' else colors[list(shot_types.keys()).index(shot_type)]
+    for i, shot in subset.iterrows():
+        x = shot['x']
+        y = shot['y']
+        if shot_type == 'Goal':
+            ax.plot(x, y, marker, color=color, markersize=10, label=shot_type)
+            plt.text(x + 1, y - 2, shot['player_name'].split()[-1])
+        else:
+            ax.plot(x, y, marker, color=color, markersize=7, alpha=.3)
+
+legend_handles = []
+for shot_type, marker in shot_types.items():
+    color = 'red' if shot_type == 'Goal' else colors[list(shot_types.keys()).index(shot_type)]
+    legend_handles.append(plt.Line2D([0], [0], linestyle='none', marker=marker, markersize=10, color=color, alpha=0.3, label=shot_type))
+
+ax.legend(
+    handles=legend_handles,
+    loc='upper center',
+    fontsize='medium',
+    title='',
+    ncol=len(shot_types),
+    bbox_to_anchor=(0.5, -0.03)
+)
+
+fig.suptitle(f"{team}'s Euro 2024 Shot Map", fontsize=20)
+fig.set_size_inches(10, 7)
+plt.show()
+
+```
+
+Kodun kilit yerlerine bakalım.
+
+`Pitch` sınıfını kullanarak siyah çizgili bir futbol sahası (pitch) oluşturduk ve `fig, ax` değişkenleri aracılığıyla sahanın çizildiği figür ve eksenleri elde ettik. `figsize` parametresiyle figürün boyutlarını belirledik (10x7 inç).
+
+`pitchLengthX` ve `pitchWidthY` değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.
+
+Her şut için `(x, y)` koordinatlarını aldık.
+
+![](imgs/img_2.png)
+
+*Gelecek içeriklerde görüşmek dileğiyle.*
