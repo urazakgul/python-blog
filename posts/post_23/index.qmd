@@ -87,8 +87,6 @@ plt.show()
 
 ```
 
-![](imgs/img_1.png)
-
 ## Şut Haritası
 
 ```{python}
