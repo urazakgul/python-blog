@@ -266,7 +266,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="cc8d2383" class="cell" data-execution_count="1">
+<div id="190e60b8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> poisson</span>
@@ -306,7 +306,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="futbol-maçlarında-poisson-dağılımının-kullanımı">Futbol Maçlarında Poisson Dağılımının Kullanımı</h2>
 <p>Poisson dağılımı, futbol maçlarında bir takımın belirli bir maçta atacağı gol sayısını öngörmek ve sonuç olasılıklarını hesaplamak için kullanılabilir. Örneğin, belirli bir takımın ortalama olarak 2.5 gol attığını varsayalım (<span class="math inline">\(\lambda\)</span>=2.5). Bu durumda, bu takımın 0, 1, 2, 3, … gol atma olasılıklarını hesaplayabiliriz.</p>
 <p>Bir takımın ortalama olarak 2.5 gol attığını düşünelim ve 0’dan 10’a kadar gol atma olasılıklarını hesaplayalım.</p>
-<div id="22570254" class="cell" data-execution_count="2">
+<div id="a327bd6c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lambda_goals <span class="op">=</span> <span class="fl">2.5</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>goal_counts <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>poisson_probabilities <span class="op">=</span> poisson.pmf(goal_counts, lambda_goals)</span>
@@ -345,7 +345,7 @@ window.Quarto = {
 <p><a href="https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017" class="external" target="_blank">International football results from 1872 to 2024</a></p>
 <p>Tüm veri setlerine ise <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_16" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
 <p>Verileri yükleyecek ve düzenlemeleri yapacak fonksiyon <code>load_data</code>’dır.</p>
-<div id="583818a2" class="cell" data-execution_count="3">
+<div id="ea24fccd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data(historical_file):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    historical_results <span class="op">=</span> pd.read_csv(historical_file)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    historical_results[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(historical_results[<span class="st">'date'</span>])</span>
@@ -360,7 +360,7 @@ window.Quarto = {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>historical_results <span class="op">=</span> load_data(<span class="st">'historical_results.csv'</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yıllara özel filtreleme yapacak fonksiyon ise <code>filter_historical_data</code>’dır.</p>
-<div id="20ccab9c" class="cell" data-execution_count="4">
+<div id="a1c9eeec" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_historical_data(historical_results, cutoff_date, countries):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    filtered_results <span class="op">=</span> historical_results[historical_results[<span class="st">'date'</span>] <span class="op">&lt;</span> cutoff_date]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    filtered_results <span class="op">=</span> filtered_results[</span>
@@ -376,7 +376,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="hesaplamanın-matematiği">Hesaplamanın Matematiği</h2>
 <p>Turnuvadaki ortalama gol beklentisini (average goal expectancy), her iki taraf için de saldırı gücü (attack strength) ve savunma gücünü (defence strength) hesaplamamız gerekiyor. Takımın gol beklentisi, hem takımın saldırı gücü ve savunma gücüne hem de karşı takımın saldırı ve savunma gücüne bağlıdır.</p>
 <p><code>calculate_strengths</code> ve <code>calculate_goal_expectancy</code> fonksiyonları ile yukarıda belirttiğimiz hesaplamaları yapacağız.</p>
-<div id="1901561a" class="cell" data-execution_count="5">
+<div id="de89536c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_strengths(historical_results_df):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_strengths_for_team(historical_results_df, column_team, column_score):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        team_strength <span class="op">=</span> {}</span>
@@ -422,7 +422,7 @@ window.Quarto = {
 <span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(goal_expectancy, columns<span class="op">=</span>[<span class="st">'Team1'</span>, <span class="st">'Team2'</span>, <span class="st">'Team1_Expectancy'</span>, <span class="st">'Team2_Expectancy'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Son olarak, <code>match_probabilities</code> fonksiyonu ile olasılıkları hesaplayıp <code>calculate_match_probabilities</code> ile veri çerçevesini ortaya çıkaracağız.</p>
-<div id="20781b0b" class="cell" data-execution_count="6">
+<div id="10034217" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> match_probabilities(lambda1, lambda2, max_goals<span class="op">=</span><span class="dv">5</span>):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> np.zeros((max_goals<span class="op">+</span><span class="dv">1</span>, max_goals<span class="op">+</span><span class="dv">1</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(max_goals<span class="op">+</span><span class="dv">1</span>):</span>
@@ -451,7 +451,7 @@ window.Quarto = {
 <section id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri" class="level2">
 <h2 class="anchored" data-anchor-id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri">2020 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</h2>
 <p>2020 yılına ait verileri içe aktaralım.</p>
-<div id="10a3c594" class="cell" data-execution_count="7">
+<div id="deca9aef" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>euro_2020_countries <span class="op">=</span> pd.read_excel(<span class="st">'euro_2020_countries.xlsx'</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>matches_2020 <span class="op">=</span> pd.read_excel(<span class="st">'matches_2020.xlsx'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -513,7 +513,7 @@ window.Quarto = {
 <p>Her iki takımın olasılıklarının çarpımıdır. Örneğin, sonucun 1-2 olma olasılığına bakalım.</p>
 <p><span class="math inline">\(P(Türkiye=1) * P(İtalya=2) = 0.34637788 * 0.19161551 = 0.0663713741289188\)</span></p>
 <p>Kod kullanarak aşağıdaki gibi hesaplnabilir.</p>
-<div id="6526140c" class="cell" data-execution_count="8">
+<div id="939006bb" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lambda_T <span class="op">=</span> <span class="fl">0.6918750166413717</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lambda_I <span class="op">=</span> <span class="fl">1.0426517774212616</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -545,7 +545,7 @@ window.Quarto = {
 </section>
 <section id="öngörüleri-ne-kadar-başarılı-olurdu" class="level3">
 <h3 class="anchored" data-anchor-id="öngörüleri-ne-kadar-başarılı-olurdu">2020 Öngörüleri Ne Kadar Başarılı Olurdu?</h3>
-<div id="df0499b2" class="cell" data-execution_count="9">
+<div id="46531999" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> determine_winner_prob(row):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'Team1_Win_Prob'</span>] <span class="op">&gt;</span> row[<span class="st">'Team2_Win_Prob'</span>] <span class="kw">and</span> row[<span class="st">'Team1_Win_Prob'</span>] <span class="op">&gt;</span> row[<span class="st">'Draw_Prob'</span>]:</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'Team1'</span>]<span class="sc">}</span><span class="ss"> wins"</span></span>
@@ -577,7 +577,7 @@ window.Quarto = {
 <section id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1" class="level2">
 <h2 class="anchored" data-anchor-id="avrupa-futbol-şampiyonası-grup-maçları-öngörüleri-1">2024 Avrupa Futbol Şampiyonası Grup Maçları Öngörüleri</h2>
 <p>Her ne kadar 2020 öngörüleri tatmin edici bir sonuç vermese de 2024 yılı için de öngörülerimizi yapalım.</p>
-<div id="a2ab509f" class="cell" data-execution_count="10">
+<div id="ffb7cdaa" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>euro_2024_countries <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_countries.xlsx'</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>matches_2024 <span class="op">=</span> pd.read_excel(<span class="st">'matches_2024.xlsx'</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -593,7 +593,7 @@ window.Quarto = {
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>goal_expectancy_df_2024[<span class="st">'Result'</span>] <span class="op">=</span> goal_expectancy_df_2024.<span class="bu">apply</span>(determine_winner_prob, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Sonuçları daha güzel gösterebiliriz.</p>
-<div id="d378f28d" class="cell" data-execution_count="11">
+<div id="7cae6a62" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> highlight_max_prob(row):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    max_prob <span class="op">=</span> row[[<span class="st">'Team1_Win_Prob'</span>, <span class="st">'Team2_Win_Prob'</span>, <span class="st">'Draw_Prob'</span>]].<span class="bu">max</span>()</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">'background-color: red'</span> <span class="cf">if</span> v <span class="op">==</span> max_prob <span class="cf">else</span> <span class="st">''</span> <span class="cf">for</span> v <span class="kw">in</span> row]</span>

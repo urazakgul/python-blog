@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="17691229" class="cell" data-execution_count="1">
+<div id="25c90a99" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -339,7 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>İdeal Kadronun Belirlenmesi</h1>
 <section id="skorları-hesaplayacak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="skorları-hesaplayacak-fonksiyonun-yazılması">Skorları Hesaplayacak Fonksiyonun Yazılması</h2>
-<div id="100289ce" class="cell" data-execution_count="2">
+<div id="dd4cc7b7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_topsis_score(position, main_df, weights_df, score_col_name):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adım 1</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    norm_main_df <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> main_df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">'Player'</span>, <span class="st">'Position'</span>, <span class="st">'Matches played'</span>, <span class="st">'Minutes Played'</span>]]</span>
@@ -406,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="veri-setinin-içe-aktarılması" class="level2">
 <h2 class="anchored" data-anchor-id="veri-setinin-içe-aktarılması">Veri Setinin İçe Aktarılması</h2>
 <p>Veri setlerine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_18" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<div id="27896fed" class="cell" data-execution_count="3">
+<div id="e96e5a5f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veri seti</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>qualifying_df <span class="op">=</span> pd.read_excel(<span class="st">'turkey_players.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Qualifying'</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>main_tournament_df <span class="op">=</span> pd.read_excel(<span class="st">'turkey_players.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Main tournament'</span>)</span>
@@ -435,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="ideal-kadroyu-belirleyecek-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="ideal-kadroyu-belirleyecek-fonksiyonun-yazılması">İdeal Kadroyu Belirleyecek Fonksiyonun Yazılması</h2>
-<div id="bcc6f490" class="cell" data-execution_count="4">
+<div id="a9803c6a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_weights_and_select_players(goalkeeper_combined_df, defender_combined_df, midfielder_combined_df, forward_combined_df, formation, weight_qualifying, weight_main_tournament, unavailable_players<span class="op">=</span><span class="va">None</span>, plot<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Birleştirme</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    combined_dfs <span class="op">=</span> [</span>
@@ -499,7 +499,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Formasyon:</em> Belirtilen formasyona (<code>formation</code>) göre her bir pozisyon için kaç oyuncu seçileceği belirlenir. <code>num_players</code> sözlüğü kullanılarak her bir pozisyon için <code>head</code> fonksiyonu ile ilk <code>num_players</code> kadar oyuncu seçilir ve seçilen oyuncular <code>selected_players</code> listesine eklenir.</p>
 <p><em>Birleştirme ve Döndürme:</em> <code>selected_players</code> listesindeki tüm seçilen oyuncu veri çerçeveleri birleştirilir ve <code>selected_players_df</code> olarak döndürülür.</p>
 <p>Formasyonun 4-4-2 olduğunu varsayarak oyuncuları seçelim. Yani, 4 defans, 4 orta saha ve 2 forvet ile çıkacağımızı varsayıyoruz.</p>
-<div id="1c50d3f0" class="cell" data-execution_count="5">
+<div id="24c10c8a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>formation <span class="op">=</span> <span class="st">'4-4-2'</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>weight_qualifying <span class="op">=</span> <span class="fl">0.2</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>weight_main_tournament <span class="op">=</span> <span class="fl">0.8</span></span>
@@ -526,7 +526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="imgs/img_6.png" class="img-fluid"></p>
 <p>Çekya maçı öncesi milli takım oyuncularımızın son durumlarına bakalım ve ideal kadroyu yeniden belirleyelim.</p>
 <p>Ayak bileğinde travma yaşayan Orkun Kökçü ve dizinde ağrı şikayeti bulunan Mert Günok’un bu karşılaşmada forma giymesi zor görünüyor. Ayrıca, ilk iki maçta gördüğü sarı kartlar nedeniyle cezalı duruma düşen Abdülkerim Bardakçı bu maçta oynayamayacak.</p>
-<div id="b6732af6" class="cell" data-execution_count="6">
+<div id="6d30fc44" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>formation <span class="op">=</span> <span class="st">'4-4-2'</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>weight_qualifying <span class="op">=</span> <span class="fl">0.2</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>weight_main_tournament <span class="op">=</span> <span class="fl">0.8</span></span>
