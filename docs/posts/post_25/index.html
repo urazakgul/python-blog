@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)</title>
+<title>Python Blog - Türkiye’nin Euro 2024 Pas Ağı Haritası</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,10 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">TCMB/EVDS Verilerine Erişim (05/04/2024 Değişikliği Sonrası)</h1>
+      <h1 class="title">Türkiye’nin Euro 2024 Pas Ağı Haritası</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">API</div>
-                <div class="quarto-category">EVDS</div>
+                <div class="quarto-category">Futbol</div>
               </div>
                   </div>
   </div>
@@ -181,14 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 21, 2024</p>
+        <p class="date">Temmuz 19, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Mayıs 13, 2024</p>
+        <p class="date-modified">Temmuz 19, 2024</p>
       </div>
     </div>
       
@@ -205,10 +204,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#verilerin-çekilmesi" id="toc-verilerin-çekilmesi" class="nav-link" data-scroll-target="#verilerin-çekilmesi">Verilerin Çekilmesi</a>
+  <li><a href="#maçlar" id="toc-maçlar" class="nav-link" data-scroll-target="#maçlar">Maçlar</a></li>
+  <li><a href="#pas-sonuç-tipleri" id="toc-pas-sonuç-tipleri" class="nav-link" data-scroll-target="#pas-sonuç-tipleri">Pas Sonuç Tipleri</a></li>
+  <li><a href="#pas-ağı-haritasının-oluşturulması" id="toc-pas-ağı-haritasının-oluşturulması" class="nav-link" data-scroll-target="#pas-ağı-haritasının-oluşturulması">Pas Ağı Haritasının Oluşturulması</a>
   <ul class="collapse">
-  <li><a href="#tek-serili-örnek" id="toc-tek-serili-örnek" class="nav-link" data-scroll-target="#tek-serili-örnek">Tek Serili Örnek</a></li>
-  <li><a href="#çok-serili-örnek" id="toc-çok-serili-örnek" class="nav-link" data-scroll-target="#çok-serili-örnek">Çok Serili Örnek</a></li>
+  <li><a href="#veri-çerçevesinin-içeriği" id="toc-veri-çerçevesinin-içeriği" class="nav-link" data-scroll-target="#veri-çerçevesinin-içeriği">Veri Çerçevesinin İçeriği</a></li>
+  <li><a href="#verilerin-çekilmesi" id="toc-verilerin-çekilmesi" class="nav-link" data-scroll-target="#verilerin-çekilmesi">Verilerin Çekilmesi</a></li>
+  <li><a href="#pas-sonuçlarının-dağılımı-ve-pas-ağı-haritası" id="toc-pas-sonuçlarının-dağılımı-ve-pas-ağı-haritası" class="nav-link" data-scroll-target="#pas-sonuçlarının-dağılımı-ve-pas-ağı-haritası">Pas Sonuçlarının Dağılımı ve Pas Ağı Haritası</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -222,91 +224,172 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>Türkiye Cumhuriyet Merkez Bankası, <em>yenievds@tcmb.gov.tr</em> adresinden bir duyuru göndermişti. Mail almayanlar için bir kısmını aşağıda paylaşıyorum.</p>
-<p><em>Önceki duyurumuzda EVDS nin web servis parametrelerinde güvenlik sebebiyle bir düzenleme yapılacağını belirtmiştik. URL adresinden giden “key” parametresinin artık http request header içinde gelmesi ve web servis kullanan uygulamalarınızda “key=xxxxxx” parametresini http request header olarak dönüştürmeniz gerektiği belirtilmişti. Bu düzenleme 05 Nisan 2024 Cuma saat 21:00 TSİ tarihinden itibaren geçerli olacaktır.</em></p>
-<p>URL adresinden gönderdiğimiz <code>key</code> parametresini artık <code>headers</code> içinden göndereceğiz.</p>
+<p>Pas ağı haritası, bir futbol takımının maç sırasında gerçekleştirdiği pasların sahada nasıl dağıldığını ve hangi oyuncular arasında gerçekleştirildiğini görsel olarak sunan bir analiz aracıdır. Bu harita, takımın pas oyununu ve saha içindeki bağlantılarını detaylı bir şekilde ortaya koyarak, oyuncular arasındaki iletişimi ve takımın genel oyun stratejisini anlamamıza yardımcı olur. Pas ağı haritası, takımın topa sahip olma becerisini, oyun akışını ve pas kombinasyonlarının etkinliğini değerlendirmek için kritik bir araçtır. Bu sayede takımın oyun düzeni ve stratejik yaklaşımları hakkında derinlemesine bilgi sağlar.</p>
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="c027cec2" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6c81a4d6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> Pitch, Sbopen</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="verilerin-çekilmesi" class="level1">
-<h1>Verilerin Çekilmesi</h1>
-<section id="tek-serili-örnek" class="level2">
-<h2 class="anchored" data-anchor-id="tek-serili-örnek">Tek Serili Örnek</h2>
-<div id="94ab74ba" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> <span class="st">'api_key'</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>series_code<span class="op">=</span><span class="st">'TP.APIFON4'</span> <span class="co"># TCMB Ağırlıklı Ortalama Fonlama Maliyeti</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_date<span class="op">=</span><span class="st">'01-01-2011'</span> <span class="co"># Başlangıç</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>end_date<span class="op">=</span><span class="st">'30-04-2024'</span> <span class="co"># Bitiş</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>frequency<span class="op">=</span><span class="st">'5'</span> <span class="co"># Aylık</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>aggregationType<span class="op">=</span><span class="st">'avg'</span> <span class="co"># Ortalama</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'series'</span>: series_code,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'startDate'</span>: start_date,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'endDate'</span>: end_date,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'frequency'</span>: frequency,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'aggregationTypes'</span>: aggregationType,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'type'</span>: <span class="st">'json'</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'https://evds2.tcmb.gov.tr/service/evds/</span><span class="sc">{</span>urlencode(params)<span class="sc">}</span><span class="ss">'</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url<span class="op">=</span>url, headers<span class="op">=</span>{<span class="st">'key'</span>: api_key})</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># print(response.request.headers)</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>formatted_response <span class="op">=</span> json.loads(response.content)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> formatted_response[<span class="st">'items'</span>]</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Tarih'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Tarih'</span>]) <span class="op">+</span> pd.offsets.Day(<span class="dv">0</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'UNIXTIME'</span>])</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>df.columns <span class="op">=</span> [<span class="st">'Tarih'</span>, <span class="st">'AOFM'</span>]</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'AOFM'</span>] <span class="op">=</span> pd.to_numeric(df[<span class="st">'AOFM'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="maçlar" class="level1">
+<h1>Maçlar</h1>
+<p>StatsBomb’dan (<code>Sbopen</code>) çekilecek maçların ID’leri şöyledir:</p>
+<ul>
+<li>Türkiye - Gürcistan: 3938639</li>
+<li>Türkiye - Portekiz: 3930174</li>
+<li>Çekya - Türkiye: 3930184</li>
+<li>Avusturya - Türkiye: 3941022</li>
+<li>Hollanda - Türkiye: 3942382</li>
+</ul>
+<p>Maçlara ait ID’leri öğrenmek için <a href="https://urazakgul.github.io/python-blog/posts/post_22/" class="external" target="_blank">StatsBomb Verilerine Erişim: Euro 2024 Örneği</a> başlıklı yazıyı inceleyebilirsiniz.</p>
+</section>
+<section id="pas-sonuç-tipleri" class="level1">
+<h1>Pas Sonuç Tipleri</h1>
+<ul>
+<li><strong>Successful:</strong> Pasın başarılı bir şekilde hedef oyuncuya ulaştığını gösterir.</li>
+<li><strong>Incomplete:</strong> Pasın başarılı bir şekilde tamamlanmadığını, yani hedef oyuncuya ulaşmadığını ifade eder.</li>
+<li><strong>Out:</strong> Pasın oyun alanı dışına çıktığını belirtir.</li>
+<li><strong>Pass Offside:</strong> Pasın, topa vurulan oyuncunun ofsayt pozisyonunda olduğunu belirtir.</li>
+<li><strong>Unknown:</strong> Pasın sonucunun belirli bir nedenden ötürü bilinmediğini veya kaydedilemediğini gösterir.</li>
+</ul>
+</section>
+<section id="pas-ağı-haritasının-oluşturulması" class="level1">
+<h1>Pas Ağı Haritasının Oluşturulması</h1>
+<section id="veri-çerçevesinin-içeriği" class="level2">
+<h2 class="anchored" data-anchor-id="veri-çerçevesinin-içeriği">Veri Çerçevesinin İçeriği</h2>
+<p><code>df</code> veri çerçevesindeki <code>type_name</code> kolonundan <code>Pass</code>’i filtreleyeceğiz. Ardından <code>outcome_name</code> kolonundan (daha çok <code>Successful</code> olanlar) ilerleyeceğiz ve <code>team_name</code> Türkiye olacak.</p>
+<p>StatsBomb’un <code>outcome_name</code> kolonunda Successful’u temsilen <code>NaN</code> vardır ancak biz değişim yapacağız.</p>
+</section>
+<section id="verilerin-çekilmesi" class="level2">
+<h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
+<div id="549728ed" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team <span class="op">=</span> <span class="st">'Turkey'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Georgia'</span>: <span class="dv">3938639</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Portugal'</span>: <span class="dv">3930174</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Czechia'</span>: <span class="dv">3930184</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Austria'</span>: <span class="dv">3941022</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Netherlands'</span>: <span class="dv">3942382</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="çok-serili-örnek" class="level2">
-<h2 class="anchored" data-anchor-id="çok-serili-örnek">Çok Serili Örnek</h2>
-<p>Eğer birden fazla seri ile çalışmak istiyorsak, seriler arasında <code>-</code> olacak şekilde giriş yapacağız.</p>
-<div id="1ac19a5d" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>series_code<span class="op">=</span><span class="st">'TP.BISTTLREF.DUSUK-TP.BISTTLREF.YUKSEK-TP.BISTTLREF.KAPANIS'</span> <span class="co"># Türk Lirası Gecelik Referans Faiz Oranı</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>start_date<span class="op">=</span><span class="st">'14-06-2019'</span> <span class="co"># Başlangıç</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>end_date<span class="op">=</span><span class="st">'30-04-2024'</span> <span class="co"># Bitiş</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>frequency<span class="op">=</span><span class="st">'5'</span> <span class="co"># Aylık</span></span>
+<section id="pas-sonuçlarının-dağılımı-ve-pas-ağı-haritası" class="level2">
+<h2 class="anchored" data-anchor-id="pas-sonuçlarının-dağılımı-ve-pas-ağı-haritası">Pas Sonuçlarının Dağılımı ve Pas Ağı Haritası</h2>
+<div id="cbfc2c61" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> opponent, match_id <span class="kw">in</span> matches.items():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> Sbopen()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    df, related, freeze, tactics <span class="op">=</span> parser.event(match_id)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'series'</span>: series_code,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'startDate'</span>: start_date,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'endDate'</span>: end_date,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'frequency'</span>: frequency,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'type'</span>: <span class="st">'json'</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f'https://evds2.tcmb.gov.tr/service/evds/</span><span class="sc">{</span>urlencode(params)<span class="sc">}</span><span class="ss">'</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url<span class="op">=</span>url, headers<span class="op">=</span>{<span class="st">'key'</span>: api_key})</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># print(response.request.headers)</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>formatted_response <span class="op">=</span> json.loads(response.content)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> formatted_response[<span class="st">'items'</span>]</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Tarih'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Tarih'</span>]) <span class="op">+</span> pd.offsets.Day(<span class="dv">0</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">'UNIXTIME'</span>])</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>numeric_columns <span class="op">=</span> df.columns[df.columns <span class="op">!=</span> <span class="st">'Tarih'</span>]</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>df[numeric_columns] <span class="op">=</span> df[numeric_columns].<span class="bu">apply</span>(pd.to_numeric)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df[<span class="st">'team_name'</span>] <span class="op">==</span> team]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    passes <span class="op">=</span> df[df[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Pass'</span>].copy()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    passes[<span class="st">'outcome_name'</span>] <span class="op">=</span> passes[<span class="st">'outcome_name'</span>].fillna(<span class="st">'Successful'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    pass_outcome_counts <span class="op">=</span> passes[<span class="st">'outcome_name'</span>].value_counts().sort_values()</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    pass_outcome_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Number of Passes'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Pass Outcome'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Pass Outcomes by </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> Against </span><span class="sc">{</span>opponent<span class="sc">}</span><span class="ss"> in Euro 2024'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    successful_passes <span class="op">=</span> passes[passes[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Successful'</span>]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    first_sub <span class="op">=</span> df[df[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Substitution'</span>][<span class="st">'minute'</span>].<span class="bu">min</span>()</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    successful_passes <span class="op">=</span> successful_passes[successful_passes[<span class="st">'minute'</span>] <span class="op">&lt;</span> first_sub]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    passer_avg_loc <span class="op">=</span> successful_passes.groupby(<span class="st">'player_name'</span>).agg(</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        avg_x<span class="op">=</span>(<span class="st">'x'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        avg_y<span class="op">=</span>(<span class="st">'y'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        pass_count<span class="op">=</span>(<span class="st">'id'</span>, <span class="st">'size'</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    ).reset_index()</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    pass_between <span class="op">=</span> successful_passes.groupby([<span class="st">'player_name'</span>, <span class="st">'pass_recipient_name'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'pass_between_count'</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    pass_between <span class="op">=</span> pass_between.merge(passer_avg_loc, left_on<span class="op">=</span><span class="st">'player_name'</span>, right_on<span class="op">=</span><span class="st">'player_name'</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    pass_between <span class="op">=</span> pass_between.merge(passer_avg_loc, left_on<span class="op">=</span><span class="st">'pass_recipient_name'</span>, right_on<span class="op">=</span><span class="st">'player_name'</span>, suffixes<span class="op">=</span>[<span class="st">''</span>, <span class="st">'_end'</span>])</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    passer_avg_loc[<span class="st">'player_name'</span>] <span class="op">=</span> passer_avg_loc[<span class="st">'player_name'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> name: name.split()[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    pass_between[<span class="st">'player_name'</span>] <span class="op">=</span> pass_between[<span class="st">'player_name'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> name: name.split()[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    pass_between[<span class="st">'pass_recipient_name'</span>] <span class="op">=</span> pass_between[<span class="st">'pass_recipient_name'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> name: name.split()[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    pitch_length_x <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    pitch_width_y <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    pitch <span class="op">=</span> Pitch(pitch_type<span class="op">=</span><span class="st">'custom'</span>, pitch_length<span class="op">=</span>pitch_length_x, pitch_width<span class="op">=</span>pitch_width_y, line_color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> pitch.draw(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    pass_lines <span class="op">=</span> pitch.lines(</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.2</span> <span class="op">*</span> pass_between.avg_x,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.8</span> <span class="op">*</span> pass_between.avg_y,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.2</span> <span class="op">*</span> pass_between.avg_x_end,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.8</span> <span class="op">*</span> pass_between.avg_y_end,</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        lw<span class="op">=</span>pass_between.pass_between_count <span class="op">*</span> <span class="fl">0.5</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        zorder<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    nodes <span class="op">=</span> pitch.scatter(</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.2</span> <span class="op">*</span> passer_avg_loc.avg_x,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.8</span> <span class="op">*</span> passer_avg_loc.avg_y,</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>        s<span class="op">=</span><span class="dv">20</span> <span class="op">*</span> passer_avg_loc[<span class="st">'pass_count'</span>].values,</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        edgecolors<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        zorder<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index, row <span class="kw">in</span> passer_avg_loc.iterrows():</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        pitch.annotate(</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">'player_name'</span>],</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>            xy<span class="op">=</span>(<span class="fl">1.2</span> <span class="op">*</span> row.avg_x, <span class="fl">0.8</span> <span class="op">*</span> row.avg_y),</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>            c<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>            fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>            va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>ax</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f"</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">'s Euro 2024 Pass Networks Against </span><span class="sc">{</span>opponent<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    ax.text(</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.95</span>, <span class="op">-</span><span class="fl">0.05</span>,</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"First substitution occurred at </span><span class="sc">{</span>first_sub<span class="sc">}</span><span class="ss">'"</span>,</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        va<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>        fontstyle<span class="op">=</span><span class="st">'italic'</span>,</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>ax.transAxes</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Kodun kilit yerlerine bakalım.</p>
+<p><code>outcome_name</code> kolonunda <code>NaN</code> olan yerleri başarılı pası temsil ettiği için <code>Successful</code> ile doldurduk ve sonrasında başarılı pasları filtreledik.</p>
+<p>Pas ağı haritası ilk oyuncu değişikliği gerçekleşene kadardır. Bu nedenle, <code>type_name</code> kolonundan <code>Substitution</code> olanları filtreleyip minimum, yani ilk oyuncu değişikliğinin gerçekleştiği dakikayı aldık. Ardından, <code>successful_passes</code> veri çerçevesini bu değerden küçük olanları bırakacak şekilde filtreledik.</p>
+<p><code>passer_avg_loc</code> ile pas yapan oyuncuların ortalama konumlarını hesapladık.</p>
+<p><code>pass_between</code>’de oyuncular arası pas akışını bir araya getirdik.</p>
+<p><code>Pitch</code> sınıfını kullanarak siyah çizgili bir futbol sahası (<code>pitch</code>) oluşturduk ve <code>fig, ax</code> değişkenleri aracılığıyla sahanın çizildiği figür ve eksenleri elde ettik. <code>figsize</code> parametresiyle figürün boyutlarını belirledik (10x7 inç).</p>
+<p><code>pitch_length_x</code> ve <code>pitch_width_y</code> değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde şutların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.</p>
+<p><code>pitch.lines</code> ile pas yapan ve pası alan oyuncular arasındaki bağlantıları çizgi şeklinde gösterdik, bu sayede pas ağlarını ve yoğunluklarını görselleştirdik.</p>
+<p><code>pitch.scatter</code> ile oyuncuların saha üzerindeki konumlarını görsel olarak temsil eden ve pas sayılarına göre boyutlandırılmış beyaz noktalar çizdik. Noktaların kenarları kırmızı renk ile belirginleştirildi.</p>
+<p><code>pitch.annotate</code> ile oyuncuların saha üzerindeki konumlarına ad etiketleri ekledik, böylece her oyuncunun adını grafikte göstermiş olduk.</p>
+<p><img src="imgs/img_1.png" class="img-fluid"></p>
+<p><img src="imgs/img_2.png" class="img-fluid"></p>
+<p><img src="imgs/img_3.png" class="img-fluid"></p>
+<p><img src="imgs/img_4.png" class="img-fluid"></p>
+<p><img src="imgs/img_5.png" class="img-fluid"></p>
+<p><img src="imgs/img_6.png" class="img-fluid"></p>
+<p><img src="imgs/img_7.png" class="img-fluid"></p>
+<p><img src="imgs/img_8.png" class="img-fluid"></p>
+<p><img src="imgs/img_9.png" class="img-fluid"></p>
+<p><img src="imgs/img_10.png" class="img-fluid"></p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 

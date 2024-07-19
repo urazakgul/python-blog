@@ -19,8 +19,8 @@ execute:
 ```{python}
 
 import pandas as pd
-import matplotlib.pyplot as plt
 from mplsoccer import Pitch, Sbopen
+import matplotlib.pyplot as plt
 
 ```
 
