@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</title>
+<title>Python Blog - Türkiye’nin Euro 2024 Pas Haritası</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,11 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Rutin Görevlerin Otomatize Edilmesi: Outlook ve Görev Zamanlayıcının Kullanılması</h1>
+      <h1 class="title">Türkiye’nin Euro 2024 Pas Haritası</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Otomatize</div>
-                <div class="quarto-category">Outlook</div>
-                <div class="quarto-category">Görev Zamanlayıcı</div>
+                <div class="quarto-category">Futbol</div>
               </div>
                   </div>
   </div>
@@ -182,14 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Nisan 23, 2024</p>
+        <p class="date">Temmuz 19, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Değiştirilmiş</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">Mayıs 13, 2024</p>
+        <p class="date-modified">Temmuz 19, 2024</p>
       </div>
     </div>
       
@@ -206,10 +204,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması" id="toc-gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması" class="nav-link" data-scroll-target="#gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması">Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</a></li>
-  <li><a href="#outlook-mail-içeriğinin-hazırlanması" id="toc-outlook-mail-içeriğinin-hazırlanması" class="nav-link" data-scroll-target="#outlook-mail-içeriğinin-hazırlanması">Outlook Mail İçeriğinin Hazırlanması</a></li>
-  <li><a href="#görev-zamanlayıcı-uygulamasına-görev-girilmesi" id="toc-görev-zamanlayıcı-uygulamasına-görev-girilmesi" class="nav-link" data-scroll-target="#görev-zamanlayıcı-uygulamasına-görev-girilmesi">Görev Zamanlayıcı Uygulamasına Görev Girilmesi</a></li>
-  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test">Test</a></li>
+  <li><a href="#maçlar" id="toc-maçlar" class="nav-link" data-scroll-target="#maçlar">Maçlar</a></li>
+  <li><a href="#pas-tipleri" id="toc-pas-tipleri" class="nav-link" data-scroll-target="#pas-tipleri">Pas Tipleri</a></li>
+  <li><a href="#pas-haritasının-oluşturulması" id="toc-pas-haritasının-oluşturulması" class="nav-link" data-scroll-target="#pas-haritasının-oluşturulması">Pas Haritasının Oluşturulması</a>
+  <ul class="collapse">
+  <li><a href="#veri-çerçevesinin-içeriği" id="toc-veri-çerçevesinin-içeriği" class="nav-link" data-scroll-target="#veri-çerçevesinin-içeriği">Veri Çerçevesinin İçeriği</a></li>
+  <li><a href="#verilerin-çekilmesi" id="toc-verilerin-çekilmesi" class="nav-link" data-scroll-target="#verilerin-çekilmesi">Verilerin Çekilmesi</a></li>
+  <li><a href="#pasların-dağılımı-ve-pas-haritası" id="toc-pasların-dağılımı-ve-pas-haritası" class="nav-link" data-scroll-target="#pasların-dağılımı-ve-pas-haritası">Pasların Dağılımı ve Pas Haritası</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -222,112 +224,137 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>İş verimliliğini artırmak için rutin görevlerin otomatize edilmesini önemsiyorum. Tekrarlayan rutin görevlerin otomatize edilmesi, çalışanların değerli zamanlarını stratejik ve yaratıcı faaliyetlere odaklamalarını sağlayabilir.</p>
-<p>Bu uygulamada, Windows Görev Zamanlayıcı (Task Scheduler) ile belirlediğimiz rutin görevin otomatik olarak çalıştırılmasını sağlayacağız.</p>
-<p>Rutin görevimiz şöyle olacak: Belirlediğimiz kripto paraların 52 + 1 haftalık kapanış fiyatlarını alacağız ve her birinin getiri ortalaması ile standart sapmasını hesaplayacağız. Getiri ortalamaları ile standart sapmaları grafik üzerine aktaracağız. Grafiği ve verileri sırasıyla PNG ve XLSX formatlarında kaydedeceğiz. Tüm bu bilgileri Microsoft Outlook uygulaması aracılığıyla göndereceğiz.</p>
+<p>Pas haritası, bir futbol takımının veya oyuncunun maç sırasında gerçekleştirdiği pasların sahada nereden yapıldığını ve nasıl yönlendirildiğini görsel olarak temsil eden bir analiz aracıdır. Bu harita, futbol analizinde kritik bir rol oynar çünkü bir takımın veya oyuncunun top kontrolü, pas isabetliliği, oyun kurma yeteneği ve saha içindeki genel hareketliliği hakkında derinlemesine bilgi sağlar.</p>
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="e55a18e1" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> win32com.client <span class="im">as</span> win32</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a09c201e" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> Pitch, Sbopen</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gönderilecek-verilerin-çekilmesi-hesaplamaların-yapılması-ve-grafiğin-oluşturulması" class="level1">
-<h1>Gönderilecek Verilerin Çekilmesi, Hesaplamaların Yapılması ve Grafiğin Oluşturulması</h1>
-<div id="89f977ca" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [<span class="st">'BTC-USD'</span>,<span class="st">'ETH-USD'</span>,<span class="st">'SOL-USD'</span>,<span class="st">'XRP-USD'</span>,<span class="st">'DOGE-USD'</span>,<span class="st">'ADA-USD'</span>,<span class="st">'AVAX-USD'</span>,<span class="st">'DOT-USD'</span>,<span class="st">'NEAR-USD'</span>,<span class="st">'RNDR-USD'</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>today_date <span class="op">=</span> datetime.today().date()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> today_date <span class="op">-</span> timedelta(weeks<span class="op">=</span><span class="dv">53</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> yf.download(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    tickers<span class="op">=</span>tickers,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    start<span class="op">=</span>start_date,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    end<span class="op">=</span>today_date,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    progress<span class="op">=</span><span class="va">False</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>daily_returns <span class="op">=</span> df[<span class="st">'Adj Close'</span>].pct_change()</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># print(daily_returns)</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>daily_returns.to_excel(<span class="st">'cryptocurrency_returns_data.xlsx'</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>std_devs <span class="op">=</span> daily_returns.std()</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> daily_returns.mean()</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ticker <span class="kw">in</span> tickers:</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    plt.scatter(std_devs[ticker], means[ticker], s<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    plt.text(std_devs[ticker], means[ticker], ticker, fontsize<span class="op">=</span><span class="dv">8</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'bottom'</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Average and Standard Deviation of 52-Week Returns of Tracked Cryptocurrencies'</span>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Standard Deviation'</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Average'</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'cryptocurrency_returns_chart.png'</span>)</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.show()</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="maçlar" class="level1">
+<h1>Maçlar</h1>
+<p>StatsBomb’dan (<code>Sbopen</code>) çekilecek maçların ID’leri şöyledir:</p>
+<ul>
+<li>Türkiye - Gürcistan: 3938639</li>
+<li>Türkiye - Portekiz: 3930174</li>
+<li>Çekya - Türkiye: 3930184</li>
+<li>Avusturya - Türkiye: 3941022</li>
+<li>Hollanda - Türkiye: 3942382</li>
+</ul>
+<p>Maçlara ait ID’leri öğrenmek için <a href="https://urazakgul.github.io/python-blog/posts/post_22/" class="external" target="_blank">StatsBomb Verilerine Erişim: Euro 2024 Örneği</a> başlıklı yazıyı inceleyebilirsiniz.</p>
+</section>
+<section id="pas-tipleri" class="level1">
+<h1>Pas Tipleri</h1>
+<ul>
+<li><strong>Recovery:</strong> Top kaybedildikten sonra tekrar kazanılan pasları ifade eder.</li>
+<li><strong>Throw-in:</strong> Oyuncunun topu elle oyuna soktuğu durumu ifade eder.</li>
+<li><strong>Interception:</strong> Rakip oyuncunun pasını keserek topu ele geçirme durumunu ifade eder.</li>
+<li><strong>Corner:</strong> Köşe vuruşu ile oyuna sokulan pasları ifade eder.</li>
+<li><strong>Goal Kick:</strong> Kalecinin kale vuruşu ile oyuna soktuğu pasları ifade eder.</li>
+<li><strong>Free Kick:</strong> Serbest vuruşla oyuna sokulan pasları ifade eder.</li>
+<li><strong>Kick Off:</strong> Maçın başında veya gol sonrası oyunun tekrar başlaması için yapılan vuruşları ifade eder.</li>
+</ul>
+</section>
+<section id="pas-haritasının-oluşturulması" class="level1">
+<h1>Pas Haritasının Oluşturulması</h1>
+<section id="veri-çerçevesinin-içeriği" class="level2">
+<h2 class="anchored" data-anchor-id="veri-çerçevesinin-içeriği">Veri Çerçevesinin İçeriği</h2>
+<p><code>df</code> veri çerçevesindeki <code>type_name</code> kolonundan <code>Pass</code>’i filtreleyeceğiz. Ardından <code>sub_type_name</code> kolonundan ilerleyeceğiz ve <code>team_name</code> Türkiye olacak.</p>
+</section>
+<section id="verilerin-çekilmesi" class="level2">
+<h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
+<div id="907854c1" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team <span class="op">=</span> <span class="st">'Turkey'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Georgia'</span>: <span class="dv">3938639</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Portugal'</span>: <span class="dv">3930174</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Czechia'</span>: <span class="dv">3930184</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Austria'</span>: <span class="dv">3941022</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Netherlands'</span>: <span class="dv">3942382</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Gönderilecek grafik:</p>
+</section>
+<section id="pasların-dağılımı-ve-pas-haritası" class="level2">
+<h2 class="anchored" data-anchor-id="pasların-dağılımı-ve-pas-haritası">Pasların Dağılımı ve Pas Haritası</h2>
+<div id="f0f033d3" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> opponent, match_id <span class="kw">in</span> matches.items():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> Sbopen()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    df, related, freeze, tactics <span class="op">=</span> parser.event(match_id)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    passes <span class="op">=</span> df.loc[(df[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Pass'</span>) <span class="op">&amp;</span> (df[<span class="st">'team_name'</span>] <span class="op">==</span> team)].set_index(<span class="st">'id'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    pass_type_counts <span class="op">=</span> passes[<span class="st">'sub_type_name'</span>].value_counts().sort_values()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    pass_type_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Number of Passes'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Pass Type'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Pass Type by </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> Against </span><span class="sc">{</span>opponent<span class="sc">}</span><span class="ss"> in Euro 2024'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    pass_types <span class="op">=</span> passes[<span class="st">'sub_type_name'</span>].dropna().unique()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    num_pass_types <span class="op">=</span> <span class="bu">len</span>(pass_types)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> (num_pass_types <span class="op">//</span> cols) <span class="op">+</span> <span class="bu">int</span>(num_pass_types <span class="op">%</span> cols <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots(rows, cols, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">7</span> <span class="op">*</span> rows))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f"</span><span class="sc">{</span>team<span class="sc">}</span><span class="ss">'s Passes Against </span><span class="sc">{</span>opponent<span class="sc">}</span><span class="ss"> in Euro 2024"</span>, fontsize<span class="op">=</span><span class="dv">24</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    axs <span class="op">=</span> axs.flatten()</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    color_list <span class="op">=</span> plt.cm.tab10.colors</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> color_list[:num_pass_types]</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    color_map <span class="op">=</span> {pass_type: colors[i] <span class="cf">for</span> i, pass_type <span class="kw">in</span> <span class="bu">enumerate</span>(pass_types)}</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, pass_type <span class="kw">in</span> <span class="bu">enumerate</span>(pass_types):</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        pitch_length_x <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        pitch_width_y <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        pitch <span class="op">=</span> Pitch(pitch_type<span class="op">=</span><span class="st">'custom'</span>, pitch_length<span class="op">=</span>pitch_length_x, pitch_width<span class="op">=</span>pitch_width_y, line_color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axs[i]</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        pitch.draw(ax<span class="op">=</span>ax)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        subtype_passes <span class="op">=</span> passes[passes[<span class="st">'sub_type_name'</span>] <span class="op">==</span> pass_type]</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _, pass_ <span class="kw">in</span> subtype_passes.iterrows():</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> pass_[<span class="st">'x'</span>]</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> pass_[<span class="st">'y'</span>]</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            pass_circle <span class="op">=</span> plt.Circle((x, y), <span class="dv">2</span>, color<span class="op">=</span>color_map[pass_type])</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>            pass_circle.set_alpha(<span class="fl">.2</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            ax.add_patch(pass_circle)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            dx <span class="op">=</span> pass_[<span class="st">'end_x'</span>] <span class="op">-</span> x</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>            dy <span class="op">=</span> pass_[<span class="st">'end_y'</span>] <span class="op">-</span> y</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            pass_arrow <span class="op">=</span> plt.Arrow(x, y, dx, dy, width<span class="op">=</span><span class="dv">3</span>, color<span class="op">=</span>color_map[pass_type])</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            ax.add_patch(pass_arrow)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        ax.set_title(pass_type, fontsize<span class="op">=</span><span class="dv">24</span>)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(axs)):</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        fig.delaxes(axs[j])</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    plt.subplots_adjust(hspace<span class="op">=</span><span class="dv">0</span>, wspace<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Kodun kilit yerlerine bakalım.</p>
+<p>Her pas türü için bir futbol sahası (<code>Pitch</code>) çizdik ve uygun eksene (<code>ax</code>) yerleştirdik.</p>
+<p><code>pitch_length_x</code> ve <code>pitch_width_y</code> değişkenleri ile futbol sahasının uzunluğunu ve genişliğini ayarladık. Bu değerler saha üzerinde pasların yerleştirilmesinde kullanılan koordinat sınırlarını belirliyor.</p>
+<p>Her pas için <code>(x, y)</code> koordinatlarını aldık.</p>
+<p><code>plt.Arrow</code> ile bir ok oluşturduk ve <code>x</code> ve <code>y</code> ile okun başlangıç noktasını, <code>dx</code> ve <code>dy</code> ile okun uzunluğunu ve yönünü ve <code>width</code> ile okun kalınlığını ayarladık.</p>
 <p><img src="imgs/img_1.png" class="img-fluid"></p>
-<p>Gönderilecek excel dosyası içeriği:</p>
-<p><img src="imgs/img_2.PNG" class="img-fluid"></p>
-</section>
-<section id="outlook-mail-içeriğinin-hazırlanması" class="level1">
-<h1>Outlook Mail İçeriğinin Hazırlanması</h1>
-<div id="c5f57bb0" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>outlook <span class="op">=</span> win32.Dispatch(<span class="st">'outlook.application'</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mail <span class="op">=</span> outlook.CreateItem(<span class="dv">0</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>mail.Subject <span class="op">=</span> <span class="st">'Cryptocurrency Returns Chart as of '</span> <span class="op">+</span> datetime.now().strftime(<span class="st">'</span><span class="sc">%#d</span><span class="st"> %b %Y %H:%M'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>mail.To <span class="op">=</span> <span class="st">'urazdev@gmail.com'</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>attachment <span class="op">=</span> mail.Attachments.Add(os.getcwd() <span class="op">+</span> <span class="st">'\cryptocurrency_returns_chart.png'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>attachment.PropertyAccessor.SetProperty(<span class="st">'http://schemas.microsoft.com/mapi/proptag/0x3712001F'</span>, <span class="st">'cryptocurrency_returns_chart'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>mail.HTMLBody <span class="op">=</span> <span class="vs">r"""</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="vs">Dear Uraz,&lt;br&gt;&lt;br&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="vs">The chart illustrating the average return and standard deviation for each cryptocurrency is as follows:&lt;br&gt;&lt;br&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;img src="cid:cryptocurrency_returns_chart"&gt;&lt;br&gt;&lt;br&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="vs">Please find attached the Excel file containing the 52-week returns data for the tracked cryptocurrencies.&lt;br&gt;&lt;br&gt;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="vs">Best regards,&lt;br&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="vs">@urazdev</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>mail.Attachments.Add(os.getcwd() <span class="op">+</span> <span class="st">'\cryptocurrency_returns_data.xlsx'</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>mail.Send()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>win32com.client</code> modülünün <code>Dispatch</code> fonksiyonu Outlook uygulaması oluşturur. Bu, Windows üzerinde Outlook’u otomatik olarak başlatmak ve programı kontrol etmek için kullanılır.</p>
-<p><code>CreateItem</code> fonksiyonu, Outlook uygulaması üzerinden yeni bir öğe oluşturur. Burada <code>0</code> parametresi, bir e-posta öğesi oluşturmak için kullanılan sabit değerdir.</p>
-<p><code>mail.Subject</code>, e-postanın başlığını belirtir.</p>
-<p><code>mail.To</code>, e-postanın gönderileceği alıcı adresini belirtir.</p>
-<p><code>mail.Attachments.Add()</code>, e-postaya bir ek ekler. Bunu hem PNG hem de XLSX için kullanıyoruz.</p>
-<p><code>attachment.PropertyAccessor.SetProperty()</code>, eklenen dosyanın özelliklerini ayarlar. <code>http://schemas.microsoft.com/mapi/proptag/0x3712001F</code>, ek dosyanın gömülü dosya ismini belirlemek için kullanılır.</p>
-<p><code>mail.HTMLBody</code>, e-postanın HTML biçimindeki gövdesini tanımlar.</p>
-<p><code>mail.Send()</code>, oluşturulan e-postayı gönderir.</p>
-</section>
-<section id="görev-zamanlayıcı-uygulamasına-görev-girilmesi" class="level1">
-<h1>Görev Zamanlayıcı Uygulamasına Görev Girilmesi</h1>
-<p>Görev Zamanlayıcı uygulamasını açıyoruz ve <code>Create Task</code>’e tıklıyoruz.</p>
-<p>General:</p>
-<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
-<p>Trigger:</p>
-<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
-<p>Actions:</p>
-<p><img src="imgs/img_5.PNG" class="img-fluid"></p>
-<p>Program/Script için Python .exe dosyasının bulunduğu dosya konumu .exe uzantılı dosya ile girilmelidir. Bunun için CMD’de <code>where python</code> komutu çalıştırılabilir. Add arguments için çalıştırılacak script’in bulunduğu dosya konumu .py uzantılı dosya ile girilmelidir. Start in için çalıştırılacak script’in bulunduğu dosyanın konumu girilmelidir.</p>
-</section>
-<section id="test" class="level1">
-<h1>Test</h1>
-<p><img src="imgs/img_6.PNG" class="img-fluid"></p>
+<p><img src="imgs/img_2.png" class="img-fluid"></p>
+<p><img src="imgs/img_3.png" class="img-fluid"></p>
+<p><img src="imgs/img_4.png" class="img-fluid"></p>
+<p><img src="imgs/img_5.png" class="img-fluid"></p>
+<p><img src="imgs/img_6.png" class="img-fluid"></p>
+<p><img src="imgs/img_7.png" class="img-fluid"></p>
+<p><img src="imgs/img_8.png" class="img-fluid"></p>
+<p><img src="imgs/img_9.png" class="img-fluid"></p>
+<p><img src="imgs/img_10.png" class="img-fluid"></p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

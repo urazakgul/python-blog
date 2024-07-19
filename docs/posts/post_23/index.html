@@ -229,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="75c38014" class="cell" data-execution_count="1">
+<div id="22cb0d98" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> Pitch, Sbopen</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
-<div id="031461a4" class="cell" data-execution_count="2">
+<div id="66d14e14" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team <span class="op">=</span> <span class="st">'Turkey'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> [<span class="dv">3938639</span>, <span class="dv">3930174</span>, <span class="dv">3930184</span>, <span class="dv">3941022</span>, <span class="dv">3942382</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> []</span>
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="şut-sonuçlarının-dağılımı" class="level2">
 <h2 class="anchored" data-anchor-id="şut-sonuçlarının-dağılımı">Şut Sonuçlarının Dağılımı</h2>
-<div id="3d37facb" class="cell" data-execution_count="3">
+<div id="b9c6f075" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>shot_type_counts <span class="op">=</span> combined_df[<span class="st">'outcome_name'</span>].value_counts().sort_values()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>shot_type_counts.plot(kind<span class="op">=</span><span class="st">'barh'</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="şut-haritası" class="level2">
 <h2 class="anchored" data-anchor-id="şut-haritası">Şut Haritası</h2>
-<div id="b0a41e63" class="cell" data-execution_count="4">
+<div id="2cad203c" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shot_types <span class="op">=</span> {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Off T'</span>: <span class="st">'o'</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Blocked'</span>: <span class="st">'&lt;'</span>,</span>
