@@ -1,0 +1,200 @@
+---
+title: "Python ile Microsoft SQL Server İşlemleri"
+author: "Uraz Akgül"
+date: "2024-07-19"
+date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Veritabanı]
+image: "imgs/img_1.PNG"
+execute:
+  eval: false
+---
+
+# Giriş
+
+Veri yönetimi ve analizi, günümüz dünyasının temel taşlarından biri haline gelmiştir. Bu yazıda, Python kullanarak SQL Server'da temel işlemleri gerçekleştirmeyi öğreneceğiz.
+
+# Kullanılacak Kütüphaneler
+
+```{python}
+
+import pandas as pd
+import pyodbc
+from statsbombpy import sb
+
+```
+
+# Veritabanı İşlemleri
+
+## Veritabanının Oluşturulması
+
+`FDATA` adlı veritabanını oluşturalım.
+
+```{python}
+
+DRIVER_NAME = 'SQL Server'
+SERVER_NAME = 'DESKTOP-1RNVH0O\\SQLEXPRESS'
+DATABASE_NAME = 'master'
+
+conn_str = f"""
+    DRIVER={{{DRIVER_NAME}}};
+    SERVER={SERVER_NAME};
+    DATABASE={DATABASE_NAME};
+    Trust_Connection=yes;
+"""
+
+conn = pyodbc.connect(conn_str)
+cursor = conn.cursor()
+
+new_database_name = 'FDATA'
+
+create_db_sql = f"CREATE DATABASE {new_database_name}"
+
+conn.autocommit = True
+cursor.execute(create_db_sql)
+
+print(f"Database '{new_database_name}' successfully created.")
+
+```
+
+`DRIVER_NAME` SQL Server veritabanı sürücüsünün adı, `SERVER_NAME` SQL Server'ın kurulu olduğu bilgisayarın adı ve sürücü bilgisi ve `DATABASE_NAME` başlangıçta bağlanılacak veritabanının adıdır. Burada `master` SQL Server'ın varsayılan veritabanıdır.
+
+`conn_str` SQL Server veritabanına nasıl bağlanılacağını belirten bir dizedir.
+
+`Trust_Connection=yes` güvenli bağlantı kullanımını sağlar.
+
+`pyodbc.connect(conn_str)` bağlantı dizesini kullanarak veritabanına bağlanır. `conn.cursor()` SQL komutlarını çalıştırmak için bir `cursor` (gösterici) oluşturur.
+
+`new_database_name` oluşturulacak yeni veritabanının adıdır.
+
+`create_db_sql` yeni veritabanını oluşturmak için kullanılır.
+
+`conn.autocommit = True` SQL komutlarının otomatik olarak işlem görmesini sağlar. Yani, komut çalıştırıldığında değişiklik hemen uygulanır.
+
+`cursor.execute(create_db_sql)` veritabanını oluşturmak için SQL komutunu çalıştırır.
+
+Son olarak, veritabanının başarıyla oluşturulduğunu belirten bir mesaj yazdırılır.
+
+## Veritabanında Tablonun Oluşturulması
+
+`EURO2024` adlı tabloyu oluşturalım.
+
+```{python}
+
+DATABASE_NAME = 'FDATA'
+
+conn_str = f"""
+    DRIVER={{{DRIVER_NAME}}};
+    SERVER={SERVER_NAME};
+    DATABASE={DATABASE_NAME};
+    Trust_Connection=yes;
+"""
+
+conn = pyodbc.connect(conn_str)
+cursor = conn.cursor()
+
+new_table_name = 'EURO2024'
+
+create_table_sql = f"""
+CREATE TABLE {new_table_name} (
+    match_id INT,
+    match_date VARCHAR(8),
+    kick_off VARCHAR(6),
+    home_team VARCHAR(255),
+    away_team VARCHAR(255),
+    home_score INT,
+    away_score INT
+)
+"""
+
+conn.autocommit = True
+cursor.execute(create_table_sql)
+
+print(f"Table {new_table_name} successfully created.")
+
+```
+
+`FDATA` veritabanına bağlanılıyor.
+
+`new_table_name` oluşturulacak yeni tablonun adıdır.
+
+`match_id INT` maçın ID'sini tamsayı, `match_date VARCHAR(8)` maçın tarihini metin, `kick_off VARCHAR(6)` maçın başlama saatini metin, `home_team VARCHAR(255)` ev sahibi takımın adını metin, `away_team VARCHAR(255)` deplasman takımının adını metin, `home_score INT` ev sahibi takımın skorunu tamsayı ve `away_score INT` deplasman takımının skorunu tamsayı olarak saklar.
+
+`conn.autocommit = True` SQL komutlarının otomatik olarak işlem görmesini sağlar, yani tablo oluşturulduğunda değişiklik hemen uygulanır.
+
+`cursor.execute(create_table_sql)` veritabanında tabloyu oluşturur.
+
+Son olarak, tablonun başarıyla oluşturulduğunu belirten bir mesaj yazdırılır.
+
+## Veritabanına Gönderilecek Verilerin Çekilmesi
+
+```{python}
+
+matches = sb.matches(competition_id=55, season_id=282)
+matches['match_id'] = matches['match_id'].astype(int)
+matches['match_date'] = pd.to_datetime(matches['match_date']).dt.strftime('%Y%m%d')
+matches['kick_off'] = pd.to_datetime(matches['kick_off']).dt.strftime('%H%M%S')
+
+```
+
+## Verilerin Veritabanına Gönderilmesi
+
+```{python}
+
+insert_sql = """
+INSERT INTO EURO2024 (
+    match_id,
+    match_date,
+    kick_off,
+    home_team,
+    away_team,
+    home_score,
+    away_score
+) VALUES (?, ?, ?, ?, ?, ?, ?)
+"""
+
+for _, match in matches.iterrows():
+    cursor.execute(insert_sql, (
+        match['match_id'],
+        match['match_date'],
+        match['kick_off'],
+        match['home_team'],
+        match['away_team'],
+        match['home_score'],
+        match['away_score']
+    ))
+
+print(f"Matches data successfully inserted into {new_table_name} table.")
+
+conn.close()
+
+```
+
+`INSERT INTO EURO2024`, `EURO2024` tablosuna veri eklemek için kullanılır.
+
+`VALUES (?, ?, ?, ?, ?, ?, ?)`, tabloya eklenecek verilerin yerlerini temsil eder. Burada ? işaretleri, verilerin yerleştirileceği yerleri belirtir.
+
+`for` döngüsü ile veriler tabloya yerleştirilir.
+
+`conn.close()` veritabanı ile olan aktif bağlantıyı kapatır ve bağlantı kaynağını serbest bırakır.
+
+Son olarak, verilerin tabloya başarıyla yerleştirildiğini belirten bir mesaj yazdırılır.
+
+Aşağıda veritabanındaki verilerin bir bölümü gösterilmiştir.
+
+![](imgs/img_1.PNG)
+
+## Veritabanından Verilerin Çekilmesi
+
+```{python}
+
+query = "SELECT * FROM EURO2024"
+df = pd.read_sql(query, conn)
+
+```
+
+`conn.autocommit = True` ile ilgili son bir açıklama yapalım.
+
+`conn.autocommit = True` durumunda her SQL komutu kendi başına bir işlem olarak değerlendirilir ve otomatik olarak veritabanına kaydedilir. Yani, `commit()` veya `rollback()` çağırılmasına gerek kalmaz. Bu durum genellikle veri tabanını yapılandırırken, yeni bir veritabanı veya tablo oluştururken kullanılır.
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

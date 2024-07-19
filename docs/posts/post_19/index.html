@@ -270,7 +270,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="fe6c35c8" class="cell" data-execution_count="1">
+<div id="a8c4b39e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
@@ -285,7 +285,7 @@ window.Quarto = {
 <section id="veri-setinin-içe-aktarılması" class="level1">
 <h1>Veri Setinin İçe Aktarılması</h1>
 <p>Veri setine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_19" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<div id="b37088c4" class="cell" data-execution_count="2">
+<div id="4657c9c0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team_stats_df <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_teams.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Sheet1'</span>).set_index(<span class="st">'Team'</span>).drop([<span class="st">'Matches Played'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>team_values_df <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_teams.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Sheet2'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>player_values_df <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_teams.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Sheet4'</span>, header<span class="op">=</span><span class="va">None</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -353,21 +353,21 @@ window.Quarto = {
 <p><span class="math inline">\(X\)</span>: Normalizasyonu yapılacak veri noktası.</p>
 <p><span class="math inline">\(\mu\)</span>: Veri setinin ortalaması.</p>
 <p><span class="math inline">\(\sigma\)</span>: Veri setinin standart sapması.</p>
-<div id="da5de399" class="cell" data-execution_count="3">
+<div id="28fd2f87" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>scaled_team_stats_df <span class="op">=</span> scaler.fit_transform(team_stats_df)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="temel-bileşenler-ve-yüklemeler" class="level2">
 <h2 class="anchored" data-anchor-id="temel-bileşenler-ve-yüklemeler">Temel Bileşenler ve Yüklemeler</h2>
-<div id="1a18c950" class="cell" data-execution_count="4">
+<div id="fe0b3524" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>principal_components <span class="op">=</span> pca.fit_transform(scaled_team_stats_df)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>pca_df <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>principal_components, columns<span class="op">=</span>[<span class="st">'PC1'</span>, <span class="st">'PC2'</span>])</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pca_df[<span class="st">'Team'</span>] <span class="op">=</span> team_stats_df.index</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bfbf19b7" class="cell" data-execution_count="5">
+<div id="1b37284c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>loadings <span class="op">=</span> pd.DataFrame(pca.components_.T, index<span class="op">=</span>team_stats_df.columns, columns<span class="op">=</span>[<span class="st">'PC1'</span>, <span class="st">'PC2'</span>]) <span class="op">*</span> np.sqrt(pca.explained_variance_)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
@@ -384,7 +384,7 @@ window.Quarto = {
 <p><img src="imgs/img_2.png" class="img-fluid"></p>
 <p>Karşılaştırma olması amacıyla bir önceki turnuvada takımların hangi konumlarda olduklarına da bakabiliriz. Bir önceki turnuvanın şampiyonu İtalya olmuştu.</p>
 <p><img src="imgs/img_3.png" class="img-fluid"></p>
-<div id="aa4acb86" class="cell" data-execution_count="6">
+<div id="4354083a" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>highlight_teams_red <span class="op">=</span> [<span class="st">'Türkiye'</span>,<span class="st">'Netherlands'</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>highlight_teams_orange <span class="op">=</span> [<span class="st">'Spain'</span>,<span class="st">'Germany'</span>,<span class="st">'Portugal'</span>,<span class="st">'France'</span>,<span class="st">'England'</span>,<span class="st">'Switzerland'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -451,7 +451,7 @@ window.Quarto = {
 <p><span class="math inline">\(X_{min}\)</span>: Veri setindeki en küçük değer.</p>
 <p><span class="math inline">\(X_{max}\)</span>: Veri setindeki en büyük değer.</p>
 <p><span class="math inline">\(X'\)</span>: Normalizasyon sonrası veri noktası.</p>
-<div id="c97b2fdf" class="cell" data-execution_count="7">
+<div id="c7063b53" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>min_max_scaler <span class="op">=</span> MinMaxScaler()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>normalized_team_stats_df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    min_max_scaler.fit_transform(team_stats_df),</span>
@@ -472,7 +472,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="normalize-edilmiş-değerler-ile-hesaplanan-skorlar-ve-sıralama">Normalize Edilmiş Değerler ile Hesaplanan Skorlar ve Sıralama</h2>
 <p>16 turu maçında 2-1 yendiğimiz Avusturya’nın sıralamada bizden sonra geldiğini görüyoruz. Çeyrek final maçındaki rakibimiz Hollanda ise Avusturya’dan sonra gelmektedir. Tüm istatistikleri bir araya getirerek aslında genel bir dengenin resmini ortaya koyduğumuz bu sıralamada Hollanda’nın iki sıra önünde olmamız bizim için avantaj oluşturmaktadır.</p>
 <p><img src="imgs/img_5.png" class="img-fluid"></p>
-<div id="0d510220" class="cell" data-execution_count="8">
+<div id="6ed2f185" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>neg_columns <span class="op">=</span> [<span class="st">'Clearances Attempted'</span>, <span class="st">'Saves'</span>, <span class="st">'Goals Conceded'</span>, <span class="st">'Fouls Committed'</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>normalized_team_stats_df[neg_columns] <span class="op">=</span> normalized_team_stats_df[neg_columns] <span class="op">*</span> (<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -516,7 +516,7 @@ window.Quarto = {
 <li>Maç başına uğranılan faul sayısı</li>
 </ul>
 <p><img src="imgs/img_6.png" class="img-fluid"></p>
-<div id="1f798b7f" class="cell" data-execution_count="9">
+<div id="40c29cf1" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>turvned_df <span class="op">=</span> normalized_team_stats_df.loc[[<span class="st">'Türkiye'</span>, <span class="st">'Netherlands'</span>]].T.drop(<span class="st">'Score'</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>my_range <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(turvned_df) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -538,7 +538,7 @@ window.Quarto = {
 <p>Rakibimiz Hollanda’nın piyasa değeri 784.4 milyon € iken bizim piyasa değerimiz 303.3 milyon €. Buna göre, Hollanda’nın kazanması beklenir ancak 30 maçın 6’sında (%20) piyasa değeri daha az olan takım kazanmış. Örneğin, 2-1 yendiğimiz Avusturya’nın piyasa değeri 252.2 milyon € olsa da Hollanda’yı 3-2 yenmişlerdir.</p>
 <p>Piyasa değerinin önemini hafifletmeyeceğiz ama bu istatistiğe de yüzde yüz tutunmayacağız.</p>
 <p><img src="imgs/img_7.png" class="img-fluid"></p>
-<div id="c2b7cd4d" class="cell" data-execution_count="10">
+<div id="18a2a53d" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>team_values_df <span class="op">=</span> team_values_df[team_values_df[<span class="st">'Team1 Goals'</span>] <span class="op">!=</span> team_values_df[<span class="st">'Team2 Goals'</span>]]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>success <span class="op">=</span> []</span>
@@ -578,7 +578,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="takımlara-göre-oyuncuların-piyasa-değerlerinin-dağılımı">Takımlara Göre Oyuncuların Piyasa Değerlerinin Dağılımı</h2>
 <p>Turnuvada ilerledikçe takımların oyuncularına ait piyasa değerinin üstten daha basık, sağa doğru daha yayılmış bir şekilde dağıldığını görüyoruz. Hollanda diğer takımlara pek benzemediği için bizim açımızdan asıl rekabetin yarı final ve finalde olacağını söyleyebiliriz.</p>
 <p><img src="imgs/img_8.png" class="img-fluid"></p>
-<div id="d43dffd3" class="cell" data-execution_count="11">
+<div id="1275f04f" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> [</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Player_Info_1'</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Player_Info_2'</span>,</span>
@@ -642,7 +642,7 @@ window.Quarto = {
 <p>Varyasyon katsayıları ile daha önce hesapladığımız skorların ilişkisine baktığımızda ikinci dereceden bir polinomun uygun olduğunu görüyoruz. Turnuvada yola devam eden 8 takımın genel olarak daha düşük bir varyasyon katsayısına sahip olduğu görülüyor.</p>
 <p>Hem Türkiye hem de Hollanda, düşük piyasa değeri varyasyonuna sahipler. Bu durum, her iki takımın da oyuncu kalitesinde (piyasa değeri) daha az dalgalanma olduğunu gösterir. Bunun yanında, her iki takım da aşağı yukarı benzer performans skorlarına sahip, bu da iki takımın da sahada benzer seviyede performans gösterdiğini ifade eder.</p>
 <p><img src="imgs/img_9.png" class="img-fluid"></p>
-<div id="cf05a06e" class="cell" data-execution_count="12">
+<div id="93c94c3a" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>combined_df <span class="op">=</span> pd.concat([market_value_stats_df, normalized_team_stats_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
