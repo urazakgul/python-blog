@@ -273,7 +273,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="a7ff97cd" class="cell" data-execution_count="1">
+<div id="04af6d84" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
@@ -297,7 +297,7 @@ window.Quarto = {
 <li>Fouls Suffered: (Uğranılan Fauller / Maç Sayısı) * Log(Maç Sayısı)</li>
 </ul>
 <p>Veri setine <a href="https://github.com/urazakgul/python-blog/tree/main/posts/post_21" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<div id="2d20c514" class="cell" data-execution_count="2">
+<div id="46250625" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_excel(<span class="st">'euro_2024_final.xlsx'</span>)</span>
@@ -327,7 +327,7 @@ window.Quarto = {
 <h1>Modelin Kurulması</h1>
 <section id="modelde-kullanılacak-değişkenlerin-incelenmesi" class="level2">
 <h2 class="anchored" data-anchor-id="modelde-kullanılacak-değişkenlerin-incelenmesi">Modelde Kullanılacak Değişkenlerin İncelenmesi</h2>
-<div id="7c4990fa" class="cell" data-execution_count="3">
+<div id="b2c237a0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>correlations <span class="op">=</span> {}</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> columns_to_keep:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="op">!=</span> <span class="st">'Transformed Goals'</span>:</span>
@@ -413,7 +413,7 @@ window.Quarto = {
 </section>
 <section id="takım-skorunu-hesaplayacak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="takım-skorunu-hesaplayacak-fonksiyonun-yazılması">Takım Skorunu Hesaplayacak Fonksiyonun Yazılması</h2>
-<div id="9523e766" class="cell" data-execution_count="4">
+<div id="c4317b21" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_score(df, weights, exclude_columns<span class="op">=</span>[]):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    columns_to_normalize <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> exclude_columns]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    df_normalized <span class="op">=</span> df.copy()</span>
@@ -438,7 +438,7 @@ window.Quarto = {
 </section>
 <section id="ağırlıkları-atayacak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="ağırlıkları-atayacak-fonksiyonun-yazılması">Ağırlıkları Atayacak Fonksiyonun Yazılması</h2>
-<div id="0f64ade2" class="cell" data-execution_count="5">
+<div id="487506fe" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_random_weights(columns):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> {col: np.random.rand() <span class="cf">for</span> col <span class="kw">in</span> columns}</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(weights.values())</span>
@@ -456,7 +456,7 @@ window.Quarto = {
 </section>
 <section id="modeli-kuracak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="modeli-kuracak-fonksiyonun-yazılması">Modeli Kuracak Fonksiyonun Yazılması</h2>
-<div id="4d079640" class="cell" data-execution_count="6">
+<div id="73f91cef" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_model(df, dependent_col, independent_col):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> df[independent_col]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> df[dependent_col]</span>
@@ -476,7 +476,7 @@ window.Quarto = {
 </section>
 <section id="fonksiyonları-çalıştıracak-döngünün-oluşturulması" class="level2">
 <h2 class="anchored" data-anchor-id="fonksiyonları-çalıştıracak-döngünün-oluşturulması">Fonksiyonları Çalıştıracak Döngünün Oluşturulması</h2>
-<div id="a9de5be6" class="cell" data-execution_count="7">
+<div id="11943ed1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100000</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> generate_random_weights([</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Transformed Attempts'</span>,</span>
@@ -518,7 +518,7 @@ window.Quarto = {
 </section>
 <section id="en-iyi-modelin-yazdırılması" class="level2">
 <h2 class="anchored" data-anchor-id="en-iyi-modelin-yazdırılması">En İyi Modelin Yazdırılması</h2>
-<div id="65f1236f" class="cell" data-execution_count="8">
+<div id="da4e5c59" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Score'</span>] <span class="op">=</span> calculate_score(df, best_weights, exclude_columns<span class="op">=</span>[<span class="st">'Transformed Goals'</span>])</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[<span class="st">'Score'</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'Transformed Goals'</span>]</span>
@@ -530,7 +530,7 @@ window.Quarto = {
 </section>
 <section id="gerçek-ve-fit-edilen-değerlerin-görselleştirilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="gerçek-ve-fit-edilen-değerlerin-görselleştirilmesi">Gerçek ve Fit Edilen Değerlerin Görselleştirilmesi</h2>
-<div id="72280b50" class="cell" data-execution_count="9">
+<div id="465f1da2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(x<span class="op">=</span>best_model.fittedvalues, y<span class="op">=</span>df[<span class="st">'Transformed Goals'</span>], color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
