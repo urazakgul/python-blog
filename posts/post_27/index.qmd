@@ -5,7 +5,7 @@ date: "2024-07-20"
 date-modified: last-modified
 date-format: "MMMM D, YYYY"
 categories: [Futbol, İstatistik, Ekonometri]
-image: "imgs/img_4.png"
+image: "imgs/img_6.png"
 execute:
   eval: false
 ---
@@ -81,7 +81,7 @@ Yukarıdaki kod ile Euro 2024 maçlarından sadece "open play" içindeki şut ve
 
 ![](imgs/img_1.PNG)
 
-İlgili dokümantasyona [buradan](https://github.com/statsbomb/open-data/blob/master/doc/Open%20Data%20Events%20v4.0.0.pdf){.external target="_blank"} ulaşabilirsiniz.
+Genel olarak dokümantasyonlara [buradan](https://github.com/statsbomb/open-data/tree/master/doc){.external target="_blank"} ulaşabilirsiniz.
 
 ## Gol Olan ve Olmayan Şutların Konumlarının Gösterilmesi
 
@@ -127,6 +127,10 @@ plt.show()
 ## Açı ve Uzaklığın Hesaplanması
 
 Belirtilen noktadan iki kale direği arasındaki açıyı ve hedefin (kale direği) en yakın mesafesini hesaplayalım.
+
+![](imgs/img_3.PNG)
+
+![](imgs/img_4.PNG)
 
 ```{python}
 
@@ -184,7 +188,7 @@ plt.show()
 
 ```
 
-![](imgs/img_3.png)
+![](imgs/img_5.png)
 
 ## Modelin Kurulması
 
@@ -276,6 +280,6 @@ plt.show()
 
 ```
 
-![](imgs/img_4.png)
+![](imgs/img_6.png)
 
 *Gelecek içeriklerde görüşmek dileğiyle.*

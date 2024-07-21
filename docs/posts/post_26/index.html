@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="e8efd920" class="cell" data-execution_count="1">
+<div id="3b11506a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyodbc</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsbombpy <span class="im">import</span> sb</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="veritabanının-oluşturulması" class="level2">
 <h2 class="anchored" data-anchor-id="veritabanının-oluşturulması">Veritabanının Oluşturulması</h2>
 <p><code>FDATA</code> adlı veritabanını oluşturalım.</p>
-<div id="7eb07537" class="cell" data-execution_count="2">
+<div id="f0557e44" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DRIVER_NAME <span class="op">=</span> <span class="st">'SQL Server'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SERVER_NAME <span class="op">=</span> <span class="st">'DESKTOP-1RNVH0O</span><span class="ch">\\</span><span class="st">SQLEXPRESS'</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>DATABASE_NAME <span class="op">=</span> <span class="st">'master'</span></span>
@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="veritabanında-tablonun-oluşturulması" class="level2">
 <h2 class="anchored" data-anchor-id="veritabanında-tablonun-oluşturulması">Veritabanında Tablonun Oluşturulması</h2>
 <p><code>EURO2024</code> adlı tabloyu oluşturalım.</p>
-<div id="74c3fcd0" class="cell" data-execution_count="3">
+<div id="e942e355" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>DATABASE_NAME <span class="op">=</span> <span class="st">'FDATA'</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>conn_str <span class="op">=</span> <span class="ss">f"""</span></span>
@@ -317,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="veritabanına-gönderilecek-verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="veritabanına-gönderilecek-verilerin-çekilmesi">Veritabanına Gönderilecek Verilerin Çekilmesi</h2>
-<div id="cfbbfbf8" class="cell" data-execution_count="4">
+<div id="43f765a7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> sb.matches(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>matches[<span class="st">'match_id'</span>] <span class="op">=</span> matches[<span class="st">'match_id'</span>].astype(<span class="bu">int</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>matches[<span class="st">'match_date'</span>] <span class="op">=</span> pd.to_datetime(matches[<span class="st">'match_date'</span>]).dt.strftime(<span class="st">'%Y%m</span><span class="sc">%d</span><span class="st">'</span>)</span>
@@ -326,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="verilerin-veritabanına-gönderilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="verilerin-veritabanına-gönderilmesi">Verilerin Veritabanına Gönderilmesi</h2>
-<div id="48532b55" class="cell" data-execution_count="5">
+<div id="1b892b9f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>insert_sql <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">INSERT INTO EURO2024 (</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    match_id,</span></span>
@@ -364,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="veritabanından-verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="veritabanından-verilerin-çekilmesi">Veritabanından Verilerin Çekilmesi</h2>
-<div id="5cd92d56" class="cell" data-execution_count="6">
+<div id="fc74cc41" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"SELECT * FROM EURO2024"</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql(query, conn)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

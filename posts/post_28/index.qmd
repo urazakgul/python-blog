@@ -1,0 +1,370 @@
+---
+title: "Lojistik Regresyon ile xG Modelinin İleri Düzeyde Oluşturulması"
+author: "Uraz Akgül"
+date: "2024-07-21"
+date-modified: last-modified
+date-format: "MMMM D, YYYY"
+categories: [Futbol, İstatistik, Ekonometri]
+image: "imgs/img_6.png"
+execute:
+  eval: false
+---
+
+# Giriş
+
+[Lojistik Regresyon ile xG Modelinin Basit Bir Şekilde Oluşturulması](https://urazakgul.github.io/python-blog/posts/post_22/){.external target="_blank"} başlıklı yazıda xG modelini basit bir şekilde oluşturmuştuk. Bu yazıda ise xG modelini biraz daha ileri düzeye taşıyacağız.
+
+# Kullanılacak Kütüphaneler
+
+```{python}
+
+import pandas as pd
+import numpy as np
+import math
+from mplsoccer import Sbopen
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+
+```
+
+# İleri Düzey xG Modelinin Oluşturulması
+
+## Modele Eklenecek Yeni Değişkenler
+
+Önceki modelde, şutu çeken oyuncunun kaleye olan açısını (`angle`) ve uzaklığını (`distance`) modele eklemiştik. Peki, başka hangi değişkenleri modele ekleyebiliriz? StatsBomb'un dokümantasyonundan görüntülerle destekleyerek yazalım.
+
+* Şutun tipi (`sub_type_name`)
+
+  * **Corner:** Köşe vuruşundan doğrudan yapılan şut.
+  * **Free Kick:** Doğrudan serbest vuruşla yapılan şut.
+  * **Open Play:** Açık oyunda yapılan şut.
+  * **Penalty:** Penaltı vuruşundan yapılan şut.
+  * **Kick Off:** Maçın başında veya ikinci yarının başında yapılan direkt vuruş.
+
+![](imgs/img_1.PNG)
+
+* Şutun tekniği (`technique_name`)
+
+  * **Backheel:** Topukla yapılan şut.
+  * **Diving Header:** Oyuncunun topa dalarak kafa vuruşu yaptığı şut.
+  * **Half Volley:** Top yere çarptıktan sonra, havada iken yapılan şut.
+  * **Lob:** Topun yüksek bir yay çizerek, rakip oyuncunun üstünden geçmesi için yapılan şut.
+  * **Normal:** Diğer tekniklerden hiçbirine uymayan şut.
+  * **Overhead Kick:** Oyuncunun sırtı kaleye dönük olarak yaptığı şut.
+  * **Volley:** Top yere değmeden önce yapılan şut.
+
+![](imgs/img_2.1.PNG)
+
+![](imgs/img_2.2.PNG)
+
+* Vücudun kullanılan yeri (`body_part_name`)
+
+  * **Head:** Kafa ile yapılan şut.
+  * **Left Foot:** Sol ayak ile yapılan şut.
+  * **Other:** Diğer vücut parçaları (örneğin diz, göğüs vb.) ile yapılan şut.
+  * **Right Foot:** Sağ ayak ile yapılan şut.
+
+![](imgs/img_3.PNG)
+
+* Baskı altında mı değil mi? (`under_pressure`)
+
+Rakip tarafından baskı altında yapılan bir şut olup olmadığıdır.
+
+![](imgs/img_4.PNG)
+
+Genel olarak dokümantasyonlara [buradan](https://github.com/statsbomb/open-data/tree/master/doc){.external target="_blank"} ulaşabilirsiniz.
+
+## Verilerin Çekilmesi
+
+Veri çerçevesini yeni kolonlar ile genişletiyoruz.
+
+```{python}
+
+parser = Sbopen()
+euro2024_matches = parser.match(competition_id=55, season_id=282)
+
+df = {}
+
+for match_id in euro2024_matches['match_id']:
+    event_data, related_data, freeze_data, tactic_data = parser.event(match_id)
+    df[match_id] = {
+        'event': event_data,
+        'related': related_data,
+        'freeze': freeze_data,
+        'tactic': tactic_data
+    }
+
+new_columns = [
+    'x',
+    'y',
+    'outcome_name',
+    'sub_type_name',
+    'body_part_name',
+    'under_pressure',
+    'technique_name',
+    'shot_statsbomb_xg'
+]
+df_shot = pd.DataFrame(columns=new_columns)
+
+for match_id, match_data in df.items():
+    event_df = match_data['event']
+    mask_shot = (
+        (event_df['type_name'] == 'Shot') &
+        (event_df['period'] <= 4)
+    )
+    shots_temp = event_df.loc[mask_shot, new_columns]
+    df_shot = pd.concat([df_shot, shots_temp], ignore_index=True)
+
+```
+
+## Açı ve Uzaklığın Hesaplanması
+
+```{python}
+
+def calculate_angle(x, y):
+
+    g0, g1, p = np.array([120, 44]), np.array([120, 36]), np.array([x, y])
+    v0, v1 = g0 - p, g1 - p
+    angle = np.arctan2(np.linalg.det([v0, v1]), np.dot(v0, v1))
+
+    return abs(np.degrees(angle))
+
+def calculate_distance(x, y):
+
+    x_dist = 120 - x
+    y_dist = 0
+
+    if y < 36:
+        y_dist = 36 - y
+    elif y > 44:
+        y_dist = y - 44
+
+    return math.sqrt(x_dist**2 + y_dist**2)
+
+df_shot['angle'] = df_shot.apply(lambda row:calculate_angle(row['x'], row['y']), axis=1)
+df_shot['distance'] = df_shot.apply(lambda row:calculate_distance(row['x'], row['y']), axis=1)
+
+```
+
+## Gol Durumunun Belirlenmesi
+
+```{python}
+
+df_shot['goal'] = df_shot.apply(lambda row:1 if row['outcome_name'] == 'Goal' else 0, axis=1)
+
+```
+
+## Kolonların NaN Kontrolünün Yapılması ve Düzeltilmesi
+
+```{python}
+
+columns_to_count = ['sub_type_name', 'body_part_name', 'under_pressure', 'technique_name']
+
+for col in columns_to_count:
+    nan_count = df_shot[col].isna().sum()
+    print(f"Column '{col}' has {nan_count} NaN values.")
+
+# Column 'sub_type_name' has 0 NaN values.
+# Column 'body_part_name' has 0 NaN values.
+# Column 'under_pressure' has 929 NaN values.
+# Column 'technique_name' has 0 NaN values.
+
+df_shot['under_pressure'] = df_shot['under_pressure'].fillna(0)
+
+```
+
+## Modele Eklenecek Değişkenlerin Dağılımı
+
+```{python}
+
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(14, 16))
+axes = axes.flatten()
+
+for i, col in enumerate(columns_to_count):
+    count_series = df_shot[col].value_counts().sort_values()
+    count_series.plot(kind='barh', ax=axes[i], color='skyblue')
+    axes[i].set_title(col.replace('_', ' ').title())
+    axes[i].set_xlabel('Count')
+    axes[i].set_ylabel('')
+
+fig.suptitle("Shot Types in Various Categories at Euro 2024", fontsize=16)
+plt.tight_layout()
+plt.show()
+
+```
+
+![](imgs/img_5.png)
+
+## Kategorik Veriler İçin One Hot Encoding Yapılması
+
+```{python}
+
+df_shot = pd.get_dummies(df_shot, columns=['sub_type_name', 'body_part_name', 'technique_name'])
+
+```
+
+## Modelin Kurulması
+
+```{python}
+
+X_cols = [
+    'angle',
+    'distance',
+    'under_pressure',
+    'sub_type_name_Corner',
+    'sub_type_name_Free Kick',
+    'sub_type_name_Open Play',
+    'sub_type_name_Penalty',
+    'body_part_name_Head',
+    'body_part_name_Left Foot',
+    'body_part_name_Right Foot',
+    'technique_name_Backheel',
+    'technique_name_Diving Header',
+    'technique_name_Half Volley',
+    'technique_name_Lob',
+    'technique_name_Normal',
+    'technique_name_Overhead Kick',
+    'technique_name_Volley'
+]
+
+X = df_shot[X_cols]
+y = df_shot['goal']
+
+model = LogisticRegression().fit(X, y)
+
+```
+
+## xG Hesaplayacak Fonksiyonun Yazılması
+
+```{python}
+
+def calculate_xg(x, y, under_pressure, sub_type_name_dummies, body_part_name_dummies, technique_name_dummies):
+
+    angle = calculate_angle(x, y)
+    distance = calculate_distance(x, y)
+    features = np.array(
+        [angle, distance, under_pressure] +
+        list(sub_type_name_dummies) +
+        list(body_part_name_dummies) +
+        list(technique_name_dummies)
+    ).reshape(1, -1)
+    xg = model.predict_proba(features)[:, 1][0]
+
+    return xg
+
+```
+
+## Maçların xG Değerlerinin Tahmin Edilmesi
+
+```{python}
+
+df_summary = euro2024_matches[['match_id', 'home_team_name', 'away_team_name']].copy()
+df_summary['home_goals_open_play'] = None
+df_summary['home_xg_open_play'] = None
+df_summary['home_xg_sb_open_play'] = None
+df_summary['away_goals_open_play'] = None
+df_summary['away_xg_open_play'] = None
+df_summary['away_xg_sb_open_play'] = None
+
+for i, match_id in enumerate(euro2024_matches['match_id']):
+    df_shots = df[match_id]['event']
+    shot_mask = (
+        (df_shots['type_name'] == 'Shot') &
+        (df_shots['period'] <= 4)
+    )
+    df_shots = df_shots[shot_mask].copy()
+
+    sub_type_dummies = pd.get_dummies(df_shots['sub_type_name'], prefix='sub_type_name')
+    body_part_dummies = pd.get_dummies(df_shots['body_part_name'], prefix='body_part_name')
+    technique_dummies = pd.get_dummies(df_shots['technique_name'], prefix='technique_name')
+
+    sub_type_dummies = sub_type_dummies.reindex(
+        columns=['sub_type_name_Corner', 'sub_type_name_Free Kick', 'sub_type_name_Open Play', 'sub_type_name_Penalty'], fill_value=0
+    )
+    body_part_dummies = body_part_dummies.reindex(
+        columns=['body_part_name_Head', 'body_part_name_Left Foot', 'body_part_name_Right Foot'], fill_value=0
+    )
+    technique_dummies = technique_dummies.reindex(
+        columns=['technique_name_Backheel', 'technique_name_Diving Header', 'technique_name_Half Volley', 'technique_name_Lob', 'technique_name_Normal', 'technique_name_Overhead Kick', 'technique_name_Volley'], fill_value=0
+    )
+
+    df_shots = pd.concat([df_shots, sub_type_dummies, body_part_dummies, technique_dummies], axis=1)
+
+    df_shots['under_pressure'] = df_shots['under_pressure'].fillna(0)
+
+    df_shots['calculated_xg'] = df_shots.apply(
+        lambda row: calculate_xg(
+            row['x'],
+            row['y'],
+            row['under_pressure'],
+            sub_type_dummies.loc[row.name].values,
+            body_part_dummies.loc[row.name].values,
+            technique_dummies.loc[row.name].values
+        ),
+        axis=1
+    )
+
+    home_team = euro2024_matches['home_team_name'][i]
+    away_team = euro2024_matches['away_team_name'][i]
+
+    df_home = df_shots[df_shots['team_name'] == home_team].copy()
+    df_summary.at[i, 'home_goals_open_play'] = len(df_home[df_home['outcome_name'] == 'Goal'])
+    df_summary.at[i, 'home_xg_open_play'] = df_home['calculated_xg'].sum()
+    df_summary.at[i, 'home_xg_sb_open_play'] = df_home['shot_statsbomb_xg'].sum()
+
+    df_away = df_shots[df_shots['team_name'] == away_team].copy()
+    df_summary.at[i, 'away_goals_open_play'] = len(df_away[df_away['outcome_name'] == 'Goal'])
+    df_summary.at[i, 'away_xg_open_play'] = df_away['calculated_xg'].sum()
+    df_summary.at[i, 'away_xg_sb_open_play'] = df_away['shot_statsbomb_xg'].sum()
+
+```
+
+## Tahmin Sonuçlarının StatsBomb ile Karşılaştırılması
+
+```{python}
+
+plt.figure(figsize=(12, 8))
+
+plt.scatter(
+    df_summary['home_xg_open_play'],
+    df_summary['home_xg_sb_open_play'],
+    alpha=0.7, color='green',
+    label='Home Team: Calculated vs StatsBomb'
+)
+
+plt.scatter(
+    df_summary['away_xg_open_play'],
+    df_summary['away_xg_sb_open_play'],
+    alpha=0.7, color='purple',
+    label='Away Team: Calculated vs StatsBomb'
+)
+
+plt.xlabel('Calculated xG')
+plt.ylabel('StatsBomb xG')
+plt.title('Comparison of xG: Calculated vs StatsBomb for Home and Away Teams (Euro 2024)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+```
+
+![](imgs/img_6.png)
+
+## RMSE'nin Hesaplanması
+
+$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$
+
+```{python}
+
+combined_xg_open_play = df_summary['home_xg_open_play'] + df_summary['away_xg_open_play']
+combined_xg_sb_open_play = df_summary['home_xg_sb_open_play'] + df_summary['away_xg_sb_open_play']
+
+rmse_advanced = mean_squared_error(combined_xg_open_play, combined_xg_sb_open_play)
+print(f"RMSE of the advanced model: {rmse_advanced}")
+
+```
+
+Yaklaşık 0.20'lik bir RMSE elde ettik. Önceki basit model ile 0.22'lik bir RMSE elde ediyoruz. Her ne kadar önemli bir fark olmasa da RMSE'yi düşürmüş olduk.
+
+*Gelecek içeriklerde görüşmek dileğiyle.*

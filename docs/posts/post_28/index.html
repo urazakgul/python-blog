@@ -8,7 +8,7 @@
 
 <meta name="author" content="Uraz Akgül">
 
-<title>Python Blog - Lojistik Regresyon ile xG Modelinin Basit Bir Şekilde Oluşturulması</title>
+<title>Python Blog - Lojistik Regresyon ile xG Modelinin İleri Düzeyde Oluşturulması</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -189,7 +189,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Lojistik Regresyon ile xG Modelinin Basit Bir Şekilde Oluşturulması</h1>
+      <h1 class="title">Lojistik Regresyon ile xG Modelinin İleri Düzeyde Oluşturulması</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Futbol</div>
                 <div class="quarto-category">İstatistik</div>
@@ -211,7 +211,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Yayınlanma Tarihi</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Temmuz 20, 2024</p>
+        <p class="date">Temmuz 21, 2024</p>
       </div>
     </div>
     
@@ -235,17 +235,20 @@ window.Quarto = {
   <ul>
   <li><a href="#giriş" id="toc-giriş" class="nav-link active" data-scroll-target="#giriş">Giriş</a></li>
   <li><a href="#kullanılacak-kütüphaneler" id="toc-kullanılacak-kütüphaneler" class="nav-link" data-scroll-target="#kullanılacak-kütüphaneler">Kullanılacak Kütüphaneler</a></li>
-  <li><a href="#basit-xg-modelinin-oluşturulması" id="toc-basit-xg-modelinin-oluşturulması" class="nav-link" data-scroll-target="#basit-xg-modelinin-oluşturulması">Basit xG Modelinin Oluşturulması</a>
+  <li><a href="#ileri-düzey-xg-modelinin-oluşturulması" id="toc-ileri-düzey-xg-modelinin-oluşturulması" class="nav-link" data-scroll-target="#ileri-düzey-xg-modelinin-oluşturulması">İleri Düzey xG Modelinin Oluşturulması</a>
   <ul class="collapse">
-  <li><a href="#xg-tanımı" id="toc-xg-tanımı" class="nav-link" data-scroll-target="#xg-tanımı">xG Tanımı</a></li>
+  <li><a href="#modele-eklenecek-yeni-değişkenler" id="toc-modele-eklenecek-yeni-değişkenler" class="nav-link" data-scroll-target="#modele-eklenecek-yeni-değişkenler">Modele Eklenecek Yeni Değişkenler</a></li>
   <li><a href="#verilerin-çekilmesi" id="toc-verilerin-çekilmesi" class="nav-link" data-scroll-target="#verilerin-çekilmesi">Verilerin Çekilmesi</a></li>
-  <li><a href="#gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi" id="toc-gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi" class="nav-link" data-scroll-target="#gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi">Gol Olan ve Olmayan Şutların Konumlarının Gösterilmesi</a></li>
   <li><a href="#açı-ve-uzaklığın-hesaplanması" id="toc-açı-ve-uzaklığın-hesaplanması" class="nav-link" data-scroll-target="#açı-ve-uzaklığın-hesaplanması">Açı ve Uzaklığın Hesaplanması</a></li>
-  <li><a href="#açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi" id="toc-açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi" class="nav-link" data-scroll-target="#açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi">Açı ve Uzaklığa Göre Gol ve Gol Olmayan Durumların Gösterilmesi</a></li>
+  <li><a href="#gol-durumunun-belirlenmesi" id="toc-gol-durumunun-belirlenmesi" class="nav-link" data-scroll-target="#gol-durumunun-belirlenmesi">Gol Durumunun Belirlenmesi</a></li>
+  <li><a href="#kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi" id="toc-kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi" class="nav-link" data-scroll-target="#kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi">Kolonların NaN Kontrolünün Yapılması ve Düzeltilmesi</a></li>
+  <li><a href="#modele-eklenecek-değişkenlerin-dağılımı" id="toc-modele-eklenecek-değişkenlerin-dağılımı" class="nav-link" data-scroll-target="#modele-eklenecek-değişkenlerin-dağılımı">Modele Eklenecek Değişkenlerin Dağılımı</a></li>
+  <li><a href="#kategorik-veriler-için-one-hot-encoding-yapılması" id="toc-kategorik-veriler-için-one-hot-encoding-yapılması" class="nav-link" data-scroll-target="#kategorik-veriler-için-one-hot-encoding-yapılması">Kategorik Veriler İçin One Hot Encoding Yapılması</a></li>
   <li><a href="#modelin-kurulması" id="toc-modelin-kurulması" class="nav-link" data-scroll-target="#modelin-kurulması">Modelin Kurulması</a></li>
   <li><a href="#xg-hesaplayacak-fonksiyonun-yazılması" id="toc-xg-hesaplayacak-fonksiyonun-yazılması" class="nav-link" data-scroll-target="#xg-hesaplayacak-fonksiyonun-yazılması">xG Hesaplayacak Fonksiyonun Yazılması</a></li>
   <li><a href="#maçların-xg-değerlerinin-tahmin-edilmesi" id="toc-maçların-xg-değerlerinin-tahmin-edilmesi" class="nav-link" data-scroll-target="#maçların-xg-değerlerinin-tahmin-edilmesi">Maçların xG Değerlerinin Tahmin Edilmesi</a></li>
   <li><a href="#tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması" id="toc-tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması" class="nav-link" data-scroll-target="#tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması">Tahmin Sonuçlarının StatsBomb ile Karşılaştırılması</a></li>
+  <li><a href="#rmsenin-hesaplanması" id="toc-rmsenin-hesaplanması" class="nav-link" data-scroll-target="#rmsenin-hesaplanması">RMSE’nin Hesaplanması</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -259,183 +262,232 @@ window.Quarto = {
 
 <section id="giriş" class="level1">
 <h1>Giriş</h1>
-<p>Futbol dünyasında performans analizi her geçen gün daha da önem kazanıyor ve takımın ve oyuncuların potansiyelini daha iyi anlamak ve geliştirmek için kritik bir rol oynuyor. Bu bağlamda, Beklenen Gol veya kısaca xG (Expected Goals) metriği, son yıllarda futbol analizlerinde sıklıkla kullanılan bir araç haline gelmiştir. Bu yazıda, lojistik regresyon ile basit bir model kurarak hesapladığımız xG’leri StatsBomb ile karşılaştıracağız.</p>
+<p><a href="https://urazakgul.github.io/python-blog/posts/post_22/" class="external" target="_blank">Lojistik Regresyon ile xG Modelinin Basit Bir Şekilde Oluşturulması</a> başlıklı yazıda xG modelini basit bir şekilde oluşturmuştuk. Bu yazıda ise xG modelini biraz daha ileri düzeye taşıyacağız.</p>
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="41c9ca95" class="cell" data-execution_count="1">
+<div id="76707e2f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> VerticalPitch, Sbopen</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplsoccer <span class="im">import</span> Sbopen</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="basit-xg-modelinin-oluşturulması" class="level1">
-<h1>Basit xG Modelinin Oluşturulması</h1>
-<section id="xg-tanımı" class="level2">
-<h2 class="anchored" data-anchor-id="xg-tanımı">xG Tanımı</h2>
-<p>Benzer özelliklere sahip şutların tarihsel bilgilerine dayanarak, xG modeli her şuta 0 ile 1 arasında bir değer atar ve bu değer şutun gol üretme olasılığını ifade eder. Örneğin, 0.2 xG, bir şutun gol olma olasılığının %20 olduğunu ifade eder. xG’nin yüksek olması, bir oyuncunun veya takımın gol atma fırsatlarının iyi olduğunu gösterir.</p>
+<section id="ileri-düzey-xg-modelinin-oluşturulması" class="level1">
+<h1>İleri Düzey xG Modelinin Oluşturulması</h1>
+<section id="modele-eklenecek-yeni-değişkenler" class="level2">
+<h2 class="anchored" data-anchor-id="modele-eklenecek-yeni-değişkenler">Modele Eklenecek Yeni Değişkenler</h2>
+<p>Önceki modelde, şutu çeken oyuncunun kaleye olan açısını (<code>angle</code>) ve uzaklığını (<code>distance</code>) modele eklemiştik. Peki, başka hangi değişkenleri modele ekleyebiliriz? StatsBomb’un dokümantasyonundan görüntülerle destekleyerek yazalım.</p>
+<ul>
+<li><p>Şutun tipi (<code>sub_type_name</code>)</p>
+<ul>
+<li><strong>Corner:</strong> Köşe vuruşundan doğrudan yapılan şut.</li>
+<li><strong>Free Kick:</strong> Doğrudan serbest vuruşla yapılan şut.</li>
+<li><strong>Open Play:</strong> Açık oyunda yapılan şut.</li>
+<li><strong>Penalty:</strong> Penaltı vuruşundan yapılan şut.</li>
+<li><strong>Kick Off:</strong> Maçın başında veya ikinci yarının başında yapılan direkt vuruş.</li>
+</ul></li>
+</ul>
+<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
+<ul>
+<li><p>Şutun tekniği (<code>technique_name</code>)</p>
+<ul>
+<li><strong>Backheel:</strong> Topukla yapılan şut.</li>
+<li><strong>Diving Header:</strong> Oyuncunun topa dalarak kafa vuruşu yaptığı şut.</li>
+<li><strong>Half Volley:</strong> Top yere çarptıktan sonra, havada iken yapılan şut.</li>
+<li><strong>Lob:</strong> Topun yüksek bir yay çizerek, rakip oyuncunun üstünden geçmesi için yapılan şut.</li>
+<li><strong>Normal:</strong> Diğer tekniklerden hiçbirine uymayan şut.</li>
+<li><strong>Overhead Kick:</strong> Oyuncunun sırtı kaleye dönük olarak yaptığı şut.</li>
+<li><strong>Volley:</strong> Top yere değmeden önce yapılan şut.</li>
+</ul></li>
+</ul>
+<p><img src="imgs/img_2.1.PNG" class="img-fluid"></p>
+<p><img src="imgs/img_2.2.PNG" class="img-fluid"></p>
+<ul>
+<li><p>Vücudun kullanılan yeri (<code>body_part_name</code>)</p>
+<ul>
+<li><strong>Head:</strong> Kafa ile yapılan şut.</li>
+<li><strong>Left Foot:</strong> Sol ayak ile yapılan şut.</li>
+<li><strong>Other:</strong> Diğer vücut parçaları (örneğin diz, göğüs vb.) ile yapılan şut.</li>
+<li><strong>Right Foot:</strong> Sağ ayak ile yapılan şut.</li>
+</ul></li>
+</ul>
+<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
+<ul>
+<li>Baskı altında mı değil mi? (<code>under_pressure</code>)</li>
+</ul>
+<p>Rakip tarafından baskı altında yapılan bir şut olup olmadığıdır.</p>
+<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
+<p>Genel olarak dokümantasyonlara <a href="https://github.com/statsbomb/open-data/tree/master/doc" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
 </section>
 <section id="verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
-<p>StatsBomb’dan verileri aşağıdaki gibi çekebiliriz. Euro 2024’ün <code>competition_id</code>’si 55, <code>season_id</code>’si 282’dir. Detaylı bilgiye <a href="https://urazakgul.github.io/python-blog/posts/post_22/" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<div id="fa9cb12f" class="cell" data-execution_count="2">
+<p>Veri çerçevesini yeni kolonlar ile genişletiyoruz.</p>
+<div id="5af7fa80" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> Sbopen()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>euro2024_matches <span class="op">=</span> parser.match(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>euro2024_matches <span class="op">=</span> parser.match(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> {}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match_id <span class="kw">in</span> euro2024_matches[<span class="st">'match_id'</span>]:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    event_data, related_data, freeze_data, tactic_data <span class="op">=</span> parser.event(match_id)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    df[match_id] <span class="op">=</span> {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'event'</span>: event_data,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'related'</span>: related_data,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'freeze'</span>: freeze_data,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'tactic'</span>: tactic_data</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>new_columns <span class="op">=</span> [</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'outcome_name'</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub_type_name'</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'body_part_name'</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'under_pressure'</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name'</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'shot_statsbomb_xg'</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>df_shot <span class="op">=</span> pd.DataFrame(columns<span class="op">=</span>new_columns)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match_id, match_data <span class="kw">in</span> df.items():</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    event_df <span class="op">=</span> match_data[<span class="st">'event'</span>]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    mask_shot <span class="op">=</span> (</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        (event_df[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Shot'</span>) <span class="op">&amp;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        (event_df[<span class="st">'period'</span>] <span class="op">&lt;=</span> <span class="dv">4</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    shots_temp <span class="op">=</span> event_df.loc[mask_shot, new_columns]</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    df_shot <span class="op">=</span> pd.concat([df_shot, shots_temp], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="36767ec4" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> {}</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match_id <span class="kw">in</span> euro2024_matches[<span class="st">'match_id'</span>]:</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    event_data, related_data, freeze_data, tactic_data <span class="op">=</span> parser.event(match_id)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    df[match_id] <span class="op">=</span> {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'event'</span>: event_data,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'related'</span>: related_data,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'freeze'</span>: freeze_data,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'tactic'</span>: tactic_data</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Yukarıdaki kod ile Euro 2024 maçlarının verilerini çektik ve maç ID’lerine göre <code>df</code> adlı sözlükte sakladık.</p>
-<div id="58011be5" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_shot <span class="op">=</span> pd.DataFrame(columns<span class="op">=</span>[<span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'outcome_name'</span>, <span class="st">'shot_statsbomb_xg'</span>])</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match_id, match_data <span class="kw">in</span> df.items():</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    event_df <span class="op">=</span> match_data[<span class="st">'event'</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    mask_shot <span class="op">=</span> (</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        (event_df[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Shot'</span>) <span class="op">&amp;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        (event_df[<span class="st">'period'</span>] <span class="op">&lt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        (event_df[<span class="st">'sub_type_name'</span>] <span class="op">==</span> <span class="st">'Open Play'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    shots_temp <span class="op">=</span> event_df.loc[mask_shot, [<span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'outcome_name'</span>, <span class="st">'shot_statsbomb_xg'</span>]]</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    df_shot <span class="op">=</span> pd.concat([df_shot, shots_temp], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Yukarıdaki kod ile Euro 2024 maçlarından sadece “open play” içindeki şut verilerini çektik ve bu verileri <code>df_shot</code> adlı bir veri çerçevesinde topladık. Open play, oyunun durmadığını, serbest ve sürekli akışta olduğunu ifade eder. Ayrıca, penaltı atışlarını dikkate almamak için 4’ten küçük olanları aldık.</p>
-<p><img src="imgs/img_1.PNG" class="img-fluid"></p>
-<p>Genel olarak dokümantasyonlara <a href="https://github.com/statsbomb/open-data/tree/master/doc" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-</section>
-<section id="gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi" class="level2">
-<h2 class="anchored" data-anchor-id="gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi">Gol Olan ve Olmayan Şutların Konumlarının Gösterilmesi</h2>
-<div id="67adc1b5" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_goals <span class="op">=</span> df_shot[df_shot[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span>].copy()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_non_goals <span class="op">=</span> df_shot[df_shot[<span class="st">'outcome_name'</span>] <span class="op">!=</span> <span class="st">'Goal'</span>].copy()</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>pitch <span class="op">=</span> VerticalPitch(</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    pad_bottom<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    half<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    goal_type<span class="op">=</span><span class="st">'box'</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> pitch.draw(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>pitch.scatter(</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    df_non_goals[<span class="st">'x'</span>], df_non_goals[<span class="st">'y'</span>],</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span><span class="st">'orange'</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    marker<span class="op">=</span><span class="st">'o'</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'No Goal'</span>,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">.5</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>pitch.scatter(</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    df_goals[<span class="st">'x'</span>], df_goals[<span class="st">'y'</span>],</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    marker<span class="op">=</span><span class="st">'o'</span>,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'Goal'</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Shot Locations for Goals and Non-Goals in Euro 2024"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="imgs/img_2.png" class="img-fluid"></p>
 </section>
 <section id="açı-ve-uzaklığın-hesaplanması" class="level2">
 <h2 class="anchored" data-anchor-id="açı-ve-uzaklığın-hesaplanması">Açı ve Uzaklığın Hesaplanması</h2>
-<p>Belirtilen noktadan iki kale direği arasındaki açıyı ve hedefin (kale direği) en yakın mesafesini hesaplayalım.</p>
-<p><img src="imgs/img_3.PNG" class="img-fluid"></p>
-<p><img src="imgs/img_4.PNG" class="img-fluid"></p>
-<div id="d4d32834" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_angle(x, y):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    g0, g1, p <span class="op">=</span> np.array([<span class="dv">120</span>, <span class="dv">44</span>]), np.array([<span class="dv">120</span>, <span class="dv">36</span>]), np.array([x, y])</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    v0, v1 <span class="op">=</span> g0 <span class="op">-</span> p, g1 <span class="op">-</span> p</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    angle <span class="op">=</span> np.arctan2(np.linalg.det([v0, v1]), np.dot(v0, v1))</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">abs</span>(np.degrees(angle))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_distance(x, y):</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    x_dist <span class="op">=</span> <span class="dv">120</span> <span class="op">-</span> x</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    y_dist <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> y <span class="op">&lt;</span> <span class="dv">36</span>:</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        y_dist <span class="op">=</span> <span class="dv">36</span> <span class="op">-</span> y</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> y <span class="op">&gt;</span> <span class="dv">44</span>:</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        y_dist <span class="op">=</span> y <span class="op">-</span> <span class="dv">44</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> math.sqrt(x_dist<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> y_dist<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'angle'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:calculate_angle(row[<span class="st">'x'</span>], row[<span class="st">'y'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'distance'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:calculate_distance(row[<span class="st">'x'</span>], row[<span class="st">'y'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'goal'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:<span class="dv">1</span> <span class="cf">if</span> row[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span> <span class="cf">else</span> <span class="dv">0</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="05dd7cf6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_angle(x, y):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    g0, g1, p <span class="op">=</span> np.array([<span class="dv">120</span>, <span class="dv">44</span>]), np.array([<span class="dv">120</span>, <span class="dv">36</span>]), np.array([x, y])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    v0, v1 <span class="op">=</span> g0 <span class="op">-</span> p, g1 <span class="op">-</span> p</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    angle <span class="op">=</span> np.arctan2(np.linalg.det([v0, v1]), np.dot(v0, v1))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">abs</span>(np.degrees(angle))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_distance(x, y):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    x_dist <span class="op">=</span> <span class="dv">120</span> <span class="op">-</span> x</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    y_dist <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> y <span class="op">&lt;</span> <span class="dv">36</span>:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        y_dist <span class="op">=</span> <span class="dv">36</span> <span class="op">-</span> y</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> y <span class="op">&gt;</span> <span class="dv">44</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        y_dist <span class="op">=</span> y <span class="op">-</span> <span class="dv">44</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> math.sqrt(x_dist<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> y_dist<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'angle'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:calculate_angle(row[<span class="st">'x'</span>], row[<span class="st">'y'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'distance'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:calculate_distance(row[<span class="st">'x'</span>], row[<span class="st">'y'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi" class="level2">
-<h2 class="anchored" data-anchor-id="açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi">Açı ve Uzaklığa Göre Gol ve Gol Olmayan Durumların Gösterilmesi</h2>
-<div id="ccdd5257" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   df_shot[df_shot[<span class="st">'goal'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'angle'</span>],</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   df_shot[df_shot[<span class="st">'goal'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'distance'</span>],</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   color<span class="op">=</span><span class="st">'blue'</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   label<span class="op">=</span><span class="st">'No Goal'</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>   alpha<span class="op">=</span><span class="fl">0.3</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>   df_shot[df_shot[<span class="st">'goal'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'angle'</span>],</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>   df_shot[df_shot[<span class="st">'goal'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'distance'</span>],</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>   color<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>   label<span class="op">=</span><span class="st">'Goal'</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>   alpha<span class="op">=</span><span class="fl">0.9</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Angle'</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Distance'</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Angle vs Distance by Goal Outcome in Euro 2024'</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="gol-durumunun-belirlenmesi" class="level2">
+<h2 class="anchored" data-anchor-id="gol-durumunun-belirlenmesi">Gol Durumunun Belirlenmesi</h2>
+<div id="c562f118" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'goal'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:<span class="dv">1</span> <span class="cf">if</span> row[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span> <span class="cf">else</span> <span class="dv">0</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi" class="level2">
+<h2 class="anchored" data-anchor-id="kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi">Kolonların NaN Kontrolünün Yapılması ve Düzeltilmesi</h2>
+<div id="4e08c92c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>columns_to_count <span class="op">=</span> [<span class="st">'sub_type_name'</span>, <span class="st">'body_part_name'</span>, <span class="st">'under_pressure'</span>, <span class="st">'technique_name'</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> columns_to_count:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    nan_count <span class="op">=</span> df_shot[col].isna().<span class="bu">sum</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Column '</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">' has </span><span class="sc">{</span>nan_count<span class="sc">}</span><span class="ss"> NaN values."</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 'sub_type_name' has 0 NaN values.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 'body_part_name' has 0 NaN values.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 'under_pressure' has 929 NaN values.</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 'technique_name' has 0 NaN values.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'under_pressure'</span>] <span class="op">=</span> df_shot[<span class="st">'under_pressure'</span>].fillna(<span class="dv">0</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modele-eklenecek-değişkenlerin-dağılımı" class="level2">
+<h2 class="anchored" data-anchor-id="modele-eklenecek-değişkenlerin-dağılımı">Modele Eklenecek Değişkenlerin Dağılımı</h2>
+<div id="e6bf9fc8" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">16</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, col <span class="kw">in</span> <span class="bu">enumerate</span>(columns_to_count):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    count_series <span class="op">=</span> df_shot[col].value_counts().sort_values()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    count_series.plot(kind<span class="op">=</span><span class="st">'barh'</span>, ax<span class="op">=</span>axes[i], color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(col.replace(<span class="st">'_'</span>, <span class="st">' '</span>).title())</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="st">'Count'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    axes[i].set_ylabel(<span class="st">''</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Shot Types in Various Categories at Euro 2024"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_5.png" class="img-fluid"></p>
 </section>
+<section id="kategorik-veriler-için-one-hot-encoding-yapılması" class="level2">
+<h2 class="anchored" data-anchor-id="kategorik-veriler-için-one-hot-encoding-yapılması">Kategorik Veriler İçin One Hot Encoding Yapılması</h2>
+<div id="ed56dad5" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_shot <span class="op">=</span> pd.get_dummies(df_shot, columns<span class="op">=</span>[<span class="st">'sub_type_name'</span>, <span class="st">'body_part_name'</span>, <span class="st">'technique_name'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="modelin-kurulması" class="level2">
 <h2 class="anchored" data-anchor-id="modelin-kurulması">Modelin Kurulması</h2>
-<div id="9d9424d3" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_shot[[<span class="st">'angle'</span>, <span class="st">'distance'</span>]]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_shot[<span class="st">'goal'</span>]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression().fit(X, y)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="78417840" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X_cols <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'angle'</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance'</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'under_pressure'</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub_type_name_Corner'</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub_type_name_Free Kick'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub_type_name_Open Play'</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sub_type_name_Penalty'</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'body_part_name_Head'</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'body_part_name_Left Foot'</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'body_part_name_Right Foot'</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Backheel'</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Diving Header'</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Half Volley'</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Lob'</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Normal'</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Overhead Kick'</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'technique_name_Volley'</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_shot[X_cols]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_shot[<span class="st">'goal'</span>]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression().fit(X, y)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="xg-hesaplayacak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="xg-hesaplayacak-fonksiyonun-yazılması">xG Hesaplayacak Fonksiyonun Yazılması</h2>
-<div id="771dbfe8" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_xg(x, y):</span>
+<div id="1638a70b" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_xg(x, y, under_pressure, sub_type_name_dummies, body_part_name_dummies, technique_name_dummies):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    angle <span class="op">=</span> calculate_angle(x, y)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    distance <span class="op">=</span> calculate_distance(x, y)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    xg <span class="op">=</span> model.predict_proba([[angle, distance]])[:, <span class="dv">1</span>][<span class="dv">0</span>]</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xg</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> np.array(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        [angle, distance, under_pressure] <span class="op">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">list</span>(sub_type_name_dummies) <span class="op">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">list</span>(body_part_name_dummies) <span class="op">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">list</span>(technique_name_dummies)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ).reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    xg <span class="op">=</span> model.predict_proba(features)[:, <span class="dv">1</span>][<span class="dv">0</span>]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xg</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="maçların-xg-değerlerinin-tahmin-edilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="maçların-xg-değerlerinin-tahmin-edilmesi">Maçların xG Değerlerinin Tahmin Edilmesi</h2>
-<p>Bir takımın xG’si tüm xG’lerin toplamıdır.</p>
-<p><span class="math inline">\(xG = \sum_{i=1}^{n} xG_i\)</span></p>
-<div id="c01f1157" class="cell" data-execution_count="10">
+<div id="64dcd75e" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_summary <span class="op">=</span> euro2024_matches[[<span class="st">'match_id'</span>, <span class="st">'home_team_name'</span>, <span class="st">'away_team_name'</span>]].copy()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_summary[<span class="st">'home_goals_open_play'</span>] <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df_summary[<span class="st">'home_xg_open_play'</span>] <span class="op">=</span> <span class="va">None</span></span>
@@ -446,27 +498,59 @@ window.Quarto = {
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, match_id <span class="kw">in</span> <span class="bu">enumerate</span>(euro2024_matches[<span class="st">'match_id'</span>]):</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    df_shots <span class="op">=</span> df[match_id][<span class="st">'event'</span>]</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    shot_mask <span class="op">=</span> (df_shots[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Shot'</span>) <span class="op">&amp;</span> (df_shots[<span class="st">'period'</span>] <span class="op">&lt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span> (df_shots[<span class="st">'sub_type_name'</span>] <span class="op">==</span> <span class="st">'Open Play'</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    df_shots <span class="op">=</span> df_shots[shot_mask].copy()</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    df_shots[<span class="st">'calculated_xg'</span>] <span class="op">=</span> df_shots.<span class="bu">apply</span>(<span class="kw">lambda</span> row: calculate_xg(row[<span class="st">'x'</span>], row[<span class="st">'y'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    home_team <span class="op">=</span> euro2024_matches[<span class="st">'home_team_name'</span>][i]</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    away_team <span class="op">=</span> euro2024_matches[<span class="st">'away_team_name'</span>][i]</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    df_home <span class="op">=</span> df_shots[df_shots[<span class="st">'team_name'</span>] <span class="op">==</span> home_team].copy()</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'home_goals_open_play'</span>] <span class="op">=</span> <span class="bu">len</span>(df_home[df_home[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span>])</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'home_xg_open_play'</span>] <span class="op">=</span> df_home[<span class="st">'calculated_xg'</span>].<span class="bu">sum</span>()</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'home_xg_sb_open_play'</span>] <span class="op">=</span> df_home[<span class="st">'shot_statsbomb_xg'</span>].<span class="bu">sum</span>()</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    df_away <span class="op">=</span> df_shots[df_shots[<span class="st">'team_name'</span>] <span class="op">==</span> away_team].copy()</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'away_goals_open_play'</span>] <span class="op">=</span> <span class="bu">len</span>(df_away[df_away[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span>])</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'away_xg_open_play'</span>] <span class="op">=</span> df_away[<span class="st">'calculated_xg'</span>].<span class="bu">sum</span>()</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'away_xg_sb_open_play'</span>] <span class="op">=</span> df_away[<span class="st">'shot_statsbomb_xg'</span>].<span class="bu">sum</span>()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    shot_mask <span class="op">=</span> (</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        (df_shots[<span class="st">'type_name'</span>] <span class="op">==</span> <span class="st">'Shot'</span>) <span class="op">&amp;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        (df_shots[<span class="st">'period'</span>] <span class="op">&lt;=</span> <span class="dv">4</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    df_shots <span class="op">=</span> df_shots[shot_mask].copy()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    sub_type_dummies <span class="op">=</span> pd.get_dummies(df_shots[<span class="st">'sub_type_name'</span>], prefix<span class="op">=</span><span class="st">'sub_type_name'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    body_part_dummies <span class="op">=</span> pd.get_dummies(df_shots[<span class="st">'body_part_name'</span>], prefix<span class="op">=</span><span class="st">'body_part_name'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    technique_dummies <span class="op">=</span> pd.get_dummies(df_shots[<span class="st">'technique_name'</span>], prefix<span class="op">=</span><span class="st">'technique_name'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    sub_type_dummies <span class="op">=</span> sub_type_dummies.reindex(</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">'sub_type_name_Corner'</span>, <span class="st">'sub_type_name_Free Kick'</span>, <span class="st">'sub_type_name_Open Play'</span>, <span class="st">'sub_type_name_Penalty'</span>], fill_value<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    body_part_dummies <span class="op">=</span> body_part_dummies.reindex(</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">'body_part_name_Head'</span>, <span class="st">'body_part_name_Left Foot'</span>, <span class="st">'body_part_name_Right Foot'</span>], fill_value<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    technique_dummies <span class="op">=</span> technique_dummies.reindex(</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">'technique_name_Backheel'</span>, <span class="st">'technique_name_Diving Header'</span>, <span class="st">'technique_name_Half Volley'</span>, <span class="st">'technique_name_Lob'</span>, <span class="st">'technique_name_Normal'</span>, <span class="st">'technique_name_Overhead Kick'</span>, <span class="st">'technique_name_Volley'</span>], fill_value<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    df_shots <span class="op">=</span> pd.concat([df_shots, sub_type_dummies, body_part_dummies, technique_dummies], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    df_shots[<span class="st">'under_pressure'</span>] <span class="op">=</span> df_shots[<span class="st">'under_pressure'</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    df_shots[<span class="st">'calculated_xg'</span>] <span class="op">=</span> df_shots.<span class="bu">apply</span>(</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lambda</span> row: calculate_xg(</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">'x'</span>],</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">'y'</span>],</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">'under_pressure'</span>],</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>            sub_type_dummies.loc[row.name].values,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>            body_part_dummies.loc[row.name].values,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>            technique_dummies.loc[row.name].values</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    home_team <span class="op">=</span> euro2024_matches[<span class="st">'home_team_name'</span>][i]</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    away_team <span class="op">=</span> euro2024_matches[<span class="st">'away_team_name'</span>][i]</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    df_home <span class="op">=</span> df_shots[df_shots[<span class="st">'team_name'</span>] <span class="op">==</span> home_team].copy()</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'home_goals_open_play'</span>] <span class="op">=</span> <span class="bu">len</span>(df_home[df_home[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span>])</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'home_xg_open_play'</span>] <span class="op">=</span> df_home[<span class="st">'calculated_xg'</span>].<span class="bu">sum</span>()</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'home_xg_sb_open_play'</span>] <span class="op">=</span> df_home[<span class="st">'shot_statsbomb_xg'</span>].<span class="bu">sum</span>()</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    df_away <span class="op">=</span> df_shots[df_shots[<span class="st">'team_name'</span>] <span class="op">==</span> away_team].copy()</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'away_goals_open_play'</span>] <span class="op">=</span> <span class="bu">len</span>(df_away[df_away[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span>])</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'away_xg_open_play'</span>] <span class="op">=</span> df_away[<span class="st">'calculated_xg'</span>].<span class="bu">sum</span>()</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    df_summary.at[i, <span class="st">'away_xg_sb_open_play'</span>] <span class="op">=</span> df_away[<span class="st">'shot_statsbomb_xg'</span>].<span class="bu">sum</span>()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması" class="level2">
 <h2 class="anchored" data-anchor-id="tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması">Tahmin Sonuçlarının StatsBomb ile Karşılaştırılması</h2>
-<div id="0840bdbb" class="cell" data-execution_count="11">
+<div id="6af85f4f" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
@@ -491,6 +575,18 @@ window.Quarto = {
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="imgs/img_6.png" class="img-fluid"></p>
+</section>
+<section id="rmsenin-hesaplanması" class="level2">
+<h2 class="anchored" data-anchor-id="rmsenin-hesaplanması">RMSE’nin Hesaplanması</h2>
+<p><span class="math inline">\(\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
+<div id="3269b56a" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>combined_xg_open_play <span class="op">=</span> df_summary[<span class="st">'home_xg_open_play'</span>] <span class="op">+</span> df_summary[<span class="st">'away_xg_open_play'</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>combined_xg_sb_open_play <span class="op">=</span> df_summary[<span class="st">'home_xg_sb_open_play'</span>] <span class="op">+</span> df_summary[<span class="st">'away_xg_sb_open_play'</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>rmse_advanced <span class="op">=</span> mean_squared_error(combined_xg_open_play, combined_xg_sb_open_play)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE of the advanced model: </span><span class="sc">{</span>rmse_advanced<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yaklaşık 0.20’lik bir RMSE elde ettik. Önceki basit model ile 0.22’lik bir RMSE elde ediyoruz. Her ne kadar önemli bir fark olmasa da RMSE’yi düşürmüş olduk.</p>
 <p><em>Gelecek içeriklerde görüşmek dileğiyle.</em></p>
 
 
