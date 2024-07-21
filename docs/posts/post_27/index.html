@@ -263,7 +263,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="41c9ca95" class="cell" data-execution_count="1">
+<div id="0c1c7e2b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -281,11 +281,11 @@ window.Quarto = {
 <section id="verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
 <p>StatsBomb’dan verileri aşağıdaki gibi çekebiliriz. Euro 2024’ün <code>competition_id</code>’si 55, <code>season_id</code>’si 282’dir. Detaylı bilgiye <a href="https://urazakgul.github.io/python-blog/posts/post_22/" class="external" target="_blank">buradan</a> ulaşabilirsiniz.</p>
-<div id="fa9cb12f" class="cell" data-execution_count="2">
+<div id="1eae7c4e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> Sbopen()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>euro2024_matches <span class="op">=</span> parser.match(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="36767ec4" class="cell" data-execution_count="3">
+<div id="e720274f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> {}</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match_id <span class="kw">in</span> euro2024_matches[<span class="st">'match_id'</span>]:</span>
@@ -298,7 +298,7 @@ window.Quarto = {
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Yukarıdaki kod ile Euro 2024 maçlarının verilerini çektik ve maç ID’lerine göre <code>df</code> adlı sözlükte sakladık.</p>
-<div id="58011be5" class="cell" data-execution_count="4">
+<div id="77a854ec" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_shot <span class="op">=</span> pd.DataFrame(columns<span class="op">=</span>[<span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'outcome_name'</span>, <span class="st">'shot_statsbomb_xg'</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match_id, match_data <span class="kw">in</span> df.items():</span>
@@ -317,7 +317,7 @@ window.Quarto = {
 </section>
 <section id="gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="gol-olan-ve-olmayan-şutların-konumlarının-gösterilmesi">Gol Olan ve Olmayan Şutların Konumlarının Gösterilmesi</h2>
-<div id="67adc1b5" class="cell" data-execution_count="5">
+<div id="4c401049" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_goals <span class="op">=</span> df_shot[df_shot[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span>].copy()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_non_goals <span class="op">=</span> df_shot[df_shot[<span class="st">'outcome_name'</span>] <span class="op">!=</span> <span class="st">'Goal'</span>].copy()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -356,9 +356,10 @@ window.Quarto = {
 <section id="açı-ve-uzaklığın-hesaplanması" class="level2">
 <h2 class="anchored" data-anchor-id="açı-ve-uzaklığın-hesaplanması">Açı ve Uzaklığın Hesaplanması</h2>
 <p>Belirtilen noktadan iki kale direği arasındaki açıyı ve hedefin (kale direği) en yakın mesafesini hesaplayalım.</p>
+<p>Ölçüler aşağıda verilmiştir.</p>
 <p><img src="imgs/img_3.PNG" class="img-fluid"></p>
 <p><img src="imgs/img_4.PNG" class="img-fluid"></p>
-<div id="d4d32834" class="cell" data-execution_count="6">
+<div id="05b17914" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_angle(x, y):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    g0, g1, p <span class="op">=</span> np.array([<span class="dv">120</span>, <span class="dv">44</span>]), np.array([<span class="dv">120</span>, <span class="dv">36</span>]), np.array([x, y])</span>
@@ -386,7 +387,7 @@ window.Quarto = {
 </section>
 <section id="açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="açı-ve-uzaklığa-göre-gol-ve-gol-olmayan-durumların-gösterilmesi">Açı ve Uzaklığa Göre Gol ve Gol Olmayan Durumların Gösterilmesi</h2>
-<div id="ccdd5257" class="cell" data-execution_count="7">
+<div id="721f4202" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   df_shot[df_shot[<span class="st">'goal'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'angle'</span>],</span>
@@ -413,7 +414,7 @@ window.Quarto = {
 </section>
 <section id="modelin-kurulması" class="level2">
 <h2 class="anchored" data-anchor-id="modelin-kurulması">Modelin Kurulması</h2>
-<div id="9d9424d3" class="cell" data-execution_count="8">
+<div id="7d2394b7" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_shot[[<span class="st">'angle'</span>, <span class="st">'distance'</span>]]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_shot[<span class="st">'goal'</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression().fit(X, y)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -421,7 +422,7 @@ window.Quarto = {
 </section>
 <section id="xg-hesaplayacak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="xg-hesaplayacak-fonksiyonun-yazılması">xG Hesaplayacak Fonksiyonun Yazılması</h2>
-<div id="771dbfe8" class="cell" data-execution_count="9">
+<div id="2f9c88ec" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_xg(x, y):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    angle <span class="op">=</span> calculate_angle(x, y)</span>
@@ -435,7 +436,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="maçların-xg-değerlerinin-tahmin-edilmesi">Maçların xG Değerlerinin Tahmin Edilmesi</h2>
 <p>Bir takımın xG’si tüm xG’lerin toplamıdır.</p>
 <p><span class="math inline">\(xG = \sum_{i=1}^{n} xG_i\)</span></p>
-<div id="c01f1157" class="cell" data-execution_count="10">
+<div id="ca313448" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_summary <span class="op">=</span> euro2024_matches[[<span class="st">'match_id'</span>, <span class="st">'home_team_name'</span>, <span class="st">'away_team_name'</span>]].copy()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_summary[<span class="st">'home_goals_open_play'</span>] <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df_summary[<span class="st">'home_xg_open_play'</span>] <span class="op">=</span> <span class="va">None</span></span>
@@ -466,7 +467,7 @@ window.Quarto = {
 </section>
 <section id="tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması" class="level2">
 <h2 class="anchored" data-anchor-id="tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması">Tahmin Sonuçlarının StatsBomb ile Karşılaştırılması</h2>
-<div id="0840bdbb" class="cell" data-execution_count="11">
+<div id="45d30f87" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>

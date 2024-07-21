@@ -128,6 +128,8 @@ plt.show()
 
 Belirtilen noktadan iki kale direği arasındaki açıyı ve hedefin (kale direği) en yakın mesafesini hesaplayalım.
 
+Ölçüler aşağıda verilmiştir.
+
 ![](imgs/img_3.PNG)
 
 ![](imgs/img_4.PNG)

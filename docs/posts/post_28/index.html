@@ -266,7 +266,7 @@ window.Quarto = {
 </section>
 <section id="kullanılacak-kütüphaneler" class="level1">
 <h1>Kullanılacak Kütüphaneler</h1>
-<div id="76707e2f" class="cell" data-execution_count="1">
+<div id="7fba5674" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -326,7 +326,7 @@ window.Quarto = {
 <section id="verilerin-çekilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="verilerin-çekilmesi">Verilerin Çekilmesi</h2>
 <p>Veri çerçevesini yeni kolonlar ile genişletiyoruz.</p>
-<div id="5af7fa80" class="cell" data-execution_count="2">
+<div id="1f6b67e9" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> Sbopen()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>euro2024_matches <span class="op">=</span> parser.match(competition_id<span class="op">=</span><span class="dv">55</span>, season_id<span class="op">=</span><span class="dv">282</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,7 +365,7 @@ window.Quarto = {
 </section>
 <section id="açı-ve-uzaklığın-hesaplanması" class="level2">
 <h2 class="anchored" data-anchor-id="açı-ve-uzaklığın-hesaplanması">Açı ve Uzaklığın Hesaplanması</h2>
-<div id="05dd7cf6" class="cell" data-execution_count="3">
+<div id="eca5b461" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_angle(x, y):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    g0, g1, p <span class="op">=</span> np.array([<span class="dv">120</span>, <span class="dv">44</span>]), np.array([<span class="dv">120</span>, <span class="dv">36</span>]), np.array([x, y])</span>
@@ -392,13 +392,13 @@ window.Quarto = {
 </section>
 <section id="gol-durumunun-belirlenmesi" class="level2">
 <h2 class="anchored" data-anchor-id="gol-durumunun-belirlenmesi">Gol Durumunun Belirlenmesi</h2>
-<div id="c562f118" class="cell" data-execution_count="4">
+<div id="14388f69" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_shot[<span class="st">'goal'</span>] <span class="op">=</span> df_shot.<span class="bu">apply</span>(<span class="kw">lambda</span> row:<span class="dv">1</span> <span class="cf">if</span> row[<span class="st">'outcome_name'</span>] <span class="op">==</span> <span class="st">'Goal'</span> <span class="cf">else</span> <span class="dv">0</span>, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="kolonların-nan-kontrolünün-yapılması-ve-düzeltilmesi">Kolonların NaN Kontrolünün Yapılması ve Düzeltilmesi</h2>
-<div id="4e08c92c" class="cell" data-execution_count="5">
+<div id="098561b8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>columns_to_count <span class="op">=</span> [<span class="st">'sub_type_name'</span>, <span class="st">'body_part_name'</span>, <span class="st">'under_pressure'</span>, <span class="st">'technique_name'</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> columns_to_count:</span>
@@ -415,7 +415,7 @@ window.Quarto = {
 </section>
 <section id="modele-eklenecek-değişkenlerin-dağılımı" class="level2">
 <h2 class="anchored" data-anchor-id="modele-eklenecek-değişkenlerin-dağılımı">Modele Eklenecek Değişkenlerin Dağılımı</h2>
-<div id="e6bf9fc8" class="cell" data-execution_count="6">
+<div id="b2f22b87" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">16</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -434,13 +434,13 @@ window.Quarto = {
 </section>
 <section id="kategorik-veriler-için-one-hot-encoding-yapılması" class="level2">
 <h2 class="anchored" data-anchor-id="kategorik-veriler-için-one-hot-encoding-yapılması">Kategorik Veriler İçin One Hot Encoding Yapılması</h2>
-<div id="ed56dad5" class="cell" data-execution_count="7">
+<div id="98dc62de" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_shot <span class="op">=</span> pd.get_dummies(df_shot, columns<span class="op">=</span>[<span class="st">'sub_type_name'</span>, <span class="st">'body_part_name'</span>, <span class="st">'technique_name'</span>])</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="modelin-kurulması" class="level2">
 <h2 class="anchored" data-anchor-id="modelin-kurulması">Modelin Kurulması</h2>
-<div id="78417840" class="cell" data-execution_count="8">
+<div id="1593600b" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X_cols <span class="op">=</span> [</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'angle'</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'distance'</span>,</span>
@@ -469,7 +469,7 @@ window.Quarto = {
 </section>
 <section id="xg-hesaplayacak-fonksiyonun-yazılması" class="level2">
 <h2 class="anchored" data-anchor-id="xg-hesaplayacak-fonksiyonun-yazılması">xG Hesaplayacak Fonksiyonun Yazılması</h2>
-<div id="1638a70b" class="cell" data-execution_count="9">
+<div id="8c7109ea" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_xg(x, y, under_pressure, sub_type_name_dummies, body_part_name_dummies, technique_name_dummies):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    angle <span class="op">=</span> calculate_angle(x, y)</span>
@@ -487,7 +487,7 @@ window.Quarto = {
 </section>
 <section id="maçların-xg-değerlerinin-tahmin-edilmesi" class="level2">
 <h2 class="anchored" data-anchor-id="maçların-xg-değerlerinin-tahmin-edilmesi">Maçların xG Değerlerinin Tahmin Edilmesi</h2>
-<div id="64dcd75e" class="cell" data-execution_count="10">
+<div id="85c3a039" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_summary <span class="op">=</span> euro2024_matches[[<span class="st">'match_id'</span>, <span class="st">'home_team_name'</span>, <span class="st">'away_team_name'</span>]].copy()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_summary[<span class="st">'home_goals_open_play'</span>] <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df_summary[<span class="st">'home_xg_open_play'</span>] <span class="op">=</span> <span class="va">None</span></span>
@@ -550,7 +550,7 @@ window.Quarto = {
 </section>
 <section id="tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması" class="level2">
 <h2 class="anchored" data-anchor-id="tahmin-sonuçlarının-statsbomb-ile-karşılaştırılması">Tahmin Sonuçlarının StatsBomb ile Karşılaştırılması</h2>
-<div id="6af85f4f" class="cell" data-execution_count="11">
+<div id="417a83b2" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
@@ -579,7 +579,7 @@ window.Quarto = {
 <section id="rmsenin-hesaplanması" class="level2">
 <h2 class="anchored" data-anchor-id="rmsenin-hesaplanması">RMSE’nin Hesaplanması</h2>
 <p><span class="math inline">\(\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\)</span></p>
-<div id="3269b56a" class="cell" data-execution_count="12">
+<div id="9a04b146" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>combined_xg_open_play <span class="op">=</span> df_summary[<span class="st">'home_xg_open_play'</span>] <span class="op">+</span> df_summary[<span class="st">'away_xg_open_play'</span>]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>combined_xg_sb_open_play <span class="op">=</span> df_summary[<span class="st">'home_xg_sb_open_play'</span>] <span class="op">+</span> df_summary[<span class="st">'away_xg_sb_open_play'</span>]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
